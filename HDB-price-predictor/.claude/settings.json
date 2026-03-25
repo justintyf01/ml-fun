@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:api-production.data.gov.sg)",
+      "Bash(curl -s \"https://api-production.data.gov.sg/v2/public/api/datasets/d_8b84c4ee58e3cfc0ece0d773c8ca6abc/initiate-download\" -H \"Content-Type: application/json\")",
+      "WebFetch(domain:data.gov.sg)",
+      "Bash(curl -s \"https://data.gov.sg/api/action/datastore_search?resource_id=d_68a42f09f350f76c7ab3f3868ce24f5c&limit=3\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d.get\\(''''result'''',{}\\).get\\(''''fields'''',[]\\), indent=2\\)[:500]\\)\")",
+      "Bash(conda run:*)"
+    ]
+  }
+}

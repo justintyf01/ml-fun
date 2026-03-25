@@ -1,0 +1,127 @@
+[
+  {
+    "name": "East Coast Park",
+    "lat": 1.3008,
+    "lon": 103.9122
+  },
+  {
+    "name": "Bishan-Ang Mo Kio Park",
+    "lat": 1.3619,
+    "lon": 103.846
+  },
+  {
+    "name": "Jurong Lake Gardens",
+    "lat": 1.3383,
+    "lon": 103.7292
+  },
+  {
+    "name": "Pasir Ris Park",
+    "lat": 1.3813,
+    "lon": 103.9512
+  },
+  {
+    "name": "Bedok Reservoir Park",
+    "lat": 1.3391,
+    "lon": 103.9329
+  },
+  {
+    "name": "West Coast Park",
+    "lat": 1.2812,
+    "lon": 103.766
+  },
+  {
+    "name": "Punggol Waterway Park",
+    "lat": 1.4084,
+    "lon": 103.9058
+  },
+  {
+    "name": "Woodlands Waterfront",
+    "lat": 1.4576,
+    "lon": 103.7689
+  },
+  {
+    "name": "Sembawang Park",
+    "lat": 1.4618,
+    "lon": 103.8302
+  },
+  {
+    "name": "Admiralty Park",
+    "lat": 1.447,
+    "lon": 103.7802
+  },
+  {
+    "name": "Labrador Nature Reserve",
+    "lat": 1.2655,
+    "lon": 103.8026
+  },
+  {
+    "name": "Kent Ridge Park",
+    "lat": 1.2815,
+    "lon": 103.7907
+  },
+  {
+    "name": "MacRitchie Reservoir Park",
+    "lat": 1.3434,
+    "lon": 103.8338
+  },
+  {
+    "name": "Bukit Timah Nature Reserve",
+    "lat": 1.35,
+    "lon": 103.776
+  },
+  {
+    "name": "Lower Peirce Reservoir Park",
+    "lat": 1.3695,
+    "lon": 103.8193
+  },
+  {
+    "name": "Tampines Eco Green",
+    "lat": 1.358,
+    "lon": 103.965
+  },
+  {
+    "name": "Yishun Park",
+    "lat": 1.4262,
+    "lon": 103.8416
+  },
+  {
+    "name": "Clementi Woods Park",
+    "lat": 1.3278,
+    "lon": 103.778
+  },
+  {
+    "name": "Ang Mo Kio Town Garden West",
+    "lat": 1.371,
+    "lon": 103.8373
+  },
+  {
+    "name": "Choa Chu Kang Park",
+    "lat": 1.3862,
+    "lon": 103.7441
+  },
+  {
+    "name": "Bukit Batok Nature Park",
+    "lat": 1.3498,
+    "lon": 103.7632
+  },
+  {
+    "name": "Toa Payoh Town Park",
+    "lat": 1.3325,
+    "lon": 103.8492
+  },
+  {
+    "name": "Kallang Riverside Park",
+    "lat": 1.311,
+    "lon": 103.8651
+  },
+  {
+    "name": "Coney Island Park",
+    "lat": 1.4099,
+    "lon": 103.9186
+  },
+  {
+    "name": "Sengkang Riverside Park",
+    "lat": 1.3964,
+    "lon": 103.8879
+  }
+]

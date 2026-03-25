@@ -1,0 +1,2024 @@
+[
+    {
+        "name": "ADMIRALTY PRIMARY SCHOOL",
+        "lat": 1.4426347903311,
+        "lon": 103.800040119743,
+        "postal_code": "738907"
+    },
+    {
+        "name": "ADMIRALTY SECONDARY SCHOOL",
+        "lat": 1.44589068910993,
+        "lon": 103.802398196596,
+        "postal_code": "737916"
+    },
+    {
+        "name": "AHMAD IBRAHIM PRIMARY SCHOOL",
+        "lat": 1.43315271543517,
+        "lon": 103.832942401086,
+        "postal_code": "768643"
+    },
+    {
+        "name": "AHMAD IBRAHIM SECONDARY SCHOOL",
+        "lat": 1.43605975368804,
+        "lon": 103.829718690077,
+        "postal_code": "768928"
+    },
+    {
+        "name": "AI TONG SCHOOL",
+        "lat": 1.36058343005814,
+        "lon": 103.83302033725,
+        "postal_code": "579646"
+    },
+    {
+        "name": "ALEXANDRA PRIMARY SCHOOL",
+        "lat": 1.2912990413487,
+        "lon": 103.823940802388,
+        "postal_code": "159016"
+    },
+    {
+        "name": "ANCHOR GREEN PRIMARY SCHOOL",
+        "lat": 1.39050830954652,
+        "lon": 103.887433162937,
+        "postal_code": "544969"
+    },
+    {
+        "name": "ANDERSON PRIMARY SCHOOL",
+        "lat": 1.38419941907925,
+        "lon": 103.841411716006,
+        "postal_code": "569785"
+    },
+    {
+        "name": "ANDERSON SECONDARY SCHOOL",
+        "lat": 1.37434001701177,
+        "lon": 103.851554107068,
+        "postal_code": "569206"
+    },
+    {
+        "name": "ANDERSON SERANGOON JUNIOR COLLEGE",
+        "lat": 1.36504342002442,
+        "lon": 103.887038809373,
+        "postal_code": "534768"
+    },
+    {
+        "name": "ANG MO KIO PRIMARY SCHOOL",
+        "lat": 1.36932176584608,
+        "lon": 103.839630858752,
+        "postal_code": "569920"
+    },
+    {
+        "name": "ANG MO KIO SECONDARY SCHOOL",
+        "lat": 1.36733710171069,
+        "lon": 103.842154973672,
+        "postal_code": "569362"
+    },
+    {
+        "name": "ANGLICAN HIGH SCHOOL",
+        "lat": 1.33058126205128,
+        "lon": 103.941082513081,
+        "postal_code": "487012"
+    },
+    {
+        "name": "ANGLO-CHINESE JUNIOR COLLEGE",
+        "lat": 1.30304255193392,
+        "lon": 103.785358436408,
+        "postal_code": "139745"
+    },
+    {
+        "name": "ANGLO-CHINESE SCHOOL (BARKER ROAD)",
+        "lat": 1.31961649151328,
+        "lon": 103.835772689988,
+        "postal_code": "309919"
+    },
+    {
+        "name": "ANGLO-CHINESE SCHOOL (INDEPENDENT)",
+        "lat": 1.30370409257783,
+        "lon": 103.780363417671,
+        "postal_code": "139650"
+    },
+    {
+        "name": "ANGLO-CHINESE SCHOOL (JUNIOR)",
+        "lat": 1.30932252730174,
+        "lon": 103.841552127373,
+        "postal_code": "227988"
+    },
+    {
+        "name": "ANGLO-CHINESE SCHOOL (PRIMARY)",
+        "lat": 1.31871860621788,
+        "lon": 103.83534516884,
+        "postal_code": "309918"
+    },
+    {
+        "name": "ANGSANA PRIMARY SCHOOL",
+        "lat": 1.3632481897246,
+        "lon": 103.938914821167,
+        "postal_code": "528565"
+    },
+    {
+        "name": "ASSUMPTION ENGLISH SCHOOL",
+        "lat": 1.36916295281535,
+        "lon": 103.767937546001,
+        "postal_code": "678117"
+    },
+    {
+        "name": "ASSUMPTION PATHWAY SCHOOL",
+        "lat": 1.3696707043227,
+        "lon": 103.765959130581,
+        "postal_code": "679697"
+    },
+    {
+        "name": "BARTLEY SECONDARY SCHOOL",
+        "lat": 1.33995415587811,
+        "lon": 103.882806211705,
+        "postal_code": "538403"
+    },
+    {
+        "name": "BEACON PRIMARY SCHOOL",
+        "lat": 1.38394936211823,
+        "lon": 103.773632022975,
+        "postal_code": "679944"
+    },
+    {
+        "name": "BEATTY SECONDARY SCHOOL",
+        "lat": 1.341790284928,
+        "lon": 103.852280842345,
+        "postal_code": "318990"
+    },
+    {
+        "name": "BEDOK GREEN PRIMARY SCHOOL",
+        "lat": 1.32399627990304,
+        "lon": 103.937745023577,
+        "postal_code": "469317"
+    },
+    {
+        "name": "BEDOK GREEN SECONDARY SCHOOL",
+        "lat": 1.33451947288431,
+        "lon": 103.935028383346,
+        "postal_code": "469722"
+    },
+    {
+        "name": "BEDOK SOUTH SECONDARY SCHOOL",
+        "lat": 1.32513655159184,
+        "lon": 103.950989139261,
+        "postal_code": "468585"
+    },
+    {
+        "name": "BEDOK VIEW SECONDARY SCHOOL",
+        "lat": 1.32415704029686,
+        "lon": 103.943776245024,
+        "postal_code": "469293"
+    },
+    {
+        "name": "BENDEMEER PRIMARY SCHOOL",
+        "lat": 1.32220848530291,
+        "lon": 103.865351336085,
+        "postal_code": "339948"
+    },
+    {
+        "name": "BENDEMEER SECONDARY SCHOOL",
+        "lat": 1.32461111307996,
+        "lon": 103.860970284401,
+        "postal_code": "327919"
+    },
+    {
+        "name": "BLANGAH RISE PRIMARY SCHOOL",
+        "lat": 1.27614522920998,
+        "lon": 103.80861316604,
+        "postal_code": "109100"
+    },
+    {
+        "name": "BOON LAY GARDEN PRIMARY SCHOOL",
+        "lat": 1.34284013791617,
+        "lon": 103.712858381937,
+        "postal_code": "649930"
+    },
+    {
+        "name": "BOON LAY SECONDARY SCHOOL",
+        "lat": 1.34272216334333,
+        "lon": 103.701891453912,
+        "postal_code": "648354"
+    },
+    {
+        "name": "BOWEN SECONDARY SCHOOL",
+        "lat": 1.37035994436209,
+        "lon": 103.877659577677,
+        "postal_code": "547529"
+    },
+    {
+        "name": "BROADRICK SECONDARY SCHOOL",
+        "lat": 1.30705061123433,
+        "lon": 103.886917922608,
+        "postal_code": "399935"
+    },
+    {
+        "name": "BUKIT BATOK SECONDARY SCHOOL",
+        "lat": 1.34849111079052,
+        "lon": 103.74087370482,
+        "postal_code": "658962"
+    },
+    {
+        "name": "BUKIT MERAH SECONDARY SCHOOL",
+        "lat": 1.28569283064288,
+        "lon": 103.813438929393,
+        "postal_code": "159050"
+    },
+    {
+        "name": "BUKIT PANJANG GOVT. HIGH SCHOOL",
+        "lat": 1.38224243360043,
+        "lon": 103.738361221869,
+        "postal_code": "689809"
+    },
+    {
+        "name": "BUKIT PANJANG PRIMARY SCHOOL",
+        "lat": 1.37350089986584,
+        "lon": 103.769417337654,
+        "postal_code": "679676"
+    },
+    {
+        "name": "BUKIT TIMAH PRIMARY SCHOOL",
+        "lat": 1.3377498622588,
+        "lon": 103.766855344779,
+        "postal_code": "598112"
+    },
+    {
+        "name": "BUKIT VIEW PRIMARY SCHOOL",
+        "lat": 1.34586054788695,
+        "lon": 103.75366641455,
+        "postal_code": "659634"
+    },
+    {
+        "name": "BUKIT VIEW SECONDARY SCHOOL",
+        "lat": 1.3457330554294,
+        "lon": 103.752226593984,
+        "postal_code": "659633"
+    },
+    {
+        "name": "CANBERRA PRIMARY SCHOOL",
+        "lat": 1.45123288382933,
+        "lon": 103.81588941317,
+        "postal_code": "757714"
+    },
+    {
+        "name": "CANBERRA SECONDARY SCHOOL",
+        "lat": 1.45319086315972,
+        "lon": 103.814203583818,
+        "postal_code": "757699"
+    },
+    {
+        "name": "CANOSSA CATHOLIC PRIMARY SCHOOL",
+        "lat": 1.32630544320425,
+        "lon": 103.882889732898,
+        "postal_code": "387621"
+    },
+    {
+        "name": "CANTONMENT PRIMARY SCHOOL",
+        "lat": 1.27547252623201,
+        "lon": 103.839962631748,
+        "postal_code": "088256"
+    },
+    {
+        "name": "CASUARINA PRIMARY SCHOOL",
+        "lat": 1.37246063927999,
+        "lon": 103.957020286115,
+        "postal_code": "518935"
+    },
+    {
+        "name": "CATHOLIC HIGH SCHOOL",
+        "lat": 1.35438878373608,
+        "lon": 103.844210670766,
+        "postal_code": "579767"
+    },
+    {
+        "name": "CATHOLIC JUNIOR COLLEGE",
+        "lat": 1.32455605783219,
+        "lon": 103.835028842353,
+        "postal_code": "297822"
+    },
+    {
+        "name": "CEDAR GIRLS' SECONDARY SCHOOL",
+        "lat": 1.33375800216334,
+        "lon": 103.873933064886,
+        "postal_code": "349692"
+    },
+    {
+        "name": "CEDAR PRIMARY SCHOOL",
+        "lat": 1.33566084356265,
+        "lon": 103.87562006259,
+        "postal_code": "349700"
+    },
+    {
+        "name": "CHANGKAT CHANGI SECONDARY SCHOOL",
+        "lat": 1.33950630072876,
+        "lon": 103.953245525564,
+        "postal_code": "529894"
+    },
+    {
+        "name": "CHANGKAT PRIMARY SCHOOL",
+        "lat": 1.34023163951633,
+        "lon": 103.952080114035,
+        "postal_code": "529896"
+    },
+    {
+        "name": "CHIJ (KATONG) PRIMARY",
+        "lat": 1.30648535277087,
+        "lon": 103.911105620496,
+        "postal_code": "424821"
+    },
+    {
+        "name": "VALOUR PRIMARY SCHOOL",
+        "lat": 1.40683570215319,
+        "lon": 103.899078139493,
+        "postal_code": "828728"
+    },
+    {
+        "name": "CHIJ (KELLOCK)",
+        "lat": 1.275022722964,
+        "lon": 103.828157564896,
+        "postal_code": "099757"
+    },
+    {
+        "name": "CHIJ KATONG CONVENT",
+        "lat": 1.30644268034894,
+        "lon": 103.917144350028,
+        "postal_code": "449150"
+    },
+    {
+        "name": "CHIJ OUR LADY OF GOOD COUNSEL",
+        "lat": 1.35742952269615,
+        "lon": 103.864009397373,
+        "postal_code": "558979"
+    },
+    {
+        "name": "CHIJ OUR LADY OF THE NATIVITY",
+        "lat": 1.37330297140128,
+        "lon": 103.897575728303,
+        "postal_code": "534793"
+    },
+    {
+        "name": "CHIJ OUR LADY QUEEN OF PEACE",
+        "lat": 1.36649865720247,
+        "lon": 103.767457467964,
+        "postal_code": "679287"
+    },
+    {
+        "name": "CHIJ PRIMARY (TOA PAYOH)",
+        "lat": 1.33275264711587,
+        "lon": 103.841847263786,
+        "postal_code": "319765"
+    },
+    {
+        "name": "CHIJ SECONDARY (TOA PAYOH)",
+        "lat": 1.33246079948303,
+        "lon": 103.843271625083,
+        "postal_code": "319764"
+    },
+    {
+        "name": "CHIJ ST. JOSEPH'S CONVENT",
+        "lat": 1.39175222260369,
+        "lon": 103.902464991543,
+        "postal_code": "548595"
+    },
+    {
+        "name": "CHIJ ST. NICHOLAS GIRLS' SCHOOL",
+        "lat": 1.37347687878916,
+        "lon": 103.834253269436,
+        "postal_code": "569405"
+    },
+    {
+        "name": "CHIJ ST. THERESA'S CONVENT",
+        "lat": 1.27535177510054,
+        "lon": 103.822440701642,
+        "postal_code": "099138"
+    },
+    {
+        "name": "CHONGFU SCHOOL",
+        "lat": 1.43846230429529,
+        "lon": 103.839070714229,
+        "postal_code": "768959"
+    },
+    {
+        "name": "CHONGZHENG PRIMARY SCHOOL",
+        "lat": 1.35061130568554,
+        "lon": 103.951317297552,
+        "postal_code": "529392"
+    },
+    {
+        "name": "CHRIST CHURCH SECONDARY SCHOOL",
+        "lat": 1.42656780901455,
+        "lon": 103.793451105242,
+        "postal_code": "737924"
+    },
+    {
+        "name": "CHUA CHU KANG PRIMARY SCHOOL",
+        "lat": 1.37760828302593,
+        "lon": 103.741270440945,
+        "postal_code": "689905"
+    },
+    {
+        "name": "CHUA CHU KANG SECONDARY SCHOOL",
+        "lat": 1.38333422637073,
+        "lon": 103.75510327583,
+        "postal_code": "688848"
+    },
+    {
+        "name": "CHUNG CHENG HIGH SCHOOL (MAIN)",
+        "lat": 1.30509154753048,
+        "lon": 103.891653229373,
+        "postal_code": "439012"
+    },
+    {
+        "name": "CHUNG CHENG HIGH SCHOOL (YISHUN)",
+        "lat": 1.41922603586175,
+        "lon": 103.837390782849,
+        "postal_code": "768547"
+    },
+    {
+        "name": "CLEMENTI PRIMARY SCHOOL",
+        "lat": 1.31505731320501,
+        "lon": 103.762966674996,
+        "postal_code": "129903"
+    },
+    {
+        "name": "CLEMENTI TOWN SECONDARY SCHOOL",
+        "lat": 1.31553912945073,
+        "lon": 103.762020598524,
+        "postal_code": "129904"
+    },
+    {
+        "name": "COMMONWEALTH SECONDARY SCHOOL",
+        "lat": 1.31920395934801,
+        "lon": 103.745637393049,
+        "postal_code": "608784"
+    },
+    {
+        "name": "COMPASSVALE PRIMARY SCHOOL",
+        "lat": 1.39443093598545,
+        "lon": 103.897904958974,
+        "postal_code": "545091"
+    },
+    {
+        "name": "COMPASSVALE SECONDARY SCHOOL",
+        "lat": 1.39614083952009,
+        "lon": 103.899847164494,
+        "postal_code": "545083"
+    },
+    {
+        "name": "CONCORD PRIMARY SCHOOL",
+        "lat": 1.38026516111464,
+        "lon": 103.736554295636,
+        "postal_code": "689814"
+    },
+    {
+        "name": "CORPORATION PRIMARY SCHOOL",
+        "lat": 1.35148548772662,
+        "lon": 103.707578404944,
+        "postal_code": "648347"
+    },
+    {
+        "name": "CRESCENT GIRLS' SCHOOL",
+        "lat": 1.29331947077104,
+        "lon": 103.817544461755,
+        "postal_code": "247961"
+    },
+    {
+        "name": "CREST SECONDARY SCHOOL",
+        "lat": 1.3431198045076,
+        "lon": 103.742628105304,
+        "postal_code": "609561"
+    },
+    {
+        "name": "DAMAI PRIMARY SCHOOL",
+        "lat": 1.33524602829747,
+        "lon": 103.921286435321,
+        "postal_code": "479226"
+    },
+    {
+        "name": "DAMAI SECONDARY SCHOOL",
+        "lat": 1.33692798510393,
+        "lon": 103.927091653438,
+        "postal_code": "479229"
+    },
+    {
+        "name": "DAZHONG PRIMARY SCHOOL",
+        "lat": 1.35906257616677,
+        "lon": 103.748122250254,
+        "postal_code": "659441"
+    },
+    {
+        "name": "DE LA SALLE SCHOOL",
+        "lat": 1.39479396035866,
+        "lon": 103.743123358084,
+        "postal_code": "689285"
+    },
+    {
+        "name": "DEYI SECONDARY SCHOOL",
+        "lat": 1.36599702567717,
+        "lon": 103.852545772422,
+        "postal_code": "569277"
+    },
+    {
+        "name": "DUNEARN SECONDARY SCHOOL",
+        "lat": 1.36357900792871,
+        "lon": 103.74472109107,
+        "postal_code": "659204"
+    },
+    {
+        "name": "DUNMAN HIGH SCHOOL",
+        "lat": 1.29996216014962,
+        "lon": 103.88294155989,
+        "postal_code": "436895"
+    },
+    {
+        "name": "DUNMAN SECONDARY SCHOOL",
+        "lat": 1.36065258337022,
+        "lon": 103.956213906966,
+        "postal_code": "529093"
+    },
+    {
+        "name": "EAST SPRING PRIMARY SCHOOL",
+        "lat": 1.35277013841942,
+        "lon": 103.961743139539,
+        "postal_code": "529258"
+    },
+    {
+        "name": "EAST SPRING SECONDARY SCHOOL",
+        "lat": 1.35622508992581,
+        "lon": 103.960640700298,
+        "postal_code": "529231"
+    },
+    {
+        "name": "EDGEFIELD PRIMARY SCHOOL",
+        "lat": 1.40009139510996,
+        "lon": 103.907847599114,
+        "postal_code": "828869"
+    },
+    {
+        "name": "EDGEFIELD SECONDARY SCHOOL",
+        "lat": 1.40059309981824,
+        "lon": 103.902687385465,
+        "postal_code": "828814"
+    },
+    {
+        "name": "ELIAS PARK PRIMARY SCHOOL",
+        "lat": 1.37451269377776,
+        "lon": 103.945128117139,
+        "postal_code": "518866"
+    },
+    {
+        "name": "ENDEAVOUR PRIMARY SCHOOL",
+        "lat": 1.45403837499301,
+        "lon": 103.817436231731,
+        "postal_code": "757521"
+    },
+    {
+        "name": "EUNOIA JUNIOR COLLEGE",
+        "lat": 1.36213757183547,
+        "lon": 103.841286169122,
+        "postal_code": "573838"
+    },
+    {
+        "name": "EVERGREEN PRIMARY SCHOOL",
+        "lat": 1.44415332824735,
+        "lon": 103.794577787757,
+        "postal_code": "738908"
+    },
+    {
+        "name": "EVERGREEN SECONDARY SCHOOL",
+        "lat": 1.44149131273737,
+        "lon": 103.794137756171,
+        "postal_code": "738489"
+    },
+    {
+        "name": "FAIRFIELD METHODIST SCHOOL (PRIMARY)",
+        "lat": 1.30100441916733,
+        "lon": 103.785455606827,
+        "postal_code": "139648"
+    },
+    {
+        "name": "FAIRFIELD METHODIST SCHOOL (SECONDARY)",
+        "lat": 1.30163374395823,
+        "lon": 103.784099647149,
+        "postal_code": "139649"
+    },
+    {
+        "name": "FARRER PARK PRIMARY SCHOOL",
+        "lat": 1.31243078021903,
+        "lon": 103.850770929023,
+        "postal_code": "217567"
+    },
+    {
+        "name": "FENGSHAN PRIMARY SCHOOL",
+        "lat": 1.3297844580718,
+        "lon": 103.931824413157,
+        "postal_code": "469680"
+    },
+    {
+        "name": "FERN GREEN PRIMARY SCHOOL",
+        "lat": 1.39744694871873,
+        "lon": 103.88012374173,
+        "postal_code": "797538"
+    },
+    {
+        "name": "FERNVALE PRIMARY SCHOOL",
+        "lat": 1.38997939874565,
+        "lon": 103.874100979909,
+        "postal_code": "797701"
+    },
+    {
+        "name": "FIRST TOA PAYOH PRIMARY SCHOOL",
+        "lat": 1.34032299499938,
+        "lon": 103.855529906182,
+        "postal_code": "319252"
+    },
+    {
+        "name": "FRONTIER PRIMARY SCHOOL",
+        "lat": 1.3366431119298,
+        "lon": 103.699682818103,
+        "postal_code": "648200"
+    },
+    {
+        "name": "FUCHUN PRIMARY SCHOOL",
+        "lat": 1.43063975763573,
+        "lon": 103.778175192579,
+        "postal_code": "739063"
+    },
+    {
+        "name": "FUHUA PRIMARY SCHOOL",
+        "lat": 1.33650394789627,
+        "lon": 103.736103745748,
+        "postal_code": "609647"
+    },
+    {
+        "name": "FUHUA SECONDARY SCHOOL",
+        "lat": 1.34701408913756,
+        "lon": 103.72652089832,
+        "postal_code": "649410"
+    },
+    {
+        "name": "GAN ENG SENG PRIMARY SCHOOL",
+        "lat": 1.28559516494962,
+        "lon": 103.815547410064,
+        "postal_code": "158901"
+    },
+    {
+        "name": "GAN ENG SENG SCHOOL",
+        "lat": 1.28907114485773,
+        "lon": 103.823733673089,
+        "postal_code": "159561"
+    },
+    {
+        "name": "GEYLANG METHODIST SCHOOL (PRIMARY)",
+        "lat": 1.31759126757284,
+        "lon": 103.883845744916,
+        "postal_code": "389706"
+    },
+    {
+        "name": "GEYLANG METHODIST SCHOOL (SECONDARY)",
+        "lat": 1.31764900474601,
+        "lon": 103.882661129303,
+        "postal_code": "389705"
+    },
+    {
+        "name": "GONGSHANG PRIMARY SCHOOL",
+        "lat": 1.35711606790292,
+        "lon": 103.949144797277,
+        "postal_code": "529176"
+    },
+    {
+        "name": "GREENDALE PRIMARY SCHOOL",
+        "lat": 1.39646367174598,
+        "lon": 103.912450421018,
+        "postal_code": "828848"
+    },
+    {
+        "name": "GREENDALE SECONDARY SCHOOL",
+        "lat": 1.39696019936894,
+        "lon": 103.91170014084,
+        "postal_code": "828866"
+    },
+    {
+        "name": "GREENRIDGE PRIMARY SCHOOL",
+        "lat": 1.3858892193692,
+        "lon": 103.767794469258,
+        "postal_code": "677744"
+    },
+    {
+        "name": "GREENRIDGE SECONDARY SCHOOL",
+        "lat": 1.375600053443,
+        "lon": 103.763998914082,
+        "postal_code": "678972"
+    },
+    {
+        "name": "GREENWOOD PRIMARY SCHOOL",
+        "lat": 1.4401104867196,
+        "lon": 103.804515180606,
+        "postal_code": "737942"
+    },
+    {
+        "name": "GUANGYANG SECONDARY SCHOOL",
+        "lat": 1.34440943525695,
+        "lon": 103.850212163078,
+        "postal_code": "579807"
+    },
+    {
+        "name": "HAI SING CATHOLIC SCHOOL",
+        "lat": 1.36933055696636,
+        "lon": 103.962762942764,
+        "postal_code": "518969"
+    },
+    {
+        "name": "HAIG GIRLS' SCHOOL",
+        "lat": 1.31194344271383,
+        "lon": 103.902902557195,
+        "postal_code": "427072"
+    },
+    {
+        "name": "HENRY PARK PRIMARY SCHOOL",
+        "lat": 1.31674735173514,
+        "lon": 103.784129850316,
+        "postal_code": "278790"
+    },
+    {
+        "name": "HILLGROVE SECONDARY SCHOOL",
+        "lat": 1.35273576615912,
+        "lon": 103.752986488399,
+        "postal_code": "659250"
+    },
+    {
+        "name": "HOLY INNOCENTS' HIGH SCHOOL",
+        "lat": 1.37154508822261,
+        "lon": 103.896398814264,
+        "postal_code": "534786"
+    },
+    {
+        "name": "HOLY INNOCENTS' PRIMARY SCHOOL",
+        "lat": 1.36693830877349,
+        "lon": 103.894114899795,
+        "postal_code": "536451"
+    },
+    {
+        "name": "HONG WEN SCHOOL",
+        "lat": 1.32175581103999,
+        "lon": 103.857733816796,
+        "postal_code": "327829"
+    },
+    {
+        "name": "HORIZON PRIMARY SCHOOL",
+        "lat": 1.40000881091199,
+        "lon": 103.91307153053,
+        "postal_code": "828819"
+    },
+    {
+        "name": "HOUGANG PRIMARY SCHOOL",
+        "lat": 1.37738245231461,
+        "lon": 103.880805274557,
+        "postal_code": "534238"
+    },
+    {
+        "name": "HOUGANG SECONDARY SCHOOL",
+        "lat": 1.37764019332164,
+        "lon": 103.882533963338,
+        "postal_code": "534256"
+    },
+    {
+        "name": "HUA YI SECONDARY SCHOOL",
+        "lat": 1.35234365488339,
+        "lon": 103.721832320169,
+        "postal_code": "649371"
+    },
+    {
+        "name": "HUAMIN PRIMARY SCHOOL",
+        "lat": 1.42697284512936,
+        "lon": 103.844240226564,
+        "postal_code": "768857"
+    },
+    {
+        "name": "HWA CHONG INSTITUTION",
+        "lat": 1.32561493280909,
+        "lon": 103.805730574839,
+        "postal_code": "269734"
+    },
+    {
+        "name": "INNOVA PRIMARY SCHOOL",
+        "lat": 1.42927790140509,
+        "lon": 103.790592723808,
+        "postal_code": "737888"
+    },
+    {
+        "name": "JIEMIN PRIMARY SCHOOL",
+        "lat": 1.42760611127302,
+        "lon": 103.830401099055,
+        "postal_code": "768515"
+    },
+    {
+        "name": "JING SHAN PRIMARY SCHOOL",
+        "lat": 1.37196445720109,
+        "lon": 103.851763531681,
+        "postal_code": "569228"
+    },
+    {
+        "name": "JUNYUAN PRIMARY SCHOOL",
+        "lat": 1.34787074766746,
+        "lon": 103.939221709073,
+        "postal_code": "528906"
+    },
+    {
+        "name": "JUNYUAN SECONDARY SCHOOL",
+        "lat": 1.35361315263537,
+        "lon": 103.933886165824,
+        "postal_code": "528933"
+    },
+    {
+        "name": "JURONG PIONEER JUNIOR COLLEGE",
+        "lat": 1.38437406410733,
+        "lon": 103.75437461519,
+        "postal_code": "688258"
+    },
+    {
+        "name": "JURONG PRIMARY SCHOOL",
+        "lat": 1.34843859698946,
+        "lon": 103.733156566858,
+        "postal_code": "609476"
+    },
+    {
+        "name": "JURONG SECONDARY SCHOOL",
+        "lat": 1.33002032220942,
+        "lon": 103.723952961648,
+        "postal_code": "618652"
+    },
+    {
+        "name": "JURONG WEST PRIMARY SCHOOL",
+        "lat": 1.33971273175894,
+        "lon": 103.698743607058,
+        "postal_code": "648368"
+    },
+    {
+        "name": "JURONG WEST SECONDARY SCHOOL",
+        "lat": 1.33525634688323,
+        "lon": 103.702098904443,
+        "postal_code": "648348"
+    },
+    {
+        "name": "JURONGVILLE SECONDARY SCHOOL",
+        "lat": 1.35128862770284,
+        "lon": 103.728907710089,
+        "postal_code": "609790"
+    },
+    {
+        "name": "JUYING SECONDARY SCHOOL",
+        "lat": 1.3387227734133,
+        "lon": 103.687310264575,
+        "postal_code": "649038"
+    },
+    {
+        "name": "MEE TOH SCHOOL",
+        "lat": 1.39485356081865,
+        "lon": 103.90857257736,
+        "postal_code": "828867"
+    },
+    {
+        "name": "KEMING PRIMARY SCHOOL",
+        "lat": 1.34506349843091,
+        "lon": 103.75592322797,
+        "postal_code": "659762"
+    },
+    {
+        "name": "KENT RIDGE SECONDARY SCHOOL",
+        "lat": 1.30122773426098,
+        "lon": 103.764889617566,
+        "postal_code": "127368"
+    },
+    {
+        "name": "KHENG CHENG SCHOOL",
+        "lat": 1.33728818369962,
+        "lon": 103.847141122849,
+        "postal_code": "319580"
+    },
+    {
+        "name": "KONG HWA SCHOOL",
+        "lat": 1.31099674009193,
+        "lon": 103.888352029067,
+        "postal_code": "399772"
+    },
+    {
+        "name": "KRANJI PRIMARY SCHOOL",
+        "lat": 1.39356050497104,
+        "lon": 103.747362720939,
+        "postal_code": "689189"
+    },
+    {
+        "name": "KRANJI SECONDARY SCHOOL",
+        "lat": 1.39005109871311,
+        "lon": 103.741190664845,
+        "postal_code": "689333"
+    },
+    {
+        "name": "KUO CHUAN PRESBYTERIAN PRIMARY SCHOOL",
+        "lat": 1.34939813669536,
+        "lon": 103.855018233311,
+        "postal_code": "579793"
+    },
+    {
+        "name": "KUO CHUAN PRESBYTERIAN SECONDARY SCHOOL",
+        "lat": 1.35017129930314,
+        "lon": 103.854983746416,
+        "postal_code": "579795"
+    },
+    {
+        "name": "LAKESIDE PRIMARY SCHOOL",
+        "lat": 1.33837569571569,
+        "lon": 103.718096899655,
+        "postal_code": "618310"
+    },
+    {
+        "name": "LIANHUA PRIMARY SCHOOL",
+        "lat": 1.35416294645557,
+        "lon": 103.754130177522,
+        "postal_code": "659243"
+    },
+    {
+        "name": "LOYANG VIEW SECONDARY SCHOOL",
+        "lat": 1.36658417167238,
+        "lon": 103.956944585725,
+        "postal_code": "519073"
+    },
+    {
+        "name": "MAHA BODHI SCHOOL",
+        "lat": 1.32858023873554,
+        "lon": 103.901306904157,
+        "postal_code": "408931"
+    },
+    {
+        "name": "MANJUSRI SECONDARY SCHOOL",
+        "lat": 1.32747123084846,
+        "lon": 103.901719963831,
+        "postal_code": "408940"
+    },
+    {
+        "name": "MARIS STELLA HIGH SCHOOL",
+        "lat": 1.34139181236127,
+        "lon": 103.877740713449,
+        "postal_code": "368051"
+    },
+    {
+        "name": "MARSILING PRIMARY SCHOOL",
+        "lat": 1.43383904037059,
+        "lon": 103.773643013846,
+        "postal_code": "738927"
+    },
+    {
+        "name": "MARSILING SECONDARY SCHOOL",
+        "lat": 1.43664424769955,
+        "lon": 103.776008090454,
+        "postal_code": "739110"
+    },
+    {
+        "name": "MARYMOUNT CONVENT SCHOOL",
+        "lat": 1.34043840661368,
+        "lon": 103.839811736775,
+        "postal_code": "297754"
+    },
+    {
+        "name": "MAYFLOWER PRIMARY SCHOOL",
+        "lat": 1.37639873282244,
+        "lon": 103.843165756947,
+        "postal_code": "569878"
+    },
+    {
+        "name": "MAYFLOWER SECONDARY SCHOOL",
+        "lat": 1.36827266209722,
+        "lon": 103.835360726863,
+        "postal_code": "569384"
+    },
+    {
+        "name": "MERIDIAN PRIMARY SCHOOL",
+        "lat": 1.37550677054835,
+        "lon": 103.934953276155,
+        "postal_code": "518798"
+    },
+    {
+        "name": "MERIDIAN SECONDARY SCHOOL",
+        "lat": 1.3672468492013,
+        "lon": 103.948972483629,
+        "postal_code": "518901"
+    },
+    {
+        "name": "METHODIST GIRLS' SCHOOL (PRIMARY)",
+        "lat": 1.33266213599636,
+        "lon": 103.783382114018,
+        "postal_code": "599986"
+    },
+    {
+        "name": "METHODIST GIRLS' SCHOOL (SECONDARY)",
+        "lat": 1.33266213599636,
+        "lon": 103.783382114018,
+        "postal_code": "599986"
+    },
+    {
+        "name": "MILLENNIA INSTITUTE",
+        "lat": 1.35031939200985,
+        "lon": 103.741593577684,
+        "postal_code": "658965"
+    },
+    {
+        "name": "MONTFORT JUNIOR SCHOOL",
+        "lat": 1.37362445234082,
+        "lon": 103.889741457901,
+        "postal_code": "538786"
+    },
+    {
+        "name": "MONTFORT SECONDARY SCHOOL",
+        "lat": 1.37396131656912,
+        "lon": 103.888928372577,
+        "postal_code": "538785"
+    },
+    {
+        "name": "NAN CHIAU HIGH SCHOOL",
+        "lat": 1.38879582498399,
+        "lon": 103.890004423764,
+        "postal_code": "545079"
+    },
+    {
+        "name": "NAN CHIAU PRIMARY SCHOOL",
+        "lat": 1.39221149906592,
+        "lon": 103.891180928186,
+        "postal_code": "545080"
+    },
+    {
+        "name": "NAN HUA HIGH SCHOOL",
+        "lat": 1.30809529518605,
+        "lon": 103.768561446725,
+        "postal_code": "129956"
+    },
+    {
+        "name": "NAN HUA PRIMARY SCHOOL",
+        "lat": 1.31919648268012,
+        "lon": 103.761179518517,
+        "postal_code": "128806"
+    },
+    {
+        "name": "NANYANG GIRLS' HIGH SCHOOL",
+        "lat": 1.33058326666479,
+        "lon": 103.802420979943,
+        "postal_code": "288683"
+    },
+    {
+        "name": "NANYANG JUNIOR COLLEGE",
+        "lat": 1.35028314949236,
+        "lon": 103.866498721912,
+        "postal_code": "556111"
+    },
+    {
+        "name": "NANYANG PRIMARY SCHOOL",
+        "lat": 1.32107094241153,
+        "lon": 103.807681852799,
+        "postal_code": "268097"
+    },
+    {
+        "name": "NATIONAL JUNIOR COLLEGE",
+        "lat": 1.33029291072172,
+        "lon": 103.804110905425,
+        "postal_code": "288913"
+    },
+    {
+        "name": "NAVAL BASE PRIMARY SCHOOL",
+        "lat": 1.41629226758972,
+        "lon": 103.838858273963,
+        "postal_code": "769028"
+    },
+    {
+        "name": "NAVAL BASE SECONDARY SCHOOL",
+        "lat": 1.41937881620441,
+        "lon": 103.831050390247,
+        "postal_code": "768689"
+    },
+    {
+        "name": "NEW TOWN PRIMARY SCHOOL",
+        "lat": 1.29981138884057,
+        "lon": 103.799964819895,
+        "postal_code": "148812"
+    },
+    {
+        "name": "NEW TOWN SECONDARY SCHOOL",
+        "lat": 1.30977590011357,
+        "lon": 103.77318863421,
+        "postal_code": "139657"
+    },
+    {
+        "name": "NGEE ANN PRIMARY SCHOOL",
+        "lat": 1.30552505910497,
+        "lon": 103.917463017497,
+        "postal_code": "449149"
+    },
+    {
+        "name": "NGEE ANN SECONDARY SCHOOL",
+        "lat": 1.35447525755806,
+        "lon": 103.956747262496,
+        "postal_code": "529283"
+    },
+    {
+        "name": "NORTH SPRING PRIMARY SCHOOL",
+        "lat": 1.38707582424175,
+        "lon": 103.903088569789,
+        "postal_code": "545088"
+    },
+    {
+        "name": "NORTH VIEW PRIMARY SCHOOL",
+        "lat": 1.42745159462566,
+        "lon": 103.848378442893,
+        "postal_code": "768960"
+    },
+    {
+        "name": "NORTH VISTA PRIMARY SCHOOL",
+        "lat": 1.38255066171151,
+        "lon": 103.89626457548,
+        "postal_code": "544974"
+    },
+    {
+        "name": "NORTH VISTA SECONDARY SCHOOL",
+        "lat": 1.381131285358,
+        "lon": 103.899188813886,
+        "postal_code": "545081"
+    },
+    {
+        "name": "NORTHBROOKS SECONDARY SCHOOL",
+        "lat": 1.42081285020652,
+        "lon": 103.845147332528,
+        "postal_code": "768692"
+    },
+    {
+        "name": "NORTHLAND PRIMARY SCHOOL",
+        "lat": 1.42096989918951,
+        "lon": 103.840928424929,
+        "postal_code": "769026"
+    },
+    {
+        "name": "NORTHLAND SECONDARY SCHOOL",
+        "lat": 1.43580183362637,
+        "lon": 103.840104687784,
+        "postal_code": "768578"
+    },
+    {
+        "name": "NORTHLIGHT SCHOOL",
+        "lat": 1.3191002158167,
+        "lon": 103.85575955353,
+        "postal_code": "327830"
+    },
+    {
+        "name": "NORTHOAKS PRIMARY SCHOOL",
+        "lat": 1.45732867302094,
+        "lon": 103.814075611175,
+        "postal_code": "757622"
+    },
+    {
+        "name": "NORTHSHORE PRIMARY SCHOOL",
+        "lat": 1.41842322079348,
+        "lon": 103.905147201163,
+        "postal_code": "828671"
+    },
+    {
+        "name": "NUS HIGH SCHOOL OF MATHEMATICS AND SCIENCE",
+        "lat": 1.30600678096247,
+        "lon": 103.770152807737,
+        "postal_code": "129957"
+    },
+    {
+        "name": "OASIS PRIMARY SCHOOL",
+        "lat": 1.40462413200793,
+        "lon": 103.911120600638,
+        "postal_code": "828716"
+    },
+    {
+        "name": "OPERA ESTATE PRIMARY SCHOOL",
+        "lat": 1.31996876377748,
+        "lon": 103.923752668632,
+        "postal_code": "458436"
+    },
+    {
+        "name": "ORCHID PARK SECONDARY SCHOOL",
+        "lat": 1.41532032779634,
+        "lon": 103.837859241343,
+        "postal_code": "768454"
+    },
+    {
+        "name": "OUTRAM SECONDARY SCHOOL",
+        "lat": 1.28651357464735,
+        "lon": 103.837127264403,
+        "postal_code": "168622"
+    },
+    {
+        "name": "PALM VIEW PRIMARY SCHOOL",
+        "lat": 1.3838407564383,
+        "lon": 103.891215110737,
+        "postal_code": "544822"
+    },
+    {
+        "name": "PARK VIEW PRIMARY SCHOOL",
+        "lat": 1.37801687647812,
+        "lon": 103.9392021807,
+        "postal_code": "519524"
+    },
+    {
+        "name": "PASIR RIS CREST SECONDARY SCHOOL",
+        "lat": 1.37284060102246,
+        "lon": 103.959728202919,
+        "postal_code": "518934"
+    },
+    {
+        "name": "PASIR RIS PRIMARY SCHOOL",
+        "lat": 1.37245132722087,
+        "lon": 103.962922699031,
+        "postal_code": "518968"
+    },
+    {
+        "name": "PASIR RIS SECONDARY SCHOOL",
+        "lat": 1.35422732653396,
+        "lon": 103.948962626204,
+        "postal_code": "529400"
+    },
+    {
+        "name": "PAYA LEBAR METHODIST GIRLS' SCHOOL (PRIMARY)",
+        "lat": 1.34947276268396,
+        "lon": 103.884971343143,
+        "postal_code": "536741"
+    },
+    {
+        "name": "PAYA LEBAR METHODIST GIRLS' SCHOOL (SECONDARY)",
+        "lat": 1.35096755912522,
+        "lon": 103.885120050588,
+        "postal_code": "536742"
+    },
+    {
+        "name": "PEI CHUN PUBLIC SCHOOL",
+        "lat": 1.33677864390672,
+        "lon": 103.855341310212,
+        "postal_code": "319320"
+    },
+    {
+        "name": "PEI HWA PRESBYTERIAN PRIMARY SCHOOL",
+        "lat": 1.33807302121151,
+        "lon": 103.776250903095,
+        "postal_code": "597610"
+    },
+    {
+        "name": "PEI HWA SECONDARY SCHOOL",
+        "lat": 1.39037504993234,
+        "lon": 103.878461745339,
+        "postal_code": "797702"
+    },
+    {
+        "name": "PEI TONG PRIMARY SCHOOL",
+        "lat": 1.31666529308968,
+        "lon": 103.767438999533,
+        "postal_code": "129857"
+    },
+    {
+        "name": "PEICAI SECONDARY SCHOOL",
+        "lat": 1.35951583222214,
+        "lon": 103.870010749055,
+        "postal_code": "556094"
+    },
+    {
+        "name": "PEIRCE SECONDARY SCHOOL",
+        "lat": 1.36665944653812,
+        "lon": 103.83021606804,
+        "postal_code": "575566"
+    },
+    {
+        "name": "PEIYING PRIMARY SCHOOL",
+        "lat": 1.41741627551251,
+        "lon": 103.830143209875,
+        "postal_code": "768687"
+    },
+    {
+        "name": "PIONEER PRIMARY SCHOOL",
+        "lat": 1.35442592930738,
+        "lon": 103.732790920197,
+        "postal_code": "699915"
+    },
+    {
+        "name": "POI CHING SCHOOL",
+        "lat": 1.35765122315688,
+        "lon": 103.935246477199,
+        "postal_code": "529067"
+    },
+    {
+        "name": "PRESBYTERIAN HIGH SCHOOL",
+        "lat": 1.38175437421949,
+        "lon": 103.842382968794,
+        "postal_code": "569845"
+    },
+    {
+        "name": "PRINCESS ELIZABETH PRIMARY SCHOOL",
+        "lat": 1.34919098857585,
+        "lon": 103.740719208011,
+        "postal_code": "659163"
+    },
+    {
+        "name": "PUNGGOL COVE PRIMARY SCHOOL",
+        "lat": 1.41158455562454,
+        "lon": 103.89890448429,
+        "postal_code": "828674"
+    },
+    {
+        "name": "PUNGGOL GREEN PRIMARY SCHOOL",
+        "lat": 1.40172590450528,
+        "lon": 103.898794262307,
+        "postal_code": "828772"
+    },
+    {
+        "name": "PUNGGOL PRIMARY SCHOOL",
+        "lat": 1.37820062547641,
+        "lon": 103.894667159512,
+        "postal_code": "538787"
+    },
+    {
+        "name": "PUNGGOL SECONDARY SCHOOL",
+        "lat": 1.40205738421399,
+        "lon": 103.909213706482,
+        "postal_code": "828870"
+    },
+    {
+        "name": "PUNGGOL VIEW PRIMARY SCHOOL",
+        "lat": 1.40505250226058,
+        "lon": 103.905299026568,
+        "postal_code": "828845"
+    },
+    {
+        "name": "QIFA PRIMARY SCHOOL",
+        "lat": 1.3132658326807,
+        "lon": 103.756629101811,
+        "postal_code": "128104"
+    },
+    {
+        "name": "QIHUA PRIMARY SCHOOL",
+        "lat": 1.44203596557592,
+        "lon": 103.788339762066,
+        "postal_code": "738525"
+    },
+    {
+        "name": "QUEENSTOWN PRIMARY SCHOOL",
+        "lat": 1.29552905587752,
+        "lon": 103.807648475656,
+        "postal_code": "149303"
+    },
+    {
+        "name": "QUEENSTOWN SECONDARY SCHOOL",
+        "lat": 1.29352126774652,
+        "lon": 103.813190980055,
+        "postal_code": "148800"
+    },
+    {
+        "name": "QUEENSWAY SECONDARY SCHOOL",
+        "lat": 1.30022271592188,
+        "lon": 103.802207291625,
+        "postal_code": "149295"
+    },
+    {
+        "name": "RADIN MAS PRIMARY SCHOOL",
+        "lat": 1.27489701529771,
+        "lon": 103.824115781658,
+        "postal_code": "099840"
+    },
+    {
+        "name": "RAFFLES GIRLS' PRIMARY SCHOOL",
+        "lat": 1.33004178068277,
+        "lon": 103.806397828938,
+        "postal_code": "289072"
+    },
+    {
+        "name": "RAFFLES GIRLS' SCHOOL (SECONDARY)",
+        "lat": 1.34217479932295,
+        "lon": 103.84313404727,
+        "postal_code": "318871"
+    },
+    {
+        "name": "RAFFLES INSTITUTION",
+        "lat": 1.34629045013358,
+        "lon": 103.843620247231,
+        "postal_code": "575954"
+    },
+    {
+        "name": "RED SWASTIKA SCHOOL",
+        "lat": 1.33405659580859,
+        "lon": 103.934317528484,
+        "postal_code": "469719"
+    },
+    {
+        "name": "REGENT SECONDARY SCHOOL",
+        "lat": 1.39327908335682,
+        "lon": 103.751034411529,
+        "postal_code": "689621"
+    },
+    {
+        "name": "RIVER VALLEY HIGH SCHOOL",
+        "lat": 1.34407801149725,
+        "lon": 103.709022156436,
+        "postal_code": "649961"
+    },
+    {
+        "name": "RIVER VALLEY PRIMARY SCHOOL",
+        "lat": 1.29418347842837,
+        "lon": 103.836018941571,
+        "postal_code": "237993"
+    },
+    {
+        "name": "RIVERSIDE PRIMARY SCHOOL",
+        "lat": 1.44704733609149,
+        "lon": 103.801938959313,
+        "postal_code": "737803"
+    },
+    {
+        "name": "RIVERSIDE SECONDARY SCHOOL",
+        "lat": 1.44110157139127,
+        "lon": 103.78830823641,
+        "postal_code": "738524"
+    },
+    {
+        "name": "UNITY PRIMARY SCHOOL",
+        "lat": 1.40278303219036,
+        "lon": 103.746801233973,
+        "postal_code": "688268"
+    },
+    {
+        "name": "RIVERVALE PRIMARY SCHOOL",
+        "lat": 1.39333506298213,
+        "lon": 103.904545253288,
+        "postal_code": "545092"
+    },
+    {
+        "name": "ROSYTH SCHOOL",
+        "lat": 1.3728583654058,
+        "lon": 103.87477170399,
+        "postal_code": "555855"
+    },
+    {
+        "name": "RULANG PRIMARY SCHOOL",
+        "lat": 1.34673868889096,
+        "lon": 103.718457955487,
+        "postal_code": "649295"
+    },
+    {
+        "name": "SCHOOL OF SCIENCE AND TECHNOLOGY, SINGAPORE",
+        "lat": 1.31292810600277,
+        "lon": 103.774011529322,
+        "postal_code": "138572"
+    },
+    {
+        "name": "SCHOOL OF THE ARTS, SINGAPORE",
+        "lat": 1.2993513904547,
+        "lon": 103.848674513968,
+        "postal_code": "227968"
+    },
+    {
+        "name": "SEMBAWANG PRIMARY SCHOOL",
+        "lat": 1.4450436428697,
+        "lon": 103.82102151409,
+        "postal_code": "757715"
+    },
+    {
+        "name": "SEMBAWANG SECONDARY SCHOOL",
+        "lat": 1.44531502131387,
+        "lon": 103.816843258118,
+        "postal_code": "757704"
+    },
+    {
+        "name": "SENG KANG PRIMARY SCHOOL",
+        "lat": 1.38925044778224,
+        "lon": 103.899527879229,
+        "postal_code": "545166"
+    },
+    {
+        "name": "SENG KANG SECONDARY SCHOOL",
+        "lat": 1.38659683143747,
+        "lon": 103.898365036709,
+        "postal_code": "545090"
+    },
+    {
+        "name": "SENGKANG GREEN PRIMARY SCHOOL",
+        "lat": 1.39284606680477,
+        "lon": 103.875217666486,
+        "postal_code": "797636"
+    },
+    {
+        "name": "SERANGOON GARDEN SECONDARY SCHOOL",
+        "lat": 1.36932570490947,
+        "lon": 103.869270301476,
+        "postal_code": "555889"
+    },
+    {
+        "name": "SERANGOON SECONDARY SCHOOL",
+        "lat": 1.37465538827443,
+        "lon": 103.902138740699,
+        "postal_code": "534237"
+    },
+    {
+        "name": "SHUQUN PRIMARY SCHOOL",
+        "lat": 1.34765311431632,
+        "lon": 103.721523713379,
+        "postal_code": "649332"
+    },
+    {
+        "name": "SI LING PRIMARY SCHOOL",
+        "lat": 1.43240935732525,
+        "lon": 103.786035065192,
+        "postal_code": "739067"
+    },
+    {
+        "name": "SINGAPORE CHINESE GIRLS' PRIMARY SCHOOL",
+        "lat": 1.32080725235992,
+        "lon": 103.827744749548,
+        "postal_code": "309437"
+    },
+    {
+        "name": "SINGAPORE CHINESE GIRLS' SCHOOL",
+        "lat": 1.3206340835184,
+        "lon": 103.828164966953,
+        "postal_code": "309437"
+    },
+    {
+        "name": "SINGAPORE SPORTS SCHOOL",
+        "lat": 1.42641140556342,
+        "lon": 103.789444793951,
+        "postal_code": "737913"
+    },
+    {
+        "name": "SOUTH VIEW PRIMARY SCHOOL",
+        "lat": 1.38143123987698,
+        "lon": 103.747153671,
+        "postal_code": "689762"
+    },
+    {
+        "name": "SPECTRA SECONDARY SCHOOL",
+        "lat": 1.43703750789961,
+        "lon": 103.804100467487,
+        "postal_code": "737758"
+    },
+    {
+        "name": "SPRINGDALE PRIMARY SCHOOL",
+        "lat": 1.39495818021916,
+        "lon": 103.889896508672,
+        "postal_code": "544799"
+    },
+    {
+        "name": "SPRINGFIELD SECONDARY SCHOOL",
+        "lat": 1.34957303471476,
+        "lon": 103.930354460693,
+        "postal_code": "529593"
+    },
+    {
+        "name": "ST ANDREW'S SCHOOL (JUNIOR)",
+        "lat": 1.33140255308868,
+        "lon": 103.865117134385,
+        "postal_code": "359337"
+    },
+    {
+        "name": "ST ANDREW'S SCHOOL (SECONDARY)",
+        "lat": 1.33069360968075,
+        "lon": 103.866249138562,
+        "postal_code": "359342"
+    },
+    {
+        "name": "ST. ANDREW'S JUNIOR COLLEGE",
+        "lat": 1.33306515740956,
+        "lon": 103.863576377056,
+        "postal_code": "357691"
+    },
+    {
+        "name": "ST. ANTHONY'S CANOSSIAN PRIMARY SCHOOL",
+        "lat": 1.3347253730189,
+        "lon": 103.941234868202,
+        "postal_code": "469701"
+    },
+    {
+        "name": "ST. ANTHONY'S CANOSSIAN SECONDARY SCHOOL",
+        "lat": 1.33466313498855,
+        "lon": 103.941977166932,
+        "postal_code": "469700"
+    },
+    {
+        "name": "ST. ANTHONY'S PRIMARY SCHOOL",
+        "lat": 1.36411948475833,
+        "lon": 103.749251919049,
+        "postal_code": "659401"
+    },
+    {
+        "name": "ST. GABRIEL'S PRIMARY SCHOOL",
+        "lat": 1.34930766795555,
+        "lon": 103.862309899986,
+        "postal_code": "556742"
+    },
+    {
+        "name": "ST. GABRIEL'S SECONDARY SCHOOL",
+        "lat": 1.34648798732177,
+        "lon": 103.876094163287,
+        "postal_code": "556140"
+    },
+    {
+        "name": "ST. HILDA'S PRIMARY SCHOOL",
+        "lat": 1.34967978969837,
+        "lon": 103.937016363397,
+        "postal_code": "529706"
+    },
+    {
+        "name": "ST. HILDA'S SECONDARY SCHOOL",
+        "lat": 1.34973922385379,
+        "lon": 103.937608032148,
+        "postal_code": "528986"
+    },
+    {
+        "name": "ST. JOSEPH'S INSTITUTION",
+        "lat": 1.32365313490152,
+        "lon": 103.828498974985,
+        "postal_code": "308274"
+    },
+    {
+        "name": "ST. JOSEPH'S INSTITUTION JUNIOR",
+        "lat": 1.31781476118551,
+        "lon": 103.845633334522,
+        "postal_code": "309331"
+    },
+    {
+        "name": "ST. MARGARET'S SCHOOL (PRIMARY)",
+        "lat": 1.30390355715254,
+        "lon": 103.845955315605,
+        "postal_code": "228197"
+    },
+    {
+        "name": "ST. MARGARET'S SCHOOL (SECONDARY)",
+        "lat": 1.32006821363359,
+        "lon": 103.80995114006,
+        "postal_code": "259240"
+    },
+    {
+        "name": "UNITY SECONDARY SCHOOL",
+        "lat": 1.40001524119441,
+        "lon": 103.74602091483,
+        "postal_code": "689143"
+    },
+    {
+        "name": "ST. PATRICK'S SCHOOL",
+        "lat": 1.30788341871801,
+        "lon": 103.917638193713,
+        "postal_code": "429058"
+    },
+    {
+        "name": "ST. STEPHEN'S SCHOOL",
+        "lat": 1.31878997295135,
+        "lon": 103.917258129598,
+        "postal_code": "455789"
+    },
+    {
+        "name": "SWISS COTTAGE SECONDARY SCHOOL",
+        "lat": 1.36471742697475,
+        "lon": 103.750396136688,
+        "postal_code": "659322"
+    },
+    {
+        "name": "TAMPINES MERIDIAN JUNIOR COLLEGE",
+        "lat": 1.37633346909682,
+        "lon": 103.936990723441,
+        "postal_code": "518799"
+    },
+    {
+        "name": "TAMPINES NORTH PRIMARY SCHOOL",
+        "lat": 1.36048786025607,
+        "lon": 103.948768900518,
+        "postal_code": "529565"
+    },
+    {
+        "name": "TAMPINES PRIMARY SCHOOL",
+        "lat": 1.34977870805929,
+        "lon": 103.944004684986,
+        "postal_code": "529426"
+    },
+    {
+        "name": "TAMPINES SECONDARY SCHOOL",
+        "lat": 1.34926094811197,
+        "lon": 103.944263709507,
+        "postal_code": "529427"
+    },
+    {
+        "name": "TANJONG KATONG GIRLS' SCHOOL",
+        "lat": 1.3075626184394,
+        "lon": 103.896107204542,
+        "postal_code": "439272"
+    },
+    {
+        "name": "TANJONG KATONG PRIMARY SCHOOL",
+        "lat": 1.30498489044822,
+        "lon": 103.899999965407,
+        "postal_code": "437259"
+    },
+    {
+        "name": "TANJONG KATONG SECONDARY SCHOOL",
+        "lat": 1.30873515955341,
+        "lon": 103.897225196199,
+        "postal_code": "438796"
+    },
+    {
+        "name": "TAO NAN SCHOOL",
+        "lat": 1.30528528687321,
+        "lon": 103.911553152326,
+        "postal_code": "449761"
+    },
+    {
+        "name": "TECK GHEE PRIMARY SCHOOL",
+        "lat": 1.36558782075966,
+        "lon": 103.850957126982,
+        "postal_code": "569299"
+    },
+    {
+        "name": "TECK WHYE PRIMARY SCHOOL",
+        "lat": 1.38388660469396,
+        "lon": 103.753924558586,
+        "postal_code": "688261"
+    },
+    {
+        "name": "TELOK KURAU PRIMARY SCHOOL",
+        "lat": 1.33109611001931,
+        "lon": 103.911005345855,
+        "postal_code": "479239"
+    },
+    {
+        "name": "TEMASEK JUNIOR COLLEGE",
+        "lat": 1.35728017255861,
+        "lon": 103.956185936394,
+        "postal_code": "529564"
+    },
+    {
+        "name": "TEMASEK PRIMARY SCHOOL",
+        "lat": 1.31720341663064,
+        "lon": 103.94575943784,
+        "postal_code": "469300"
+    },
+    {
+        "name": "TEMASEK SECONDARY SCHOOL",
+        "lat": 1.31591673150616,
+        "lon": 103.947564112022,
+        "postal_code": "465561"
+    },
+    {
+        "name": "TOWNSVILLE PRIMARY SCHOOL",
+        "lat": 1.35994649477568,
+        "lon": 103.853768994775,
+        "postal_code": "569730"
+    },
+    {
+        "name": "VICTORIA JUNIOR COLLEGE",
+        "lat": 1.30670174177479,
+        "lon": 103.919982704149,
+        "postal_code": "449035"
+    },
+    {
+        "name": "VICTORIA SCHOOL",
+        "lat": 1.3087130270751,
+        "lon": 103.927980966639,
+        "postal_code": "448880"
+    },
+    {
+        "name": "WATERWAY PRIMARY SCHOOL",
+        "lat": 1.39889261226315,
+        "lon": 103.918585924582,
+        "postal_code": "828802"
+    },
+    {
+        "name": "WELLINGTON PRIMARY SCHOOL",
+        "lat": 1.45189083282189,
+        "lon": 103.822341940714,
+        "postal_code": "757702"
+    },
+    {
+        "name": "WEST GROVE PRIMARY SCHOOL",
+        "lat": 1.34471211768915,
+        "lon": 103.698964212988,
+        "postal_code": "649223"
+    },
+    {
+        "name": "WEST SPRING PRIMARY SCHOOL",
+        "lat": 1.38896618016838,
+        "lon": 103.766256126816,
+        "postal_code": "679946"
+    },
+    {
+        "name": "WEST SPRING SECONDARY SCHOOL",
+        "lat": 1.38782283303782,
+        "lon": 103.760128840155,
+        "postal_code": "677737"
+    },
+    {
+        "name": "WEST VIEW PRIMARY SCHOOL",
+        "lat": 1.38378546546228,
+        "lon": 103.760273432258,
+        "postal_code": "677742"
+    },
+    {
+        "name": "WESTWOOD PRIMARY SCHOOL",
+        "lat": 1.34715462510442,
+        "lon": 103.700526720098,
+        "postal_code": "649188"
+    },
+    {
+        "name": "WESTWOOD SECONDARY SCHOOL",
+        "lat": 1.35373698510994,
+        "lon": 103.701772102139,
+        "postal_code": "648350"
+    },
+    {
+        "name": "WHITE SANDS PRIMARY SCHOOL",
+        "lat": 1.36563610941695,
+        "lon": 103.960861814678,
+        "postal_code": "519075"
+    },
+    {
+        "name": "WHITLEY SECONDARY SCHOOL",
+        "lat": 1.35505208480649,
+        "lon": 103.842552378136,
+        "postal_code": "579747"
+    },
+    {
+        "name": "WOODGROVE PRIMARY SCHOOL",
+        "lat": 1.43310340168966,
+        "lon": 103.790604437613,
+        "postal_code": "738079"
+    },
+    {
+        "name": "WOODGROVE SECONDARY SCHOOL",
+        "lat": 1.42831828137013,
+        "lon": 103.79604758539,
+        "postal_code": "738990"
+    },
+    {
+        "name": "WOODLANDS PRIMARY SCHOOL",
+        "lat": 1.43658270720199,
+        "lon": 103.791791282236,
+        "postal_code": "738853"
+    },
+    {
+        "name": "WOODLANDS RING PRIMARY SCHOOL",
+        "lat": 1.43485179380236,
+        "lon": 103.79741434351,
+        "postal_code": "738240"
+    },
+    {
+        "name": "WOODLANDS RING SECONDARY SCHOOL",
+        "lat": 1.43070452883799,
+        "lon": 103.777625748539,
+        "postal_code": "739062"
+    },
+    {
+        "name": "WOODLANDS SECONDARY SCHOOL",
+        "lat": 1.43912528141356,
+        "lon": 103.774586410437,
+        "postal_code": "739111"
+    },
+    {
+        "name": "XINGHUA PRIMARY SCHOOL",
+        "lat": 1.35799653782463,
+        "lon": 103.890216355459,
+        "postal_code": "538882"
+    },
+    {
+        "name": "XINGNAN PRIMARY SCHOOL",
+        "lat": 1.34270639669225,
+        "lon": 103.687588478681,
+        "postal_code": "649036"
+    },
+    {
+        "name": "XINMIN PRIMARY SCHOOL",
+        "lat": 1.37176798317468,
+        "lon": 103.88280991785,
+        "postal_code": "538784"
+    },
+    {
+        "name": "XINMIN SECONDARY SCHOOL",
+        "lat": 1.37255884700002,
+        "lon": 103.88305161385,
+        "postal_code": "538789"
+    },
+    {
+        "name": "XISHAN PRIMARY SCHOOL",
+        "lat": 1.43347186925064,
+        "lon": 103.837755319448,
+        "postal_code": "768611"
+    },
+    {
+        "name": "YANGZHENG PRIMARY SCHOOL",
+        "lat": 1.3489768083841,
+        "lon": 103.868467129954,
+        "postal_code": "556108"
+    },
+    {
+        "name": "YEW TEE PRIMARY SCHOOL",
+        "lat": 1.39672603497195,
+        "lon": 103.751817992962,
+        "postal_code": "689100"
+    },
+    {
+        "name": "YIO CHU KANG PRIMARY SCHOOL",
+        "lat": 1.3778227088538,
+        "lon": 103.885568719387,
+        "postal_code": "538720"
+    },
+    {
+        "name": "YIO CHU KANG SECONDARY SCHOOL",
+        "lat": 1.37797597740925,
+        "lon": 103.84213696352,
+        "postal_code": "569868"
+    },
+    {
+        "name": "YISHUN INNOVA JUNIOR COLLEGE",
+        "lat": 1.42426692572335,
+        "lon": 103.83003171149,
+        "postal_code": "768675"
+    },
+    {
+        "name": "YISHUN PRIMARY SCHOOL",
+        "lat": 1.43351074871338,
+        "lon": 103.833920424962,
+        "postal_code": "768679"
+    },
+    {
+        "name": "YISHUN SECONDARY SCHOOL",
+        "lat": 1.42813324276086,
+        "lon": 103.828764316679,
+        "postal_code": "768516"
+    },
+    {
+        "name": "YISHUN TOWN SECONDARY SCHOOL",
+        "lat": 1.43232156717386,
+        "lon": 103.838094226361,
+        "postal_code": "768610"
+    },
+    {
+        "name": "YU NENG PRIMARY SCHOOL",
+        "lat": 1.33398037894072,
+        "lon": 103.932015036296,
+        "postal_code": "469623"
+    },
+    {
+        "name": "YUAN CHING SECONDARY SCHOOL",
+        "lat": 1.34200635764467,
+        "lon": 103.72089870437,
+        "postal_code": "618654"
+    },
+    {
+        "name": "YUHUA PRIMARY SCHOOL",
+        "lat": 1.34291981622016,
+        "lon": 103.740861148879,
+        "postal_code": "609558"
+    },
+    {
+        "name": "YUHUA SECONDARY SCHOOL",
+        "lat": 1.34718626876968,
+        "lon": 103.722687235839,
+        "postal_code": "649406"
+    },
+    {
+        "name": "YUMIN PRIMARY SCHOOL",
+        "lat": 1.35131569890862,
+        "lon": 103.950551091373,
+        "postal_code": "529393"
+    },
+    {
+        "name": "YUSOF ISHAK SECONDARY SCHOOL",
+        "lat": 1.40693702458178,
+        "lon": 103.896275149571,
+        "postal_code": "828676"
+    },
+    {
+        "name": "YUYING SECONDARY SCHOOL",
+        "lat": 1.35713595302467,
+        "lon": 103.890194755287,
+        "postal_code": "538884"
+    },
+    {
+        "name": "ZHANGDE PRIMARY SCHOOL",
+        "lat": 1.28421153855474,
+        "lon": 103.825951884637,
+        "postal_code": "169485"
+    },
+    {
+        "name": "ZHENGHUA PRIMARY SCHOOL",
+        "lat": 1.37942873617052,
+        "lon": 103.76970317201,
+        "postal_code": "679002"
+    },
+    {
+        "name": "ZHENGHUA SECONDARY SCHOOL",
+        "lat": 1.38836583415352,
+        "lon": 103.765510638527,
+        "postal_code": "679962"
+    },
+    {
+        "name": "ZHONGHUA PRIMARY SCHOOL",
+        "lat": 1.36026072476019,
+        "lon": 103.869712517383,
+        "postal_code": "556095"
+    },
+    {
+        "name": "ZHONGHUA SECONDARY SCHOOL",
+        "lat": 1.34840720846208,
+        "lon": 103.869430481414,
+        "postal_code": "556123"
+    }
+]
