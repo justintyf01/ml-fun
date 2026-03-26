@@ -16,6 +16,8 @@ import os
 
 from utils import haversine_distance
 
+_ROOT = os.path.dirname(os.path.abspath(__file__))
+
 
 # ──────────────────────────────────────────────────────────────
 # Constants
@@ -48,7 +50,11 @@ GEP_SCHOOLS = [
 # Data loading
 # ──────────────────────────────────────────────────────────────
 
-def load_data(csv_path="data/hdb_prices_2017.csv", fallback_path="data/HDB_Resale_Prices.csv"):
+def load_data(csv_path=None, fallback_path=None):
+    if csv_path is None:
+        csv_path = os.path.join(_ROOT, "data", "hdb_prices_2017.csv")
+    if fallback_path is None:
+        fallback_path = os.path.join(_ROOT, "data", "HDB_Resale_Prices.csv")
     """Load the HDB resale dataset, preferring the expanded version."""
     if os.path.exists(csv_path):
         df = pd.read_csv(csv_path)
@@ -92,7 +98,9 @@ def add_base_features(df):
     return df
 
 
-def add_location_features(df, cache_path="data/caches/onemap_cache.json"):
+def add_location_features(df, cache_path=None):
+    if cache_path is None:
+        cache_path = os.path.join(_ROOT, "data", "caches", "onemap_cache.json")
     """Add geocoded location features: CBD distance, regional hub distance, actual MRT distance."""
     if not os.path.exists(cache_path):
         raise FileNotFoundError(f"{cache_path} not found! Run build_cache.py first.")
@@ -118,7 +126,7 @@ def add_location_features(df, cache_path="data/caches/onemap_cache.json"):
     )
 
     # [v2 - Phase 1b] Distance to ACTUAL nearest MRT station (additive)
-    mrt_path = "data/MRT Stations.csv"
+    mrt_path = os.path.join(_ROOT, "data", "MRT Stations.csv")
     if os.path.exists(mrt_path):
         mrt_df = pd.read_csv(mrt_path)
         mrt_coords = list(zip(mrt_df["Latitude"], mrt_df["Longitude"]))
@@ -156,7 +164,9 @@ def _count_within(lat, lon, points, radius_m):
     return sum(1 for p in points if haversine_distance(lat, lon, p[0], p[1]) <= radius_m)
 
 
-def add_amenity_features(df, school_cache_path="data/caches/school_cache.json"):
+def add_amenity_features(df, school_cache_path=None):
+    if school_cache_path is None:
+        school_cache_path = os.path.join(_ROOT, "data", "caches", "school_cache.json")
     """Add estate maturity, school, hawker, mall, and park proximity features."""
     df["is_mature_estate"] = df["town"].isin(MATURE_ESTATES).astype(int)
 
@@ -187,7 +197,7 @@ def add_amenity_features(df, school_cache_path="data/caches/school_cache.json"):
         df["elite_school_within_1km"] = 0
 
     # ── Hawker centres (Phase 2a) ────────────────────────────────
-    hawker_points = _load_point_cache("data/caches/hawker_cache.json")
+    hawker_points = _load_point_cache(os.path.join(_ROOT, "data", "caches", "hawker_cache.json"))
     if hawker_points:
         print(f"  Loaded {len(hawker_points)} hawker centres")
         df["dist_to_nearest_hawker"] = df.apply(
@@ -198,7 +208,7 @@ def add_amenity_features(df, school_cache_path="data/caches/school_cache.json"):
         )
 
     # ── Shopping malls (Phase 2b) ────────────────────────────────
-    mall_points = _load_point_cache("data/caches/mall_cache.json")
+    mall_points = _load_point_cache(os.path.join(_ROOT, "data", "caches", "mall_cache.json"))
     if mall_points:
         print(f"  Loaded {len(mall_points)} shopping malls")
         df["dist_to_nearest_mall"] = df.apply(
@@ -209,7 +219,7 @@ def add_amenity_features(df, school_cache_path="data/caches/school_cache.json"):
         )
 
     # ── Parks (Phase 2c) ─────────────────────────────────────────
-    park_points = _load_point_cache("data/caches/park_cache.json")
+    park_points = _load_point_cache(os.path.join(_ROOT, "data", "caches", "park_cache.json"))
     if park_points:
         print(f"  Loaded {len(park_points)} parks")
         df["dist_to_nearest_park"] = df.apply(
@@ -422,7 +432,7 @@ def encode_fold(X_train, y_train, X_val, X_test=None):
 # Full pipeline
 # ──────────────────────────────────────────────────────────────
 
-def build_features(csv_path="data/hdb_prices_2017.csv", fallback_path="data/HDB_Resale_Prices.csv"):
+def build_features(csv_path=None, fallback_path=None):
     """Run the full feature engineering pipeline. Returns splits ready for training."""
     print("=" * 60)
     print("  Feature Engineering Pipeline v2")
@@ -447,7 +457,7 @@ def build_features(csv_path="data/hdb_prices_2017.csv", fallback_path="data/HDB_
     return splits
 
 
-def build_features_kfold(csv_path="data/hdb_prices_2017.csv", fallback_path="data/HDB_Resale_Prices.csv"):
+def build_features_kfold(csv_path=None, fallback_path=None):
     """Run the feature pipeline and return trainval/test for K-fold CV."""
     print("=" * 60)
     print("  Feature Engineering Pipeline v2 (K-Fold)")

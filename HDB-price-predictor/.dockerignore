@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+*.pyo
+.git/
+data/
+approaches/
+scripts/
+*.ipynb
+*.csv
+.DS_Store

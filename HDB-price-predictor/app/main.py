@@ -5,7 +5,7 @@ FastAPI application serving XGBoost predictions.
 """
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.model_loader import ModelArtifacts
@@ -39,6 +39,8 @@ app.add_middleware(
 
 @app.get("/api/health")
 async def health():
+    if not artifacts.models:
+        raise HTTPException(status_code=503, detail="Models not loaded")
     return {"status": "ok", "models_loaded": len(artifacts.models)}
 
 

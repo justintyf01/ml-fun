@@ -3,12 +3,14 @@ import numpy as np
 import os
 import json
 import math
+
+_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from sklearn.model_selection import train_test_split
 from xgboost import XGBRegressor
 from sklearn.metrics import mean_squared_error
 
 print("Loading data...")
-df = pd.read_csv('data/HDB_Resale_Prices.csv')
+df = pd.read_csv(os.path.join(_ROOT, 'data', 'HDB_Resale_Prices.csv'))
 df["years"] = df["remaining_lease"].str.extract(r"(\d+) years").astype(float).fillna(0)
 df["months"] = df["remaining_lease"].str.extract(r"(\d+) month").astype(float).fillna(0)
 df["remaining_lease_float"] = df["years"] + (df["months"] / 12)
@@ -17,7 +19,7 @@ df["transaction_year"] = df["month"].str.extract(r"(\d{4})").astype(int)
 df["transaction_month"] = df["month"].str.extract(r"-(\d{2})").astype(int)
 df['full_address'] = df['block'] + " " + df['street_name']
 
-with open("data/caches/onemap_cache.json", "r") as f:
+with open(os.path.join(_ROOT, "data", "caches", "onemap_cache.json"), "r") as f:
     address_to_coords = json.load(f)
 
 df['lat'] = df['full_address'].map(lambda x: address_to_coords.get(x, (1.35, 103.8))[0])
@@ -40,7 +42,7 @@ df['dist_to_nearest_mrt'] = df.apply(lambda row: min([haversine_distance(row['la
 mature_estates = ["ANG MO KIO", "BEDOK", "BISHAN", "BUKIT MERAH", "BUKIT TIMAH", "CLEMENTI", "GEYLANG", "KALLANG/WHAMPOA", "MARINE PARADE", "PASIR RIS", "QUEENSTOWN", "SERANGOON", "TAMPINES", "TOA PAYOH"]
 df['is_mature_estate'] = df['town'].isin(mature_estates).astype(int)
 
-with open("data/caches/school_cache.json", "r") as f:
+with open(os.path.join(_ROOT, "data", "caches", "school_cache.json"), "r") as f:
     school_coords_data = json.load(f)
     school_points = [(s["lat"], s["lon"]) for s in school_coords_data if s["lat"] is not None]
 

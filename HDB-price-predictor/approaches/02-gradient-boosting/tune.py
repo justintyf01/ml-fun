@@ -8,10 +8,12 @@ import requests
 import json
 import os
 
+_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 print("Loading data and applying v1.5 features...")
 
 # 1. Load Data & Basic Cleaning
-df = pd.read_csv('data/HDB_Resale_Prices.csv')
+df = pd.read_csv(os.path.join(_ROOT, 'data', 'HDB_Resale_Prices.csv'))
 df["years"] = df["remaining_lease"].str.extract(r"(\d+) years").astype(float).fillna(0)
 df["months"] = df["remaining_lease"].str.extract(r"(\d+) month").astype(float).fillna(0)
 df["remaining_lease_float"] = df["years"] + (df["months"] / 12)
@@ -22,7 +24,7 @@ df["transaction_month"] = df["month"].str.extract(r"-(\d{2})").astype(int)
 # 2. Add Location Features (Using cached OneMap coords to save time)
 df['full_address'] = df['block'] + " " + df['street_name']
 
-cache_file = "data/caches/onemap_cache.json"
+cache_file = os.path.join(_ROOT, "data", "caches", "onemap_cache.json")
 if os.path.exists(cache_file):
     with open(cache_file, "r") as f:
         address_to_coords = json.load(f)
@@ -53,8 +55,8 @@ mature_estates = ["ANG MO KIO", "BEDOK", "BISHAN", "BUKIT MERAH", "BUKIT TIMAH",
 df['is_mature_estate'] = df['town'].isin(mature_estates).astype(int)
 
 # Load actual school coordinates from cache
-if os.path.exists("data/caches/school_cache.json"):
-    with open("data/caches/school_cache.json", "r") as f:
+if os.path.exists(os.path.join(_ROOT, "data", "caches", "school_cache.json")):
+    with open(os.path.join(_ROOT, "data", "caches", "school_cache.json"), "r") as f:
         school_coords_data = json.load(f)
         school_points = [(s["lat"], s["lon"]) for s in school_coords_data if s["lat"] is not None]
 else:

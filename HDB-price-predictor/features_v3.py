@@ -13,6 +13,8 @@ import numpy as np
 import json
 import os
 
+_ROOT = os.path.dirname(os.path.abspath(__file__))
+
 from features_v2 import (
     load_data, add_base_features, add_location_features, add_amenity_features,
     smoothed_target_encode, FEATURE_COLUMNS as V2_FEATURE_COLUMNS,
@@ -86,7 +88,11 @@ def prepare_data_kfold_v3(df, test_size=0.15, random_state=42):
     }
 
 
-def build_features_kfold_v3(csv_path="data/hdb_prices_2017.csv", fallback_path="data/HDB_Resale_Prices.csv"):
+def build_features_kfold_v3(csv_path=None, fallback_path=None):
+    if csv_path is None:
+        csv_path = os.path.join(_ROOT, "data", "hdb_prices_2017.csv")
+    if fallback_path is None:
+        fallback_path = os.path.join(_ROOT, "data", "HDB_Resale_Prices.csv")
     """Run v3 feature pipeline and return trainval/test for K-fold CV."""
     print("=" * 60)
     print("  Feature Engineering Pipeline v3 (Phase 4)")

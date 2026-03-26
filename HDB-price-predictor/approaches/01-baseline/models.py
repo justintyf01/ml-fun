@@ -25,7 +25,7 @@ from utils import haversine_distance, get_onemap_coordinates
 # ──────────────────────────────────────────────────────────────
 # 1. Load & preprocess
 # ──────────────────────────────────────────────────────────────
-df = pd.read_csv("data/HDB_Resale_Prices.csv")
+df = pd.read_csv(os.path.join(_ROOT, "data", "HDB_Resale_Prices.csv"))
 # Parse remaining_lease → float
 df["years"] = df["remaining_lease"].str.extract(r"(\d+) years").astype(float).fillna(0)
 df["months"] = df["remaining_lease"].str.extract(r"(\d+) month").astype(float).fillna(0)
@@ -57,7 +57,8 @@ df['full_address'] = df['block'] + " " + df['street_name']
 import json
 import os
 
-cache_file = "data/caches/onemap_cache.json"
+_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+cache_file = os.path.join(_ROOT, "data", "caches", "onemap_cache.json")
 address_to_coords = {}
 if os.path.exists(cache_file):
     with open(cache_file, "r") as f:
@@ -116,8 +117,8 @@ import json
 import os
 
 # Load actual school coordinates from cache
-if os.path.exists("data/caches/school_cache.json"):
-    with open("data/caches/school_cache.json", "r") as f:
+if os.path.exists(os.path.join(_ROOT, "data", "caches", "school_cache.json")):
+    with open(os.path.join(_ROOT, "data", "caches", "school_cache.json"), "r") as f:
         school_coords_data = json.load(f)
         school_points = [(s["lat"], s["lon"]) for s in school_coords_data if s["lat"] is not None]
         
