@@ -19,7 +19,7 @@ import xgboost as xgb
 import lightgbm as lgb
 from catboost import CatBoostRegressor
 
-from features_v2 import build_features_kfold, encode_fold, TARGET_ENCODE_FEATURES, CATEGORICAL_FEATURES
+from features import build_features_kfold, encode_fold, TARGET_ENCODE_FEATURES, CATEGORICAL_FEATURES
 
 optuna.logging.set_verbosity(optuna.logging.WARNING)
 

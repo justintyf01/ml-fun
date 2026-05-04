@@ -1,0 +1,22 @@
+# Training data (not needed for deployment — use export.py to regenerate model_artifacts)
+data/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# macOS
+.DS_Store
+
+# Optuna study databases
+*.db
+
+# CatBoost training logs (generated during training runs)
+**/catboost_info/

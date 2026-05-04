@@ -10,4 +10,5 @@ COPY model_artifacts/ ./model_artifacts/
 
 EXPOSE 8000
 
-CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
+# Render injects $PORT at runtime; shell form expands env vars
+CMD uvicorn app.main:app --host 0.0.0.0 --port $PORT

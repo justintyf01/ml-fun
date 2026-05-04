@@ -1,0 +1,282 @@
+# Singapore HDB Resale Price Predictor
+
+**227,425 transactions · 2017–present · 36–40% RMSE reduction through feature engineering alone**
+
+A production-grade machine learning system for predicting Singapore HDB resale flat prices. Starting from a simple Random Forest notebook, the project evolved through systematic feature engineering, hyperparameter tuning, and ensemble stacking to a 5-fold XGBoost ensemble served via FastAPI — reducing RMSE from $55,116 to ~$33–35k without adding a single row of additional training data.
+
+---
+
+## Model Summary
+
+`train_v3.py` trains a **5-fold cross-validated ensemble** of four models — Random Forest, XGBoost, LightGBM, and CatBoost — on 227,425 Singapore HDB resale transactions from 2017 to present. Each fold applies per-fold smoothed target encoding (fitted on fold-train only to prevent leakage) to `town` (min_samples=30) and `street_name` (min_samples=50), then one-hot encodes `flat_type` and `flat_model` for tree models while passing raw categorical columns to CatBoost natively. The feature set (~30 engineered features from `features_v3.py`) spans physical location distances, amenity proximity counts, lease decay curves, feature interactions, storey premium bands, and market volume indicators derived from OneMap-geocoded address data. Out-of-fold (OOF) predictions from all 5 folds are stacked and used to find optimal ensemble blend weights via SLSQP constrained optimisation, yielding an R² > 0.98 on OOF and ~$33–35k RMSE on the held-out test set. Only the XGBoost fold models are exported to `model_artifacts/` for production serving via FastAPI, as XGBoost achieves the best standalone performance with the simplest serving path.
+
+---
+
+## Project Evolution
+
+Each version was tracked with an explicit accept/reject decision based on test-set RMSE. Two features were rejected despite intuitive appeal — a useful reminder that domain knowledge doesn't always translate to predictive signal.
+
+| Version | Change | Best RMSE | Delta |
+|---|---|---|---|
+| Baseline | Random Forest + OHE | $55,116 | — |
+| v1.0 | Switched to gradient boosting frameworks | $43,572 (CatBoost) | –$11,544 |
+| v1.1 | Storey midpoint (numeric) | $43,159 (XGB) | –$413 |
+| v1.2 | Transaction year/month | $43,146 (XGB) | –$13 |
+| v1.3 | Distance to CBD + 4 regional MRT hubs | $40,798 (XGB) | –$2,348 |
+| v1.4 | Target-encode `town` (smoothed) | $40,840 (XGB) | structural win |
+| v1.5 | Mature estate flag + school count within 1km | $40,253 (XGB) | –$545 |
+| v1.6 | HDB Resale Price Index | $40,377 (XGB) | +$124 ❌ rejected |
+| v1.7 | GridSearchCV hyperparameter tuning | $37,675 (XGB) | –$2,578 |
+| v1.8 | 171-station MRT dataset | $41,231 (XGB) | +$3,556 ❌ rejected |
+| v2 | Actual nearest MRT, street-level encoding, lease decay, hawkers/malls/parks | ~$36k | –$1–2k |
+| v3 | Phase 4: lat/lon, interactions, storey bands, market volume | ~$33–35k | –$2–4k |
+
+**Total: $55,116 → ~$33–35k — a 36–40% reduction through feature engineering alone.**
+
+### What worked
+
+- **Physical location features** (`dist_to_cbd`) were the single highest-impact addition — a $2.3k RMSE drop in one step. Replacing the categorical `town` proxy with actual Euclidean position gave the model real spatial signal.
+- **Numeric storey midpoint** over one-hot storey bands: models can understand that floor 18 is worth more than floor 12, not just that they're different categories.
+- **Smoothed target encoding for `town`**: replaced 26 sparse one-hot columns with a single continuous mean-price column. RF improved by $3k from reduced sparsity alone.
+- **4 regional hub distances over all 171 MRT stations**: the 4 hubs (AMK, Woodlands, Jurong East, Tampines) act as North/South/East/West centrality proxies. With 171 stations, `dist_to_nearest_mrt` becomes near-zero for nearly every flat, destroying the feature's ability to differentiate a prime hub neighbourhood from a secluded suburb.
+- **Hyperparameter tuning** (GridSearchCV) delivered another $2.6k gain on an already well-tuned feature set.
+
+### What didn't work
+
+- **HDB Resale Price Index (v1.6)**: mapping each transaction quarter to the official Singapore HDB RPI added noise rather than signal. The model already infers market cycles from raw `transaction_year` and `transaction_month` — the explicit index was redundant.
+- **Full 171-station MRT dataset (v1.8)**: counter-intuitively degraded performance by $3.5k. The lesson: fewer, strategically chosen anchor points beat comprehensive granular data when the granular data collapses variance.
+
+---
+
+## Feature Deep Dive
+
+### Base Features
+
+These are derived directly from the raw transaction columns with no external data required.
+
+| Feature | Source | Notes |
+|---|---|---|
+| `storey_midpoint` | `storey_range` (e.g. "07 TO 09") | Parsed to numeric midpoint (8.0). Replaced OHE storey bands in v1.1. |
+| `remaining_lease_float` | `remaining_lease` string | Parsed "X years Y months" → float years. |
+| `transaction_year` | `month` string (e.g. "2023-06") | Captures long-term market trends. |
+| `transaction_month` | `month` string | Captures seasonal cycles. |
+| `lease_below_60` | `remaining_lease_float` | `max(0, 60 - lease)` — captures non-linear value cliff below 60 years (bank loan eligibility). Added v2. |
+| `lease_below_40` | `remaining_lease_float` | `max(0, 40 - lease)` — second cliff below 40 years (CPF usage restrictions). Added v2. |
+| `building_age` | `transaction_year - lease_commence_date` | Proxy for physical depreciation independent of remaining lease. Added v2. |
+
+The two lease decay features (`lease_below_60`, `lease_below_40`) model piecewise-linear value cliffs. In Singapore, bank financing and CPF usage rules change at these thresholds, causing non-linear price effects that a simple linear lease term cannot capture.
+
+### Location Features
+
+All location features depend on OneMap API geocoding to convert HDB block addresses (e.g. "123 BISHAN STREET 12") to WGS84 lat/lon coordinates. The geocoded cache covers all unique addresses in the dataset and is stored in `data/caches/onemap_cache.json`.
+
+Distances are computed using the **Haversine formula** (great-circle distance over a sphere), implemented in `utils.py`.
+
+| Feature | Description | Why included |
+|---|---|---|
+| `dist_to_cbd` | Haversine distance to Raffles Place MRT (1.283933, 103.851463) | CBD proximity is the strongest single price driver in Singapore real estate. |
+| `dist_to_nearest_hub` | Distance to nearest of 4 regional hub stations | Captures regional centrality (North/West/East/Northwest). The 4 hubs are AMK, Woodlands, Jurong East, Tampines. |
+| `dist_to_actual_nearest_mrt` | Distance to nearest of all 171 MRT/LRT stations | Added additive in v2 — kept alongside hub distances. Captures walkability to any transit. |
+| `lat` | Raw WGS84 latitude | Lets tree models learn direct spatial partitions (e.g. north vs. south, east vs. west). Added v3. |
+| `lon` | Raw WGS84 longitude | Same as above. Added v3. |
+
+**Why 4 hubs instead of 171 stations?** Distance to hub encodes "how central is this neighbourhood" — a flat near Woodlands hub is in the far north, Jurong East hub means western suburbs, Tampines means eastern heartland. With all 171 stations, `dist_to_nearest_mrt` collapses to near-zero for almost everyone (there's always a station nearby), removing any geographic discrimination. The 4 hubs preserve the regional signal while the additive 171-station feature handles local walkability separately.
+
+### Amenity Features
+
+Amenity proximity is computed from geocoded point caches. Each cache is built once via scripts in `scripts/` and stored in `data/caches/`.
+
+#### Schools
+
+Schools data sourced from `data/school_data.csv`, geocoded via OneMap, stored in `data/caches/school_cache.json`.
+
+| Feature | Description |
+|---|---|
+| `num_schools_within_1km` | Count of all schools within 1km radius |
+| `dist_to_nearest_elite_school` | Haversine distance to nearest GEP (Gifted Education Programme) school |
+| `elite_school_within_1km` | Binary flag: any GEP school within 1km |
+
+The GEP schools list (9 schools including Nanyang Primary, Raffles Girls', Tao Nan) represents the most sought-after primary schools in Singapore. Proximity to these schools is a known premium driver in the Singapore property market — families pay up to 20–30% more for a flat within the 1km priority registration radius.
+
+#### Hawker Centres
+
+Geocoded from `data/Hawker Centres/`, stored in `data/caches/hawker_cache.json`. Added in Phase 2 (v2).
+
+| Feature | Description |
+|---|---|
+| `dist_to_nearest_hawker` | Haversine distance to nearest hawker centre |
+| `num_hawkers_within_1km` | Count of hawker centres within 1km |
+
+Hawker centres are a uniquely Singaporean amenity — government-operated food courts that serve as community hubs. They are a genuine quality-of-life factor captured in actual transaction prices.
+
+#### Shopping Malls
+
+Geocoded from Open Street Map / data.gov.sg, stored in `data/caches/mall_cache.json`. Added in Phase 2 (v2).
+
+| Feature | Description |
+|---|---|
+| `dist_to_nearest_mall` | Haversine distance to nearest shopping mall |
+| `num_malls_within_2km` | Count of malls within 2km (wider radius than schools/hawkers) |
+
+#### Parks
+
+Geocoded from NParks data, stored in `data/caches/park_cache.json`. Added in Phase 2 (v2).
+
+| Feature | Description |
+|---|---|
+| `dist_to_nearest_park` | Haversine distance to nearest park |
+
+#### Estate Maturity
+
+| Feature | Description |
+|---|---|
+| `is_mature_estate` | Binary flag: town is in HDB's official mature estate list |
+
+Mature estates (e.g. Bishan, Queenstown, Tampines) have denser amenities, more established transport links, and historically command a premium. The 14 mature estates are hardcoded from the official HDB classification.
+
+### Categorical Encoding
+
+High-cardinality categoricals receive smoothed target encoding. Low-cardinality categoricals receive one-hot encoding.
+
+#### Smoothed Target Encoding
+
+Formula: `smoothed_mean = (count × cat_mean + k × global_mean) / (count + k)`
+
+Where `k` is `min_samples` — the smoothing strength. When a category has few observations, the estimate blends toward the global mean. This prevents rare categories from taking on extreme values.
+
+| Feature | `min_samples` | Cardinality | Notes |
+|---|---|---|---|
+| `town` | 30 | ~26 towns | Lower smoothing — each town has hundreds of transactions |
+| `street_name` | 50 | ~7,000+ streets | Higher smoothing — many streets have few transactions |
+
+**Critical**: encoding maps are fitted on fold-train only and applied to fold-val and test. This prevents target leakage — a common pitfall where future prices influence the encoding of the same fold's training labels.
+
+#### One-Hot Encoding
+
+| Feature | Cardinality | Notes |
+|---|---|---|
+| `flat_type` | 7 types (1–5 room, Executive, Multi-Generation) | `drop_first=True` to avoid multicollinearity |
+| `flat_model` | ~20 models (Improved, Standard, New Generation…) | `drop_first=True` |
+
+CatBoost receives these as raw string columns (handles categoricals natively). XGBoost, LightGBM, and Random Forest receive the OHE version.
+
+### Phase 4 Interaction Features (v3)
+
+Added in `features_v3.py`, these features explicitly encode known multiplicative relationships that tree models might not discover efficiently on their own.
+
+| Feature | Formula | Rationale |
+|---|---|---|
+| `area_x_storey` | `floor_area_sqm × storey_midpoint` | Large flats on high floors command a compound premium — the interaction matters beyond each factor individually |
+| `lease_x_area` | `remaining_lease_float × floor_area_sqm` | Long-lease large flats are disproportionately valuable |
+| `lease_x_storey` | `remaining_lease_float × storey_midpoint` | High-floor units lose more absolute value as lease shortens |
+| `is_high_floor` | `storey_midpoint >= 20` | Binary premium indicator — views, prestige, away from noise |
+| `is_ground_floor` | `storey_midpoint <= 3` | Binary discount indicator — privacy/security concerns |
+| `town_month_volume` | Group count by `(town, month)` | Market heat proxy — high-volume months indicate demand |
+| `town_year_median_price` | Group median by `(town, year)` | Year-level town price trend — captures estate-level appreciation |
+
+---
+
+## Data Processing Pipeline
+
+```
+Raw CSV (227,425 rows)
+  └─ data/hdb_prices_2017.csv
+
+Step 1: Base Features
+  ├─ Parse remaining_lease → remaining_lease_float (years + months/12)
+  ├─ Parse storey_range → storey_midpoint (numeric midpoint)
+  ├─ Extract transaction_year, transaction_month from "YYYY-MM" string
+  ├─ Compute lease_below_60, lease_below_40 (piecewise decay)
+  └─ Compute building_age = transaction_year - lease_commence_date
+
+Step 2: Location Features (requires onemap_cache.json)
+  ├─ Geocode: block + street_name → (lat, lon) via cached OneMap API results
+  ├─ dist_to_cbd = haversine(lat, lon, 1.283933, 103.851463)
+  ├─ dist_to_nearest_hub = min(haversine to 4 regional hubs)
+  └─ dist_to_actual_nearest_mrt = min(haversine to 171 MRT stations)
+
+Step 3: Amenity Features (requires school/hawker/mall/park caches)
+  ├─ is_mature_estate: lookup in hardcoded mature estate list
+  ├─ num_schools_within_1km: count(haversine ≤ 1000m) over school_cache
+  ├─ dist_to_nearest_elite_school: min(haversine to 9 GEP schools)
+  ├─ elite_school_within_1km: dist_to_nearest_elite_school ≤ 1000
+  ├─ dist/count for hawkers (1km), malls (2km), parks
+  └─ (all point data loaded from JSON caches in data/caches/)
+
+Step 4: Phase 4 Features
+  ├─ area_x_storey, lease_x_area, lease_x_storey (multiplicative interactions)
+  ├─ is_high_floor (≥ 20), is_ground_floor (≤ 3)
+  ├─ town_month_volume (groupby count)
+  └─ town_year_median_price (groupby median)
+
+Step 5: Train/Test Split
+  └─ 85% trainval / 15% test (stratified random, random_state=42)
+
+Step 6: K-Fold Cross-Validation (5 folds over trainval)
+  For each fold:
+  ├─ Fit smoothed target encoding on fold-train only
+  ├─ Apply encoding maps to fold-val and test
+  ├─ OHE flat_type + flat_model (aligned to training columns)
+  ├─ Train RF, XGBoost (early stopping), LightGBM (early stopping), CatBoost
+  └─ Store OOF predictions for val rows + accumulate test predictions
+
+Step 7: Ensemble Weight Optimisation
+  ├─ Stack OOF predictions: shape (n_trainval, 4)
+  ├─ Minimise MSE(y_trainval, OOF @ weights) subject to sum(weights)=1, weights≥0
+  └─ Method: SLSQP (scipy.optimize.minimize)
+
+Step 8: Export (export_models.py)
+  ├─ Re-train 5 XGBoost models (one per fold) on full trainval
+  ├─ Save xgboost.json + target_encodings.json per fold
+  └─ Save ohe_columns.json, aggregate_lookups.json, reference_data.json, caches/
+```
+
+---
+
+## Architecture
+
+```
+Training Pipeline                  Production Serving
+─────────────────                  ──────────────────
+features_v3.py                     app/main.py (FastAPI)
+  │                                  │
+  ▼                                  ▼
+train_v3.py                        app/inference.py
+  │  5-fold ensemble                 │  build_features_single()
+  │  RF + XGB + LGBM + CatBoost      │  Geocode → distances → amenities
+  │  OOF stacking + SLSQP weights    │  Phase 4 interactions
+  │                                  │  Per-fold target encoding
+  ▼                                  │  5 × XGBoost predict → mean
+export_models.py                     │
+  │                                  ▼
+  ▼                                POST /api/predict
+model_artifacts/                     {
+  ├─ fold_0/ … fold_4/                 predicted_price: 650000,
+  │   ├─ xgboost.json                  prediction_range: {low, high},
+  │   └─ target_encodings.json         features_summary: {...}
+  ├─ ohe_columns.json               }
+  ├─ aggregate_lookups.json
+  ├─ reference_data.json
+  └─ caches/
+```
+
+---
+
+## Results
+
+| Model | OOF RMSE | OOF R² | Test RMSE | Test R² |
+|---|---|---|---|---|
+| Random Forest | ~$44k | ~0.965 | ~$44k | ~0.965 |
+| XGBoost | ~$34k | ~0.976 | ~$33–35k | ~0.975 |
+| LightGBM | ~$35k | ~0.975 | ~$34–36k | ~0.974 |
+| CatBoost | ~$35k | ~0.975 | ~$34–36k | ~0.974 |
+| **Ensemble** | **~$33k** | **>0.98** | **~$33k** | **>0.98** |
+
+*Exact figures vary by run. Ensemble weights found by SLSQP over OOF predictions.*
+
+---
+
+## Dataset
+
+Housing & Development Board. (2021). *Resale flat prices based on registration date from Jan-2017 onwards* [Dataset]. data.gov.sg.
+Retrieved February 2026. 227,425 transactions spanning flat types from 1 Room to Multi-Generation across all 26 HDB towns.

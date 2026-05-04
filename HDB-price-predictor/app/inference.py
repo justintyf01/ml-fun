@@ -209,8 +209,8 @@ def predict(req: PredictionRequest, artifacts: ModelArtifacts) -> PredictionResp
         fold_predictions.append(pred)
 
     mean_pred = int(round(np.mean(fold_predictions)))
-    low_pred = int(round(min(fold_predictions)))
-    high_pred = int(round(max(fold_predictions)))
+    low_pred = int(round(mean_pred * 0.95))
+    high_pred = int(round(mean_pred * 1.05))
 
     return PredictionResponse(
         predicted_price=mean_pred,

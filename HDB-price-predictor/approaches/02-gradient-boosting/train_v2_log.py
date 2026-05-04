@@ -22,7 +22,7 @@ import xgboost as xgb
 import lightgbm as lgb
 from catboost import CatBoostRegressor
 
-from features_v2 import build_features_kfold, encode_fold
+from features import build_features_kfold, encode_fold
 
 
 def evaluate(name, y_true, y_pred):

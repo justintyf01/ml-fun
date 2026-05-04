@@ -5,7 +5,7 @@ import os
 import pandas as pd
 import xgboost as xgb
 
-N_FOLDS = 5
+BEST_FOLD = 3  # fold_3 had the highest validation R² (0.9799)
 
 
 class ModelArtifacts:
@@ -29,17 +29,16 @@ class ModelArtifacts:
         """Load all artifacts from disk."""
         print("Loading model artifacts...")
 
-        # Load XGBoost models (5 folds)
-        for i in range(N_FOLDS):
-            fold_dir = os.path.join(self.artifacts_dir, f"fold_{i}")
-            model = xgb.XGBRegressor()
-            model.load_model(os.path.join(fold_dir, "xgboost.json"))
-            self.models.append(model)
+        # Load single best fold
+        fold_dir = os.path.join(self.artifacts_dir, f"fold_{BEST_FOLD}")
+        model = xgb.XGBRegressor()
+        model.load_model(os.path.join(fold_dir, "xgboost.json"))
+        self.models.append(model)
 
-            with open(os.path.join(fold_dir, "target_encodings.json")) as f:
-                self.target_encodings.append(json.load(f))
+        with open(os.path.join(fold_dir, "target_encodings.json")) as f:
+            self.target_encodings.append(json.load(f))
 
-        print(f"  Loaded {len(self.models)} XGBoost models")
+        print(f"  Loaded fold_{BEST_FOLD} (best validation R²)")
 
         # OHE columns
         with open(os.path.join(self.artifacts_dir, "ohe_columns.json")) as f:

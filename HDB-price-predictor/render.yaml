@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: hdb-price-predictor
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/health
+    envVars:
+      - key: PORT
+        value: 8000

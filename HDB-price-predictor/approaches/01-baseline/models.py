@@ -20,7 +20,7 @@ from sklearn.metrics import (
 import requests
 import math
 import time
-from utils import haversine_distance, get_onemap_coordinates
+from features import haversine_distance
 
 # ──────────────────────────────────────────────────────────────
 # 1. Load & preprocess
