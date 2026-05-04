@@ -7,4 +7,5 @@ approaches/
 scripts/
 *.ipynb
 *.csv
+!model_artifacts/**/*.csv
 .DS_Store
