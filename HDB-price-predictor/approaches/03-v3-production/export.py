@@ -103,6 +103,45 @@ def extract_reference_data(df):
     }
 
 
+def extract_block_lookup(df):
+    """
+    Build a per-block lookup table for the frontend auto-fill.
+
+    Keyed by "BLOCK STREET_NAME" (uppercase). Each entry contains:
+      town              — HDB town name
+      lease_commence_date — year the 99-year lease started
+      floor_areas       — {flat_type: median_sqm} from training data
+      flat_models       — {flat_type: most_common_model} from training data
+    """
+    result = {}
+    for (block, street), grp in df.groupby(["block", "street_name"]):
+        key = f"{block} {street}"
+        floor_areas, flat_models = {}, {}
+        for flat_type, ft_grp in grp.groupby("flat_type"):
+            floor_areas[flat_type] = round(float(ft_grp["floor_area_sqm"].median()), 1)
+            mode = ft_grp["flat_model"].mode()
+            flat_models[flat_type] = mode.iloc[0] if len(mode) else "Model A"
+        result[key] = {
+            "town": str(grp["town"].iloc[0]),
+            "lease_commence_date": int(grp["lease_commence_date"].iloc[0]),
+            "floor_areas": floor_areas,
+            "flat_models": flat_models,
+        }
+    return result
+
+
+def extract_street_to_town(df):
+    """
+    Build a street_name → town mapping for town inference when a block
+    is not found in the block_lookup (e.g. recently built blocks).
+    """
+    return (
+        df.groupby("street_name")["town"]
+        .agg(lambda x: x.mode().iloc[0])
+        .to_dict()
+    )
+
+
 def plot_feature_importance(fold_importances, save_path, top_n=20):
     """
     Save a bar chart of mean XGBoost feature importance (gain) across folds.
@@ -135,17 +174,21 @@ def main():
     df = add_location_features(df)
     df = add_amenity_features(df)
 
-    # Extract reference data and aggregate lookups before Phase 4 adds
-    # derived columns (town_month_volume etc.) that would pollute dropdowns
+    # Extract lookups before Phase 4 adds derived columns
     reference_data = extract_reference_data(df)
 
-    print("\n[2/6] Extracting aggregate lookup tables...")
+    print("\n[2/7] Extracting aggregate lookup tables...")
     aggregate_lookups = extract_aggregate_lookups(df)
+
+    print("\n[3/7] Building block lookup for frontend auto-fill...")
+    block_lookup = extract_block_lookup(df)
+    street_to_town = extract_street_to_town(df)
+    print(f"  {len(block_lookup):,} blocks indexed")
 
     df = add_phase4_features(df)
 
     # ── Prepare splits ──────────────────────────────────────────
-    print("\n[3/6] Splitting data...")
+    print("\n[4/7] Splitting data...")
     y = df["resale_price"]
     X = df[FEATURE_COLUMNS].copy()
     X_trainval, X_test, y_trainval, y_test = train_test_split(
@@ -156,7 +199,7 @@ def main():
     os.makedirs(ARTIFACTS_DIR, exist_ok=True)
 
     # ── Train and save per fold ─────────────────────────────────
-    print("\n[4/6] Training XGBoost models (5-fold CV)...")
+    print("\n[5/7] Training XGBoost models (5-fold CV)...")
     kf = KFold(n_splits=N_FOLDS, shuffle=True, random_state=42)
     test_preds = np.zeros(len(X_test))
     fold_importances = []
@@ -231,14 +274,18 @@ def main():
     print(f"\n  Ensemble test R²: {test_r2:.4f}  RMSE: ${test_rmse:,.0f}")
 
     # ── Save global artifacts ───────────────────────────────────
-    print("\n[5/6] Saving global artifacts...")
+    print("\n[6/7] Saving global artifacts...")
     with open(os.path.join(ARTIFACTS_DIR, "aggregate_lookups.json"), "w") as f:
         json.dump(aggregate_lookups, f)
     with open(os.path.join(ARTIFACTS_DIR, "reference_data.json"), "w") as f:
         json.dump(reference_data, f)
+    with open(os.path.join(ARTIFACTS_DIR, "block_lookup.json"), "w") as f:
+        json.dump(block_lookup, f)
+    with open(os.path.join(ARTIFACTS_DIR, "street_to_town.json"), "w") as f:
+        json.dump(street_to_town, f)
 
     # ── Copy caches ─────────────────────────────────────────────
-    print("\n[6/6] Copying cache files...")
+    print("\n[7/7] Copying cache files...")
     caches_dir = os.path.join(ARTIFACTS_DIR, "caches")
     os.makedirs(caches_dir, exist_ok=True)
 

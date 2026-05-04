@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HDB Resale Estimator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary:       #1f69ff;
+      --primary-dark:  #004FF0;
+      --primary-pale:  #EBF1FF;
+      --success:       #0A8217;
+      --success-pale:  #E7F6E9;
+      --danger:        #D7260F;
+      --danger-pale:   #FFF4F3;
+      --warn-pale:     #FFFAEB;
+      --warn:          #DC6803;
+      --text:          #1D2939;
+      --text-muted:    #667085;
+      --text-light:    #98A2B3;
+      --bg:            #F7F7F9;
+      --card:          #ffffff;
+      --border:        #D0D5DD;
+      --border-input:  #98A2B3;
+      --radius:        0.5rem;
+      --radius-lg:     0.75rem;
+      --shadow:        0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.05);
+      --shadow-md:     0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+      --font:          'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    /* ── Header ───────────────────────────────────────────── */
+    header {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 1.5rem;
+    }
+    .header-inner {
+      max-width: 540px;
+      margin: 0 auto;
+      padding: 0 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    header h1 { font-size: 1.125rem; font-weight: 700; }
+    header p  { font-size: 0.875rem; color: var(--text-muted); margin-top: 0.125rem; }
+
+    .header-links {
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+      flex-shrink: 0;
+    }
+    .header-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 0.25rem 0.5rem;
+      border-radius: var(--radius);
+      transition: color 0.15s, background 0.15s;
+    }
+    .header-link:hover { color: var(--text); background: var(--bg); }
+
+    /* ── Layout ───────────────────────────────────────────── */
+    .container {
+      max-width: 540px;
+      margin: 0 auto;
+      padding: 1.5rem 1rem 3rem;
+    }
+
+    /* ── Card ─────────────────────────────────────────────── */
+    .card {
+      background: var(--card);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      padding: 1.5rem;
+    }
+
+    .section + .section {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .section-label {
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.875rem;
+    }
+
+    /* ── Form controls ────────────────────────────────────── */
+    .field-label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 0.375rem;
+    }
+
+    .input {
+      width: 100%;
+      padding: 0.5625rem 0.75rem;
+      font-family: var(--font);
+      font-size: 1rem;
+      color: var(--text);
+      background: var(--card);
+      border: 1px solid var(--border-input);
+      border-radius: var(--radius);
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      -webkit-appearance: none;
+      /* hide browser spin arrows on number inputs */
+      -moz-appearance: textfield;
+    }
+    .input::-webkit-outer-spin-button,
+    .input::-webkit-inner-spin-button { -webkit-appearance: none; }
+    .input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(31,105,255,0.12);
+    }
+    .input::placeholder { color: var(--text-light); }
+    .input:disabled { background: #E4E7EC; cursor: not-allowed; color: var(--text-muted); border-color: var(--border); }
+
+    /* Warning state */
+    .input.warn { border-color: var(--warn); background: var(--warn-pale); }
+    .input.warn:focus { box-shadow: 0 0 0 3px rgba(220,104,3,0.12); }
+    .field-warn {
+      margin-top: 0.375rem;
+      font-size: 0.8125rem;
+      color: var(--warn);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.3rem;
+    }
+
+    /* Postal row */
+    .input-row { display: flex; gap: 0.5rem; }
+    .input-row .input {
+      flex: 1;
+      font-size: 1.125rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    /* Address badge */
+    .address-badge {
+      display: none;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+      padding: 0.625rem 0.875rem;
+      background: var(--primary-pale);
+      border-radius: var(--radius);
+      font-size: 0.875rem;
+    }
+    .address-badge.show { display: flex; }
+    .address-badge .addr-text { flex: 1; font-weight: 600; color: var(--primary-dark); }
+    .address-badge .addr-sub  { font-size: 0.75rem; font-weight: 400; color: var(--text-muted); }
+    .address-badge .clear-btn {
+      background: none; border: none; cursor: pointer;
+      color: var(--text-muted); font-size: 1rem; padding: 0; line-height: 1;
+    }
+    .address-badge .clear-btn:hover { color: var(--text); }
+
+    /* Manual toggle link */
+    .link-btn {
+      display: inline-block;
+      margin-top: 0.625rem;
+      font-size: 0.8125rem;
+      color: var(--primary);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font);
+      padding: 0;
+      text-decoration: underline;
+      text-decoration-color: transparent;
+      transition: text-decoration-color 0.15s;
+    }
+    .link-btn:hover { text-decoration-color: var(--primary); }
+
+    /* Flat type pills */
+    .pill-group { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .pill-btn {
+      padding: 0.375rem 0.875rem;
+      border: 1.5px solid var(--border-input);
+      border-radius: 2rem;
+      font-family: var(--font);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      background: var(--card);
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .pill-btn:hover { border-color: var(--primary); color: var(--primary); }
+    .pill-btn.active {
+      border-color: var(--primary);
+      background: var(--primary-pale);
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    /* Two-column grid */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    /* Stepper (floor) */
+    .stepper {
+      display: flex;
+      align-items: center;
+      border: 1px solid var(--border-input);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: box-shadow 0.15s, border-color 0.15s;
+    }
+    .stepper:focus-within {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(31,105,255,0.12);
+    }
+    .stepper input {
+      flex: 1; width: 0;
+      border: none; outline: none;
+      font-family: var(--font);
+      font-size: 1.125rem; font-weight: 700;
+      color: var(--text); text-align: center;
+      padding: 0.5rem 0;
+      -moz-appearance: textfield;
+    }
+    .stepper input::-webkit-outer-spin-button,
+    .stepper input::-webkit-inner-spin-button { -webkit-appearance: none; }
+    .stepper .step-btn {
+      background: var(--bg); border: none;
+      width: 2.25rem; height: 2.625rem;
+      font-size: 1.25rem; font-weight: 300;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.1s; flex-shrink: 0; user-select: none;
+    }
+    .stepper .step-btn:hover { background: #E4E7EC; color: var(--text); }
+
+    /* Input with auto badge */
+    .input-wrap { position: relative; }
+    .input-wrap .input { padding-right: 3.75rem; }
+    .auto-tag {
+      position: absolute; right: 0.625rem; top: 50%;
+      transform: translateY(-50%);
+      background: var(--success-pale); color: var(--success);
+      font-size: 0.6875rem; font-weight: 700;
+      padding: 0.125rem 0.375rem; border-radius: 2rem;
+      pointer-events: none;
+    }
+
+    /* Unit toggle (sqm / sqft) */
+    .unit-group {
+      display: inline-flex;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      vertical-align: middle;
+    }
+    .unit-btn {
+      padding: 0.15rem 0.5rem;
+      font-family: var(--font);
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: background 0.12s, color 0.12s;
+      line-height: 1.5;
+    }
+    .unit-btn + .unit-btn { border-left: 1px solid var(--border); }
+    .unit-btn.active { background: var(--primary); color: #fff; font-weight: 600; }
+
+    /* Town dropdown (last-resort fallback) */
+    .select {
+      width: 100%;
+      padding: 0.5625rem 0.75rem;
+      font-family: var(--font); font-size: 1rem;
+      color: var(--text); background: var(--card);
+      border: 1px solid var(--border-input); border-radius: var(--radius);
+      outline: none; cursor: pointer;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(31,105,255,0.12);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.375rem;
+      font-family: var(--font); font-weight: 600; cursor: pointer;
+      border: none; border-radius: var(--radius); transition: background 0.15s, transform 0.1s;
+    }
+    .btn-primary {
+      width: 100%; margin-top: 1.5rem;
+      padding: 0.75rem 1.5rem;
+      background: var(--primary); color: #fff;
+      font-size: 1rem;
+    }
+    .btn-primary:hover:not(:disabled) { background: var(--primary-dark); }
+    .btn-primary:active:not(:disabled) { transform: scale(0.99); }
+    .btn-primary:disabled { opacity: 0.55; cursor: not-allowed; }
+
+    .btn-outline {
+      width: 100%; margin-top: 1.25rem;
+      padding: 0.625rem 1.5rem;
+      background: var(--card); color: var(--text);
+      border: 1.5px solid var(--border);
+      font-size: 0.9375rem;
+    }
+    .btn-outline:hover { background: var(--bg); border-color: var(--border-input); }
+
+    .btn-sm {
+      padding: 0.4375rem 0.875rem;
+      background: var(--primary); color: #fff;
+      font-size: 0.875rem; border-radius: var(--radius);
+      white-space: nowrap;
+    }
+    .btn-sm:hover:not(:disabled) { background: var(--primary-dark); }
+    .btn-sm:disabled { opacity: 0.55; cursor: not-allowed; }
+
+    /* Spinner */
+    .spinner {
+      width: 1rem; height: 1rem;
+      border: 2px solid rgba(255,255,255,0.4); border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.65s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Error */
+    .error-box {
+      display: none;
+      margin-top: 0.875rem; padding: 0.625rem 0.875rem;
+      background: var(--danger-pale);
+      border: 1px solid #FC9C90;
+      border-radius: var(--radius);
+      color: var(--danger); font-size: 0.875rem;
+    }
+    .error-box.show { display: block; }
+
+    /* ── Result view ──────────────────────────────────────── */
+    #result-view { display: none; }
+    #result-view.show { display: block; }
+    #form-view.hide  { display: none; }
+
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 0.25rem;
+      background: none; border: none; cursor: pointer;
+      font-family: var(--font); font-size: 0.875rem;
+      color: var(--text-muted); padding: 0;
+      margin-bottom: 1.25rem;
+      transition: color 0.15s;
+    }
+    .back-btn:hover { color: var(--text); }
+
+    .result-eyebrow {
+      font-size: 0.6875rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--primary); margin-bottom: 0.5rem;
+    }
+    .result-price {
+      font-size: 2.75rem; font-weight: 700;
+      color: var(--text); line-height: 1.1;
+      margin-bottom: 0.25rem;
+    }
+    .result-range {
+      font-size: 0.875rem; color: var(--text-muted);
+      margin-bottom: 0.25rem;
+    }
+    .result-note {
+      font-size: 0.75rem; color: var(--text-light);
+      margin-bottom: 1.25rem;
+    }
+
+    .divider { height: 1px; background: var(--border); margin: 1.25rem 0; }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+    }
+    .stat-card {
+      background: var(--bg); border-radius: var(--radius);
+      padding: 0.75rem 0.875rem;
+    }
+    .stat-icon  { font-size: 1.125rem; margin-bottom: 0.25rem; }
+    .stat-label {
+      font-size: 0.6875rem; font-weight: 600;
+      letter-spacing: 0.04em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 0.25rem;
+    }
+    .stat-value { font-size: 0.9375rem; font-weight: 700; color: var(--text); }
+    .stat-sub   { font-size: 0.75rem; font-weight: 400; color: var(--text-muted); margin-top: 0.125rem; }
+
+    .tag {
+      display: inline-block; padding: 0.125rem 0.5rem;
+      border-radius: 2rem; font-size: 0.75rem; font-weight: 600;
+    }
+    .tag-yes { background: var(--success-pale); color: var(--success); }
+    .tag-no  { background: var(--bg); color: var(--text-muted);
+               border: 1px solid var(--border); }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up { animation: fadeUp 0.3s ease both; }
+
+    /* Responsive */
+    @media (max-width: 420px) {
+      .card { padding: 1.25rem; }
+      .result-price { font-size: 2.25rem; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .two-col { grid-template-columns: 1fr; }
+    }
+
+    .hidden { display: none !important; }
+
+    /* ── Star rating ──────────────────────────────────────── */
+    .star-group { display: flex; gap: 0.25rem; }
+    .star-btn {
+      background: none; border: none; cursor: pointer;
+      font-size: 2rem; line-height: 1; padding: 0.125rem;
+      color: var(--border);
+      transition: color 0.1s, transform 0.1s;
+    }
+    .star-btn:hover  { transform: scale(1.15); }
+    .star-btn.filled { color: #F5A623; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div>
+      <h1>HDB Resale Estimator</h1>
+      <p>Instant price estimates for any HDB flat in Singapore</p>
+    </div>
+    <nav class="header-links">
+      <a href="#" target="_blank" rel="noopener" class="header-link">
+        <!-- Replace # with your personal website URL -->
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        Portfolio
+      </a>
+      <a href="https://github.com/justintyf01" target="_blank" rel="noopener" class="header-link" title="GitHub">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.341-3.369-1.341-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+        GitHub
+      </a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<div class="container">
+
+  <!-- ── Form view ─────────────────────────────────────────── -->
+  <div id="form-view" class="card">
+
+    <!-- Address section -->
+    <div class="section">
+      <p class="section-label">Your Flat</p>
+
+      <label class="field-label" for="postal">Postal Code</label>
+      <div class="input-row">
+        <input class="input" id="postal" type="text" inputmode="numeric"
+          maxlength="6" placeholder="e.g. 560406" autocomplete="postal-code">
+        <button class="btn btn-sm" id="lookup-btn" onclick="handlePostalLookup()">
+          <span id="lookup-text">Search</span>
+          <span id="lookup-spin" class="spinner hidden"></span>
+        </button>
+      </div>
+
+      <!-- Address badge -->
+      <div class="address-badge" id="address-badge">
+        <span style="font-size:1rem;">📍</span>
+        <div style="flex:1;">
+          <div class="addr-text" id="addr-main"></div>
+          <div class="addr-sub"  id="addr-sub"></div>
+        </div>
+        <button class="clear-btn" onclick="clearAddress()" title="Clear">✕</button>
+      </div>
+
+      <!-- Manual address toggle -->
+      <button class="link-btn" id="manual-toggle" onclick="toggleManual()">
+        Don't know postal code? Enter address manually
+      </button>
+
+      <!-- Manual address inputs -->
+      <div id="manual-section" class="hidden" style="margin-top:0.875rem;display:flex;flex-direction:column;gap:0.75rem;">
+        <div>
+          <label class="field-label" for="blk-input">Block Number</label>
+          <input class="input" id="blk-input" type="text" placeholder="e.g. 406">
+        </div>
+        <div>
+          <label class="field-label" for="street-input">Street Name</label>
+          <input class="input" id="street-input" type="text"
+            placeholder="e.g. ANG MO KIO AVE 10"
+            list="street-datalist" style="text-transform:uppercase;">
+          <datalist id="street-datalist"></datalist>
+        </div>
+        <button class="btn btn-sm" style="align-self:flex-start;" onclick="handleManualLookup()">
+          Confirm Address
+        </button>
+      </div>
+    </div>
+
+    <!-- Details section -->
+    <div class="section">
+      <p class="section-label">Flat Details</p>
+
+      <!-- Flat type -->
+      <div style="margin-bottom:1.25rem;">
+        <label class="field-label">Flat Type</label>
+        <div class="pill-group" id="flat-type-group"></div>
+      </div>
+
+      <!-- Floor + Lease Year (always visible; lease disabled until address resolved) -->
+      <div class="two-col" style="margin-bottom:0.375rem;">
+        <div>
+          <label class="field-label" for="floor-input">Floor</label>
+          <div class="stepper">
+            <button class="step-btn" type="button" onclick="stepFloor(-1)">−</button>
+            <input id="floor-input" type="number" min="1" max="60" value="7">
+            <button class="step-btn" type="button" onclick="stepFloor(1)">+</button>
+          </div>
+        </div>
+        <div>
+          <label class="field-label" for="lease-input">Lease Year</label>
+          <div class="input-wrap">
+            <input class="input" id="lease-input" type="number"
+              min="1960" max="2030" placeholder="—" disabled>
+            <span class="auto-tag hidden" id="lease-tag">auto</span>
+          </div>
+        </div>
+      </div>
+      <!-- Lease warn note sits below the two-col, left-aligned under lease column -->
+      <p class="field-warn hidden" id="lease-warn" style="margin-bottom:1rem;">
+        <span>⚠</span>
+        Lease not found — pre-filled as current year. Please verify and correct if needed.
+      </p>
+      <!-- Spacer when no warn note -->
+      <div id="lease-spacer" style="margin-bottom:1rem;"></div>
+
+      <!-- Floor Area (full-width with sqm / sqft toggle) -->
+      <div style="margin-bottom:1rem;">
+        <label class="field-label" style="display:flex;align-items:center;justify-content:space-between;">
+          Floor Area
+          <span class="unit-group">
+            <button class="unit-btn active" id="unit-sqm" onclick="setUnit('sqm')">sqm</button>
+            <button class="unit-btn"        id="unit-sqft" onclick="setUnit('sqft')">sqft</button>
+          </span>
+        </label>
+        <div class="input-wrap">
+          <input class="input" id="area-input" type="number"
+            min="20" max="4000" step="0.5" placeholder="e.g. 93">
+          <span class="auto-tag hidden" id="area-tag">auto</span>
+        </div>
+      </div>
+
+      <!-- Town dropdown: last-resort fallback when lat/lon unavailable and block unknown -->
+      <div id="town-section" class="hidden" style="margin-bottom:1rem;">
+        <label class="field-label" for="town-select">Town</label>
+        <p style="font-size:0.8125rem;color:var(--text-muted);margin-bottom:0.5rem;">
+          Could not determine town automatically. Please select below.
+        </p>
+        <select class="select" id="town-select">
+          <option value="">Select town…</option>
+        </select>
+      </div>
+    </div>
+
+    <button class="btn btn-primary" id="submit-btn" onclick="submitForm()">
+      <span id="submit-text">Get Estimate</span>
+      <span id="submit-spin" class="spinner hidden"></span>
+    </button>
+
+    <div class="error-box" id="error-box"></div>
+  </div>
+
+  <!-- ── Result view ────────────────────────────────────────── -->
+  <div id="result-view">
+    <div class="card fade-up">
+      <button class="back-btn" onclick="showForm()">← Back</button>
+
+      <p class="result-eyebrow">Estimated Resale Price</p>
+      <p class="result-price" id="result-price">—</p>
+      <p class="result-range" id="result-range">—</p>
+      <p class="result-note">±5% model confidence interval</p>
+
+      <div class="divider"></div>
+
+      <p class="section-label" style="margin-bottom:0.75rem;">Property Insights</p>
+      <div class="stats-grid" id="stats-grid"></div>
+
+      <button class="btn btn-outline" onclick="showForm()">Estimate Another Flat</button>
+    </div>
+  </div>
+
+  <!-- ── Feedback section ─────────────────────────────────── -->
+  <div class="card" style="margin-top:1.5rem;padding:1.25rem;">
+    <p class="section-label" style="margin-bottom:0.75rem;">Leave a Review</p>
+    <p style="font-size:0.8125rem;color:var(--text-muted);margin-bottom:1rem;">
+      Anonymous — no account needed.
+    </p>
+
+    <!-- Star rating -->
+    <div style="margin-bottom:1rem;">
+      <div class="star-group" id="star-group" role="group" aria-label="Rating">
+        <button class="star-btn" data-v="1" onclick="setStars(1)" onmouseenter="hoverStars(1)" onmouseleave="unhoverStars()">☆</button>
+        <button class="star-btn" data-v="2" onclick="setStars(2)" onmouseenter="hoverStars(2)" onmouseleave="unhoverStars()">☆</button>
+        <button class="star-btn" data-v="3" onclick="setStars(3)" onmouseenter="hoverStars(3)" onmouseleave="unhoverStars()">☆</button>
+        <button class="star-btn" data-v="4" onclick="setStars(4)" onmouseenter="hoverStars(4)" onmouseleave="unhoverStars()">☆</button>
+        <button class="star-btn" data-v="5" onclick="setStars(5)" onmouseenter="hoverStars(5)" onmouseleave="unhoverStars()">☆</button>
+      </div>
+      <p id="star-label" style="font-size:0.8125rem;color:var(--text-muted);margin-top:0.375rem;min-height:1.2em;"></p>
+    </div>
+
+    <!-- Message -->
+    <textarea id="fb-text" rows="3"
+      placeholder="Anything to add? (optional)"
+      maxlength="1000"
+      style="width:100%;padding:0.5rem 0.75rem;font-family:var(--font);
+             font-size:0.9375rem;color:var(--text);background:var(--card);
+             border:1px solid var(--border-input);border-radius:var(--radius);
+             outline:none;resize:vertical;transition:border-color 0.15s,box-shadow 0.15s;
+             -webkit-appearance:none;"
+      onfocus="this.style.borderColor='var(--primary)';this.style.boxShadow='0 0 0 3px rgba(31,105,255,0.12)'"
+      onblur="this.style.borderColor='var(--border-input)';this.style.boxShadow='none'"
+    ></textarea>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:0.625rem;gap:0.75rem;">
+      <span id="fb-count" style="font-size:0.75rem;color:var(--text-light);">0 / 1000</span>
+      <button class="btn btn-sm" id="fb-btn" onclick="submitFeedback()" style="margin:0;">
+        <span id="fb-text-btn">Send</span>
+        <span id="fb-spin" class="spinner hidden"></span>
+      </button>
+    </div>
+    <p id="fb-status" style="display:none;margin-top:0.5rem;font-size:0.8125rem;"></p>
+  </div>
+
+</div>
+</main>
+
+<script>
+// ── State ─────────────────────────────────────────────────────
+const s = {
+  block: null, street: null, town: null,
+  leaseYear: null, blockInfo: null,
+  flatType: null, isManual: false,
+  lat: null, lon: null,
+  unit: 'sqm',
+};
+
+const FLAT_TYPES = ['3 ROOM','4 ROOM','5 ROOM','EXECUTIVE','2 ROOM','1 ROOM','MULTI-GENERATION'];
+const SQM_TO_SQFT = 10.7639;
+
+const FALLBACK_AREAS  = {'1 ROOM':33,'2 ROOM':45,'3 ROOM':68,'4 ROOM':93,'5 ROOM':110,'EXECUTIVE':140,'MULTI-GENERATION':155};
+const FALLBACK_MODELS = {'1 ROOM':'Improved','2 ROOM':'Model A','3 ROOM':'New Generation','4 ROOM':'Model A','5 ROOM':'Model A','EXECUTIVE':'Apartment','MULTI-GENERATION':'Multi Generation'};
+
+// ── Init ──────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  buildFlatTypeGroup();
+  selectFlatType('4 ROOM');
+  prefetchOptions();
+
+  const postalEl = document.getElementById('postal');
+  postalEl.addEventListener('input', e => {
+    if (e.target.value.replace(/\D/g,'').length === 6) handlePostalLookup();
+  });
+  postalEl.addEventListener('keydown', e => { if (e.key === 'Enter') handlePostalLookup(); });
+
+  document.getElementById('floor-input').addEventListener('change', () => {
+    const v = parseInt(document.getElementById('floor-input').value);
+    document.getElementById('floor-input').value = Math.max(1, Math.min(60, v || 1));
+  });
+
+  document.getElementById('area-input').addEventListener('input', () => {
+    document.getElementById('area-tag').classList.add('hidden');
+  });
+});
+
+function buildFlatTypeGroup() {
+  document.getElementById('flat-type-group').innerHTML = FLAT_TYPES.map(ft =>
+    `<button class="pill-btn" data-ft="${ft}" onclick="selectFlatType('${ft}')">${ft}</button>`
+  ).join('');
+}
+
+function selectFlatType(ft) {
+  s.flatType = ft;
+  document.querySelectorAll('.pill-btn').forEach(b =>
+    b.classList.toggle('active', b.dataset.ft === ft)
+  );
+  syncFloorArea();
+}
+
+function syncFloorArea() {
+  if (!s.flatType) return;
+  const areaSqm = s.blockInfo?.floor_areas?.[s.flatType] ?? FALLBACK_AREAS[s.flatType];
+  const isAuto  = !!s.blockInfo?.floor_areas?.[s.flatType];
+  if (areaSqm) {
+    const display = s.unit === 'sqft' ? Math.round(areaSqm * SQM_TO_SQFT) : areaSqm;
+    document.getElementById('area-input').value = display;
+    document.getElementById('area-tag').classList.toggle('hidden', !isAuto);
+  }
+}
+
+// ── Unit toggle ───────────────────────────────────────────────
+function setUnit(unit) {
+  if (s.unit === unit) return;
+  const inp = document.getElementById('area-input');
+  const val = parseFloat(inp.value);
+  if (!isNaN(val)) {
+    inp.value = unit === 'sqft'
+      ? Math.round(val * SQM_TO_SQFT)
+      : +(val / SQM_TO_SQFT).toFixed(1);
+  }
+  s.unit = unit;
+  document.getElementById('unit-sqm').classList.toggle('active', unit === 'sqm');
+  document.getElementById('unit-sqft').classList.toggle('active', unit === 'sqft');
+}
+
+async function prefetchOptions() {
+  try {
+    const res = await fetch('/api/options');
+    const data = await res.json();
+    const dl = document.getElementById('street-datalist');
+    dl.innerHTML = (data.street_names||[]).map(s => `<option value="${s}">`).join('');
+    const sel = document.getElementById('town-select');
+    (data.towns||[]).forEach(t => {
+      const o = document.createElement('option');
+      o.value = o.textContent = t;
+      sel.appendChild(o);
+    });
+  } catch {}
+}
+
+// ── Address lookup ────────────────────────────────────────────
+async function handlePostalLookup() {
+  const postal = document.getElementById('postal').value.replace(/\D/g,'');
+  if (postal.length !== 6) { showError('Please enter a valid 6-digit postal code.'); return; }
+  setLoading('lookup', true);
+  clearError();
+  try {
+    const hit = await oneMapSearch(postal);
+    if (!hit) { showError('Postal code not found. Try entering the address manually.'); return; }
+    await applyAddress(hit.BLK_NO, hit.ROAD_NAME, hit.LATITUDE, hit.LONGITUDE);
+  } catch { showError('Could not reach address lookup. Please check your connection.'); }
+  finally { setLoading('lookup', false); }
+}
+
+async function handleManualLookup() {
+  const block  = document.getElementById('blk-input').value.trim().toUpperCase();
+  const street = document.getElementById('street-input').value.trim().toUpperCase();
+  if (!block || !street) { showError('Please enter both block number and street name.'); return; }
+  setLoading('lookup', true);
+  clearError();
+  try {
+    const hit = await oneMapSearch(`${block} ${street}`);
+    await applyAddress(block, street, hit?.LATITUDE ?? null, hit?.LONGITUDE ?? null);
+  } catch { await applyAddress(block, street, null, null); }
+  finally { setLoading('lookup', false); }
+}
+
+async function oneMapSearch(q) {
+  const url = `https://www.onemap.gov.sg/api/common/elastic/search?searchVal=${encodeURIComponent(q)}&returnGeom=Y&getAddrDetails=Y&pageNum=1`;
+  const res = await fetch(url);
+  if (!res.ok) return null;
+  const d = await res.json();
+  return d.found > 0 ? d.results[0] : null;
+}
+
+async function applyAddress(block, street, lat, lon) {
+  s.block = block; s.street = street;
+  s.lat = lat ? parseFloat(lat) : null;
+  s.lon = lon ? parseFloat(lon) : null;
+
+  // Show address badge
+  document.getElementById('addr-main').textContent = `Blk ${block}, ${toTitle(street)}`;
+  document.getElementById('addr-sub').textContent   = s.lat
+    ? `${s.lat.toFixed(4)}, ${s.lon.toFixed(4)}`
+    : 'Coordinates unavailable';
+  document.getElementById('address-badge').classList.add('show');
+
+  // Fetch block info
+  s.blockInfo = await fetchBlockInfo(block, street);
+
+  // ── Resolve town ──────────────────────────────────────────
+  if (s.blockInfo?.town) {
+    s.town = s.blockInfo.town;
+    document.getElementById('town-section').classList.add('hidden');
+  } else if (s.lat !== null) {
+    const nt = await fetchNearestTown(s.lat, s.lon);
+    s.town = nt?.town ?? null;
+    document.getElementById('town-section').classList.add('hidden');
+  } else {
+    s.town = null;
+    document.getElementById('town-section').classList.remove('hidden');
+  }
+
+  // ── Resolve lease year ────────────────────────────────────
+  if (s.blockInfo?.lease_commence_date) {
+    setLeaseAuto(s.blockInfo.lease_commence_date);
+  } else {
+    setLeaseUnknown();
+  }
+
+  syncFloorArea();
+}
+
+function setLeaseAuto(year) {
+  s.leaseYear = year;
+  const inp = document.getElementById('lease-input');
+  inp.value = year;
+  inp.disabled = true;
+  inp.classList.remove('warn');
+  document.getElementById('lease-tag').classList.remove('hidden');
+  document.getElementById('lease-warn').classList.add('hidden');
+  document.getElementById('lease-spacer').style.display = '';
+}
+
+function setLeaseUnknown() {
+  s.leaseYear = null;
+  const inp = document.getElementById('lease-input');
+  inp.value = new Date().getFullYear();
+  inp.disabled = false;
+  inp.classList.add('warn');
+  document.getElementById('lease-tag').classList.add('hidden');
+  document.getElementById('lease-warn').classList.remove('hidden');
+  document.getElementById('lease-spacer').style.display = 'none';
+}
+
+async function fetchBlockInfo(block, street) {
+  try {
+    const res = await fetch(`/api/block-info?block=${encodeURIComponent(block)}&street=${encodeURIComponent(street)}`);
+    if (res.ok) return await res.json();
+    return null;
+  } catch { return null; }
+}
+
+async function fetchNearestTown(lat, lon) {
+  try {
+    const res = await fetch(`/api/nearest-town?lat=${lat}&lon=${lon}`);
+    if (res.ok) return await res.json();
+    return null;
+  } catch { return null; }
+}
+
+function clearAddress() {
+  s.block = s.street = s.blockInfo = s.leaseYear = s.town = s.lat = s.lon = null;
+  document.getElementById('address-badge').classList.remove('show');
+  document.getElementById('postal').value = '';
+  document.getElementById('town-section').classList.add('hidden');
+  // Reset lease input to initial disabled/empty state
+  const leaseInp = document.getElementById('lease-input');
+  leaseInp.value = '';
+  leaseInp.disabled = true;
+  leaseInp.classList.remove('warn');
+  document.getElementById('lease-tag').classList.add('hidden');
+  document.getElementById('lease-warn').classList.add('hidden');
+  document.getElementById('lease-spacer').style.display = '';
+  document.getElementById('area-tag').classList.add('hidden');
+  clearError();
+}
+
+// ── Manual mode ───────────────────────────────────────────────
+function toggleManual() {
+  s.isManual = !s.isManual;
+  const sec = document.getElementById('manual-section');
+  const btn = document.getElementById('manual-toggle');
+  if (s.isManual) {
+    sec.classList.remove('hidden'); sec.style.display = 'flex';
+    btn.textContent = 'Use postal code instead';
+  } else {
+    sec.classList.add('hidden');
+    btn.textContent = "Don't know postal code? Enter address manually";
+  }
+}
+
+// ── Floor stepper ─────────────────────────────────────────────
+function stepFloor(d) {
+  const el = document.getElementById('floor-input');
+  el.value = Math.max(1, Math.min(60, (parseInt(el.value) || 1) + d));
+}
+
+// ── Submit ────────────────────────────────────────────────────
+async function submitForm() {
+  clearError();
+
+  if (!s.block || !s.street) { showError('Please look up an address first.'); return; }
+  if (!s.flatType)            { showError('Please select a flat type.'); return; }
+
+  const floor = parseInt(document.getElementById('floor-input').value);
+  if (isNaN(floor) || floor < 1 || floor > 60) { showError('Please enter a valid floor (1–60).'); return; }
+
+  // Floor area — convert to sqm before sending
+  let area = parseFloat(document.getElementById('area-input').value);
+  if (s.unit === 'sqft') area = area / SQM_TO_SQFT;
+  if (isNaN(area) || area < 20 || area > 350) { showError('Please enter a valid floor area (20–350 sqm / 215–3767 sqft).'); return; }
+
+  // Lease year
+  let leaseYear = s.leaseYear;
+  if (!leaseYear) {
+    leaseYear = parseInt(document.getElementById('lease-input').value);
+    if (isNaN(leaseYear) || leaseYear < 1960 || leaseYear > 2030)
+      { showError('Please enter a valid lease commencement year (1960–2030).'); return; }
+  }
+
+  // Town
+  let town = s.town;
+  if (!town) {
+    town = document.getElementById('town-select').value;
+    if (!town) { showError("Please select your flat's town."); return; }
+  }
+
+  const flatModel = s.blockInfo?.flat_models?.[s.flatType] ?? FALLBACK_MODELS[s.flatType] ?? 'Model A';
+
+  const payload = {
+    town,
+    flat_type:           s.flatType,
+    flat_model:          flatModel,
+    block:               s.block,
+    street_name:         s.street,
+    storey_range:        toStoreyRange(floor),
+    floor_area_sqm:      +area.toFixed(2),
+    remaining_lease:     remainingLease(leaseYear),
+    lease_commence_date: leaseYear,
+    month:               currentMonth(),
+    lat:                 s.lat,
+    lon:                 s.lon,
+  };
+
+  setLoading('submit', true);
+  try {
+    const res = await fetch('/api/predict', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      showError(err.detail || 'Prediction failed. Please check your inputs.');
+      return;
+    }
+    showResult(await res.json());
+  } catch { showError('Could not reach the prediction service. Please try again.'); }
+  finally  { setLoading('submit', false); }
+}
+
+// ── MRT line colours (official LTA palette) ───────────────────
+const MRT_LINE_COLORS = {
+  NS: { bg: '#DA2128', text: '#fff' },  // North-South     red
+  EW: { bg: '#009645', text: '#fff' },  // East-West       green
+  CG: { bg: '#009645', text: '#fff' },  // Changi branch   green
+  NE: { bg: '#9900AA', text: '#fff' },  // North-East      purple
+  CC: { bg: '#FA9E0D', text: '#fff' },  // Circle          orange
+  CE: { bg: '#FA9E0D', text: '#fff' },  // Circle ext.     orange
+  DT: { bg: '#005EC4', text: '#fff' },  // Downtown        blue
+  TE: { bg: '#9D5B25', text: '#fff' },  // Thomson-EC      brown
+  BP: { bg: '#748477', text: '#fff' },  // BP LRT          grey
+  SE: { bg: '#748477', text: '#fff' },  // Sengkang LRT    grey
+  SW: { bg: '#748477', text: '#fff' },
+  PE: { bg: '#748477', text: '#fff' },  // Punggol LRT     grey
+  PW: { bg: '#748477', text: '#fff' },
+  CR: { bg: '#028A8A', text: '#fff' },  // Cross Island    teal
+  JE: { bg: '#0099AA', text: '#fff' },  // Jurong Region   teal-blue
+  JS: { bg: '#0099AA', text: '#fff' },
+  JW: { bg: '#0099AA', text: '#fff' },
+};
+
+function mrtBadges(codesStr) {
+  return codesStr.split('/').map(code => {
+    const line = code.replace(/\d+[A-Z]?$/i, '');  // strip number suffix → "EW"
+    const c = MRT_LINE_COLORS[line] || { bg: '#667085', text: '#fff' };
+    return `<span style="display:inline-block;background:${c.bg};color:${c.text};`
+         + `padding:0.1rem 0.4rem;border-radius:0.25rem;`
+         + `font-size:0.7rem;font-weight:700;letter-spacing:0.03em;line-height:1.5;">`
+         + `${code}</span>`;
+  }).join(' ');
+}
+
+// ── Result ────────────────────────────────────────────────────
+function showResult(d) {
+  document.getElementById('result-price').textContent = fmtSGD(d.predicted_price);
+  document.getElementById('result-range').textContent =
+    `${fmtSGD(d.prediction_range.low)} – ${fmtSGD(d.prediction_range.high)}`;
+
+  const f = d.features_summary;
+
+  // Parse nearest MRT: "EW8/CC9 Paya Lebar" → code + name
+  const mrtParts = f.nearest_mrt.split(' ');
+  const mrtCode  = mrtParts[0];
+  const mrtName  = mrtParts.slice(1).join(' ');
+
+  const stats = [
+    {
+      icon:'🚇', label:'Nearest MRT',
+      value: mrtBadges(mrtCode),
+      sub:   `${mrtName} · ${fmtDist(f.dist_to_nearest_mrt_m)}`,
+    },
+    { icon:'📍', label:'CBD Distance',   value:`${f.dist_to_cbd_km.toFixed(1)} km` },
+    { icon:'🏫', label:'Nearest Pri',  value: f.nearest_primary_school.split(' · ')[0],   sub: f.nearest_primary_school.split(' · ')[1] },
+    { icon:'🏫', label:'Nearest Sec',  value: f.nearest_secondary_school.split(' · ')[0], sub: f.nearest_secondary_school.split(' · ')[1] },
+    { icon:'📋', label:'Lease Left',     value:`${Math.floor(f.remaining_lease_years)} yrs` },
+    {
+      icon:'🏘', label:'Mature Estate',
+      value: f.is_mature_estate
+        ? '<span class="tag tag-yes">Yes</span>'
+        : '<span class="tag tag-no">No</span>',
+    },
+    { icon:'🏗', label:'Building Age',   value:`${f.building_age} yrs` },
+  ];
+
+  document.getElementById('stats-grid').innerHTML = stats.map(st => `
+    <div class="stat-card">
+      <div class="stat-icon">${st.icon}</div>
+      <div class="stat-label">${st.label}</div>
+      <div class="stat-value">${st.value}</div>
+      ${st.sub ? `<div class="stat-sub">${st.sub}</div>` : ''}
+    </div>
+  `).join('');
+
+  document.getElementById('form-view').classList.add('hide');
+  const rv = document.getElementById('result-view');
+  rv.classList.add('show');
+  rv.querySelector('.card').classList.remove('fade-up');
+  void rv.querySelector('.card').offsetWidth;
+  rv.querySelector('.card').classList.add('fade-up');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showForm() {
+  document.getElementById('result-view').classList.remove('show');
+  document.getElementById('form-view').classList.remove('hide');
+}
+
+// ── Helpers ───────────────────────────────────────────────────
+function toStoreyRange(floor) {
+  const band = Math.floor((floor - 1) / 3);
+  const lo = String(band * 3 + 1).padStart(2, '0');
+  const hi = String(band * 3 + 3).padStart(2, '0');
+  return `${lo} TO ${hi}`;
+}
+
+function remainingLease(leaseYear) {
+  const now = new Date();
+  const end = new Date(leaseYear + 99, 0, 1);
+  const months = Math.max(0, Math.round((end - now) / (1000 * 60 * 60 * 24 * 30.44)));
+  const y = Math.floor(months / 12), m = months % 12;
+  return `${y} years ${String(m).padStart(2,'0')} months`;
+}
+
+function currentMonth() {
+  const n = new Date();
+  return `${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}`;
+}
+
+function fmtSGD(n) {
+  return 'S$' + Math.round(n).toLocaleString('en-SG');
+}
+
+function fmtDist(m) {
+  return m >= 1000 ? `${(m/1000).toFixed(1)} km` : `${Math.round(m)} m`;
+}
+
+function toTitle(str) {
+  return str.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+}
+
+function setLoading(type, on) {
+  if (type === 'lookup') {
+    document.getElementById('lookup-btn').disabled = on;
+    document.getElementById('lookup-text').classList.toggle('hidden', on);
+    document.getElementById('lookup-spin').classList.toggle('hidden', !on);
+  } else {
+    document.getElementById('submit-btn').disabled = on;
+    document.getElementById('submit-text').classList.toggle('hidden', on);
+    document.getElementById('submit-spin').classList.toggle('hidden', !on);
+  }
+}
+
+function showError(msg) {
+  const el = document.getElementById('error-box');
+  el.textContent = msg;
+  el.classList.add('show');
+}
+function clearError() {
+  document.getElementById('error-box').classList.remove('show');
+}
+
+// ── Feedback ──────────────────────────────────────────────────
+const STAR_LABELS = ['', 'Poor', 'Fair', 'Good', 'Great', 'Excellent'];
+let fbStars = 0;
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('fb-text').addEventListener('input', function() {
+    document.getElementById('fb-count').textContent = `${this.value.length} / 1000`;
+  });
+});
+
+function renderStars(filled) {
+  document.querySelectorAll('.star-btn').forEach((btn, i) => {
+    const on = i < filled;
+    btn.classList.toggle('filled', on);
+    btn.textContent = on ? '★' : '☆';
+  });
+}
+
+function setStars(n) {
+  fbStars = n;
+  renderStars(n);
+  document.getElementById('star-label').textContent = STAR_LABELS[n] || '';
+}
+
+function hoverStars(n) { renderStars(n); }
+function unhoverStars()  { renderStars(fbStars); }
+
+async function submitFeedback() {
+  if (fbStars === 0 && !document.getElementById('fb-text').value.trim()) {
+    document.getElementById('fb-status').textContent = 'Please select a star rating or leave a message.';
+    document.getElementById('fb-status').style.color = 'var(--danger)';
+    document.getElementById('fb-status').style.display = 'block';
+    return;
+  }
+
+  document.getElementById('fb-btn').disabled = true;
+  document.getElementById('fb-text-btn').classList.add('hidden');
+  document.getElementById('fb-spin').classList.remove('hidden');
+  const status = document.getElementById('fb-status');
+  status.style.display = 'none';
+
+  try {
+    const res = await fetch('/api/feedback', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        stars: fbStars,
+        message: document.getElementById('fb-text').value.trim(),
+      }),
+    });
+    if (res.ok) {
+      status.textContent = 'Thanks for your feedback!';
+      status.style.color = 'var(--success)';
+      document.getElementById('fb-text').value = '';
+      document.getElementById('fb-count').textContent = '0 / 1000';
+      setStars(0);
+    } else {
+      status.textContent = 'Could not send feedback. Please try again later.';
+      status.style.color = 'var(--danger)';
+    }
+  } catch {
+    status.textContent = 'Could not reach the server. Please try again later.';
+    status.style.color = 'var(--danger)';
+  } finally {
+    status.style.display = 'block';
+    document.getElementById('fb-btn').disabled = false;
+    document.getElementById('fb-text-btn').classList.remove('hidden');
+    document.getElementById('fb-spin').classList.add('hidden');
+  }
+}
+</script>
+</body>
+</html>

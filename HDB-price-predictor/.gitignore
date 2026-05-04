@@ -20,3 +20,6 @@ venv/
 
 # CatBoost training logs (generated during training runs)
 **/catboost_info/
+
+# Local environment variables (never commit secrets)
+.env

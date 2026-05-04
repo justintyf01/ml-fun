@@ -18,12 +18,15 @@ class ModelArtifacts:
         self.ohe_columns: list[str] = []
         self.aggregate_lookups: dict = {}
         self.reference_data: dict = {}
+        self.block_lookup: dict = {}
+        self.street_to_town: dict = {}
         self.onemap_cache: dict = {}
         self.school_data: list[dict] = []
         self.hawker_points: list[tuple] = []
         self.mall_points: list[tuple] = []
         self.park_points: list[tuple] = []
-        self.mrt_coords: list[tuple] = []
+        self.mrt_stations: list[tuple] = []  # (lat, lon, display_name) e.g. "EW8/CC9 Paya Lebar"
+        self.address_town_points: list[tuple] = []  # (lat, lon, town) for nearest-town lookup
 
     def load(self):
         """Load all artifacts from disk."""
@@ -52,6 +55,18 @@ class ModelArtifacts:
         with open(os.path.join(self.artifacts_dir, "reference_data.json")) as f:
             self.reference_data = json.load(f)
 
+        # Block lookup (for frontend auto-fill)
+        block_lookup_path = os.path.join(self.artifacts_dir, "block_lookup.json")
+        if os.path.exists(block_lookup_path):
+            with open(block_lookup_path) as f:
+                self.block_lookup = json.load(f)
+            print(f"  Loaded {len(self.block_lookup):,} blocks in lookup")
+
+        street_to_town_path = os.path.join(self.artifacts_dir, "street_to_town.json")
+        if os.path.exists(street_to_town_path):
+            with open(street_to_town_path) as f:
+                self.street_to_town = json.load(f)
+
         # Caches
         caches_dir = os.path.join(self.artifacts_dir, "caches")
 
@@ -68,8 +83,23 @@ class ModelArtifacts:
 
         mrt_path = os.path.join(caches_dir, "MRT Stations.csv")
         mrt_df = pd.read_csv(mrt_path)
-        self.mrt_coords = list(zip(mrt_df["Latitude"], mrt_df["Longitude"]))
-        print(f"  Loaded {len(self.mrt_coords)} MRT/LRT stations")
+        for _, row in mrt_df.iterrows():
+            clean_name = (str(row["STN_NAME"])
+                          .replace(" MRT STATION", "")
+                          .replace(" LRT STATION", "")
+                          .title())
+            display = f"{row['STN_NO']} {clean_name}"
+            self.mrt_stations.append((float(row["Latitude"]), float(row["Longitude"]), display))
+        print(f"  Loaded {len(self.mrt_stations)} MRT/LRT stations")
+
+        # Precompute (lat, lon, town) for nearest-town lookups
+        for key, coords in self.onemap_cache.items():
+            if key in self.block_lookup:
+                self.address_town_points.append((
+                    float(coords[0]), float(coords[1]),
+                    self.block_lookup[key]["town"],
+                ))
+        print(f"  Precomputed {len(self.address_town_points):,} address-town points")
 
         print("All artifacts loaded successfully.")
 

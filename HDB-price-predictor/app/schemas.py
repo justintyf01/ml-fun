@@ -13,6 +13,8 @@ class PredictionRequest(BaseModel):
     remaining_lease: str = Field(..., example="61 years 04 months")
     lease_commence_date: int = Field(..., example=1979)
     month: str = Field(..., example="2024-06")
+    lat: float | None = Field(None, example=1.3620)
+    lon: float | None = Field(None, example=103.8539)
 
 
 class PredictionRange(BaseModel):
@@ -23,9 +25,11 @@ class PredictionRange(BaseModel):
 class FeaturesSummary(BaseModel):
     dist_to_cbd_km: float
     dist_to_nearest_mrt_m: float
+    nearest_mrt: str
+    nearest_primary_school: str
+    nearest_secondary_school: str
     remaining_lease_years: float
     is_mature_estate: bool
-    num_schools_within_1km: int
     building_age: int
 
 
@@ -40,3 +44,8 @@ class OptionsResponse(BaseModel):
     flat_types: list[str]
     flat_models: list[str]
     street_names: list[str]
+
+
+class FeedbackRequest(BaseModel):
+    stars: int = Field(..., ge=0, le=5)
+    message: str = Field("", max_length=1000)

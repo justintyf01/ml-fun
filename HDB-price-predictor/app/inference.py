@@ -89,29 +89,54 @@ def build_features_single(req: PredictionRequest, artifacts: ModelArtifacts) -> 
     building_age = transaction_year - req.lease_commence_date
 
     # ── Location features ───────────────────────────────────
-    full_address = f"{req.block} {req.street_name}"
-    coords = artifacts.onemap_cache.get(full_address, [1.35, 103.8])
-    lat, lon = float(coords[0]), float(coords[1])
+    # Prefer coordinates supplied by the client (from OneMap geocoding).
+    # Fall back to pre-built cache; last resort: Singapore centre.
+    if req.lat is not None and req.lon is not None:
+        lat, lon = float(req.lat), float(req.lon)
+    else:
+        full_address = f"{req.block} {req.street_name}"
+        coords = artifacts.onemap_cache.get(full_address, [1.35, 103.8])
+        lat, lon = float(coords[0]), float(coords[1])
 
     dist_to_cbd = haversine_distance(lat, lon, CBD_COORD[0], CBD_COORD[1])
     dist_to_nearest_hub = min(
         haversine_distance(lat, lon, h[0], h[1]) for h in REGIONAL_HUBS
     )
-    dist_to_actual_nearest_mrt = min(
-        haversine_distance(lat, lon, m[0], m[1]) for m in artifacts.mrt_coords
-    )
+    _nearest_mrt = min(artifacts.mrt_stations, key=lambda m: haversine_distance(lat, lon, m[0], m[1]))
+    dist_to_actual_nearest_mrt = haversine_distance(lat, lon, _nearest_mrt[0], _nearest_mrt[1])
+    nearest_mrt_name = _nearest_mrt[2]
 
     # ── Amenity features ────────────────────────────────────
     is_mature_estate = 1 if req.town in MATURE_ESTATES else 0
 
-    school_points = [(s["lat"], s["lon"]) for s in artifacts.school_data if s["lat"] is not None]
+    valid_schools = [s for s in artifacts.school_data if s["lat"] is not None]
+    school_points = [(s["lat"], s["lon"]) for s in valid_schools]
     elite_points = [
-        (s["lat"], s["lon"]) for s in artifacts.school_data
-        if s["lat"] is not None and s["name"] in GEP_SCHOOLS
+        (s["lat"], s["lon"]) for s in valid_schools if s["name"] in GEP_SCHOOLS
     ]
     num_schools_within_1km = _count_within(lat, lon, school_points, 1000)
     dist_to_nearest_elite_school = _nearest_distance(lat, lon, elite_points)
     elite_school_within_1km = 1 if dist_to_nearest_elite_school <= 1000 else 0
+
+    primary_schools   = [s for s in valid_schools if "PRIMARY" in s["name"]]
+    secondary_schools = [s for s in valid_schools if "SECONDARY" in s["name"]]
+
+    def _nearest_school_label(schools):
+        if not schools:
+            return "N/A"
+        nearest = min(schools, key=lambda s: haversine_distance(lat, lon, s["lat"], s["lon"]))
+        dist_m  = haversine_distance(lat, lon, nearest["lat"], nearest["lon"])
+        # Drop redundant level/type words; the card label already says Pri/Sec
+        import re
+        short = re.sub(r"\s*\(\s*(PRIMARY|SECONDARY)\s*\)", "", nearest["name"], flags=re.IGNORECASE)
+        short = re.sub(r"\b(PRIMARY|SECONDARY)\s+SCHOOL\b", "SCHOOL", short, flags=re.IGNORECASE)
+        short = re.sub(r"\bSCHOOL\b", "", short, flags=re.IGNORECASE)
+        short = re.sub(r"\b(PRIMARY|SECONDARY)\b", "", short, flags=re.IGNORECASE)
+        short = re.sub(r"\s{2,}", " ", short).strip().title()
+        return f"{short} · {dist_m/1000:.1f} km"
+
+    nearest_primary_school   = _nearest_school_label(primary_schools)
+    nearest_secondary_school = _nearest_school_label(secondary_schools)
 
     dist_to_nearest_hawker = _nearest_distance(lat, lon, artifacts.hawker_points)
     num_hawkers_within_1km = _count_within(lat, lon, artifacts.hawker_points, 1000)
@@ -155,11 +180,14 @@ def build_features_single(req: PredictionRequest, artifacts: ModelArtifacts) -> 
         "num_schools_within_1km": num_schools_within_1km,
         "dist_to_nearest_elite_school": dist_to_nearest_elite_school,
         "elite_school_within_1km": elite_school_within_1km,
+        "nearest_primary_school": nearest_primary_school,
+        "nearest_secondary_school": nearest_secondary_school,
         "dist_to_nearest_hawker": dist_to_nearest_hawker,
         "num_hawkers_within_1km": num_hawkers_within_1km,
         "dist_to_nearest_mall": dist_to_nearest_mall,
         "num_malls_within_2km": num_malls_within_2km,
         "dist_to_nearest_park": dist_to_nearest_park,
+        "nearest_mrt_name": nearest_mrt_name,
         "lease_below_60": lease_below_60,
         "lease_below_40": lease_below_40,
         "building_age": building_age,
@@ -218,9 +246,11 @@ def predict(req: PredictionRequest, artifacts: ModelArtifacts) -> PredictionResp
         features_summary=FeaturesSummary(
             dist_to_cbd_km=round(raw_features["dist_to_cbd"] / 1000, 2),
             dist_to_nearest_mrt_m=round(raw_features["dist_to_actual_nearest_mrt"], 0),
+            nearest_mrt=raw_features["nearest_mrt_name"],
+            nearest_primary_school=raw_features["nearest_primary_school"],
+            nearest_secondary_school=raw_features["nearest_secondary_school"],
             remaining_lease_years=round(raw_features["remaining_lease_float"], 2),
             is_mature_estate=bool(raw_features["is_mature_estate"]),
-            num_schools_within_1km=raw_features["num_schools_within_1km"],
             building_age=raw_features["building_age"],
         ),
     )
