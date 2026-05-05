@@ -46,6 +46,7 @@
     /* ── Header ───────────────────────────────────────────── */
     header {
       background: var(--card);
+      border-top: 3px solid var(--primary);
       border-bottom: 1px solid var(--border);
       padding: 1rem 1.5rem;
     }
@@ -107,7 +108,7 @@
       font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--text-muted);
+      color: var(--primary);
       margin-bottom: 0.875rem;
     }
 
@@ -382,6 +383,12 @@
     }
     .back-btn:hover { color: var(--text); }
 
+    .result-hero {
+      background: var(--primary-pale);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.25rem;
+    }
     .result-eyebrow {
       font-size: 0.6875rem; font-weight: 700;
       letter-spacing: 0.08em; text-transform: uppercase;
@@ -389,7 +396,7 @@
     }
     .result-price {
       font-size: 2.75rem; font-weight: 700;
-      color: var(--text); line-height: 1.1;
+      color: var(--primary-dark); line-height: 1.1;
       margin-bottom: 0.25rem;
     }
     .result-range {
@@ -398,7 +405,7 @@
     }
     .result-note {
       font-size: 0.75rem; color: var(--text-light);
-      margin-bottom: 1.25rem;
+      margin-bottom: 0;
     }
 
     .divider { height: 1px; background: var(--border); margin: 1.25rem 0; }
@@ -411,7 +418,11 @@
     .stat-card {
       background: var(--bg); border-radius: var(--radius);
       padding: 0.75rem 0.875rem;
+      border-left: 3px solid transparent;
     }
+    .stat-card.accent-blue   { border-left-color: var(--primary); }
+    .stat-card.accent-green  { border-left-color: var(--success); }
+    .stat-card.accent-amber  { border-left-color: #F5A623; }
     .stat-icon  { font-size: 1.125rem; margin-bottom: 0.25rem; }
     .stat-label {
       font-size: 0.6875rem; font-weight: 600;
@@ -445,6 +456,19 @@
     }
 
     .hidden { display: none !important; }
+
+    /* ── Footer ───────────────────────────────────────────── */
+    .site-footer {
+      text-align: center;
+      padding: 1.5rem 1rem 2rem;
+      font-size: 0.75rem;
+      color: var(--text-light);
+    }
+    .site-footer a {
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+    .site-footer a:hover { color: var(--text); }
 
     /* ── Star rating ──────────────────────────────────────── */
     .star-group { display: flex; gap: 0.25rem; }
@@ -612,10 +636,12 @@
     <div class="card fade-up">
       <button class="back-btn" onclick="showForm()">← Back</button>
 
-      <p class="result-eyebrow">Estimated Resale Price</p>
-      <p class="result-price" id="result-price">—</p>
-      <p class="result-range" id="result-range">—</p>
-      <p class="result-note">±5% model confidence interval</p>
+      <div class="result-hero">
+        <p class="result-eyebrow">Estimated Resale Price</p>
+        <p class="result-price" id="result-price">—</p>
+        <p class="result-range" id="result-range">—</p>
+        <p class="result-note">±5% model confidence interval</p>
+      </div>
 
       <div class="divider"></div>
 
@@ -669,6 +695,10 @@
 
 </div>
 </main>
+
+<footer class="site-footer">
+  Built by <a href="https://github.com/justintyf01" target="_blank" rel="noopener">Justin Teo</a>
+</footer>
 
 <script>
 // ── State ─────────────────────────────────────────────────────
@@ -1022,25 +1052,25 @@ function showResult(d) {
 
   const stats = [
     {
-      icon:'🚇', label:'Nearest MRT',
+      accent:'accent-blue', icon:'🚇', label:'Nearest MRT',
       value: mrtBadges(mrtCode),
       sub:   `${mrtName} · ${fmtDist(f.dist_to_nearest_mrt_m)}`,
     },
-    { icon:'📍', label:'CBD Distance',   value:`${f.dist_to_cbd_km.toFixed(1)} km` },
-    { icon:'🏫', label:'Nearest Pri',  value: f.nearest_primary_school.split(' · ')[0],   sub: f.nearest_primary_school.split(' · ')[1] },
-    { icon:'🏫', label:'Nearest Sec',  value: f.nearest_secondary_school.split(' · ')[0], sub: f.nearest_secondary_school.split(' · ')[1] },
-    { icon:'📋', label:'Lease Left',     value:`${Math.floor(f.remaining_lease_years)} yrs` },
+    { accent:'accent-blue',  icon:'📍', label:'CBD Distance',   value:`${f.dist_to_cbd_km.toFixed(1)} km` },
+    { accent:'accent-green', icon:'🏫', label:'Nearest Pri',  value: f.nearest_primary_school.split(' · ')[0],   sub: f.nearest_primary_school.split(' · ')[1] },
+    { accent:'accent-green', icon:'🏫', label:'Nearest Sec',  value: f.nearest_secondary_school.split(' · ')[0], sub: f.nearest_secondary_school.split(' · ')[1] },
+    { accent:'accent-amber', icon:'📋', label:'Lease Left',     value:`${Math.floor(f.remaining_lease_years)} yrs` },
     {
-      icon:'🏘', label:'Mature Estate',
+      accent:'accent-amber', icon:'🏘', label:'Mature Estate',
       value: f.is_mature_estate
         ? '<span class="tag tag-yes">Yes</span>'
         : '<span class="tag tag-no">No</span>',
     },
-    { icon:'🏗', label:'Building Age',   value:`${f.building_age} yrs` },
+    { accent:'accent-amber', icon:'🏗', label:'Building Age',   value:`${f.building_age} yrs` },
   ];
 
   document.getElementById('stats-grid').innerHTML = stats.map(st => `
-    <div class="stat-card">
+    <div class="stat-card ${st.accent}">
       <div class="stat-icon">${st.icon}</div>
       <div class="stat-label">${st.label}</div>
       <div class="stat-value">${st.value}</div>
