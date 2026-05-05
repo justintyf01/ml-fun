@@ -45,28 +45,44 @@
 
     /* ── Header ───────────────────────────────────────────── */
     header {
-      background: var(--card);
-      border-top: 3px solid var(--primary);
-      border-bottom: 1px solid var(--border);
-      padding: 1rem 1.5rem;
+      position: relative;
+      background-image: url('/static/hero.jpg');
+      background-size: cover;
+      background-position: center 55%;
+      height: 220px;
+    }
+    header::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.40) 100%);
+      pointer-events: none;
     }
     .header-inner {
+      position: absolute;
+      top: 28px; bottom: 16px;
+      left: 50%; transform: translateX(-50%);
+      width: calc(100% - 2rem);
       max-width: 540px;
-      margin: 0 auto;
-      padding: 0 1rem;
+      z-index: 1;
+      background: var(--card);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      padding: 1rem 1.25rem;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
+      justify-content: center;
+      gap: 0.5rem;
+      text-align: center;
     }
-    header h1 { font-size: 1.125rem; font-weight: 700; }
-    header p  { font-size: 0.875rem; color: var(--text-muted); margin-top: 0.125rem; }
+    header h1 { font-size: 1.25rem; font-weight: 700; }
+    header p  { font-size: 0.875rem; color: var(--text-muted); }
 
     .header-links {
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 0.375rem;
-      flex-shrink: 0;
     }
     .header-link {
       display: inline-flex;
@@ -457,42 +473,6 @@
 
     .hidden { display: none !important; }
 
-    /* ── Hero banner ──────────────────────────────────────── */
-    .hero {
-      position: relative;
-      width: 100%;
-      height: 200px;
-      overflow: hidden;
-    }
-    .hero img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      object-position: center 55%;
-      display: block;
-    }
-    .hero::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(to bottom,
-        rgba(0,0,0,0.05) 0%,
-        rgba(0,0,0,0.35) 100%);
-    }
-    .hero-text {
-      position: absolute;
-      bottom: 1rem; left: 1.5rem; right: 1.5rem;
-      z-index: 1;
-      color: #fff;
-    }
-    .hero-text h2 {
-      font-size: 1.375rem; font-weight: 700; line-height: 1.2;
-      text-shadow: 0 1px 4px rgba(0,0,0,0.4);
-    }
-    .hero-text p {
-      font-size: 0.8125rem; margin-top: 0.2rem;
-      opacity: 0.85;
-      text-shadow: 0 1px 3px rgba(0,0,0,0.4);
-    }
-
     /* ── Footer ───────────────────────────────────────────── */
     .site-footer {
       text-align: center;
@@ -522,30 +502,20 @@
 
 <header>
   <div class="header-inner">
-    <div>
-      <h1>HDB Resale Estimator <span style="font-size:0.6875rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;background:var(--primary-pale);color:var(--primary);padding:0.15rem 0.45rem;border-radius:2rem;vertical-align:middle;">Beta</span></h1>
-      <p>Instant price estimates for any HDB flat in Singapore</p>
-    </div>
+    <h1>HDB Resale Estimator <span style="font-size:0.6875rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;background:var(--primary-pale);color:var(--primary);padding:0.15rem 0.45rem;border-radius:2rem;vertical-align:middle;">Beta</span></h1>
     <nav class="header-links">
       <a href="https://portfolio-opal-sigma-42.vercel.app/" target="_blank" rel="noopener" class="header-link">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
         Portfolio
       </a>
-      <a href="https://github.com/justintyf01" target="_blank" rel="noopener" class="header-link" title="GitHub">
+      <a href="https://github.com/justintyf01" target="_blank" rel="noopener" class="header-link">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.341-3.369-1.341-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
         GitHub
       </a>
     </nav>
+    <p>Instant price estimates for any HDB flat in Singapore</p>
   </div>
 </header>
-
-<div class="hero">
-  <img src="/static/hero.jpg" alt="Singapore HDB flats at golden hour">
-  <div class="hero-text">
-    <h2>Find Your Flat's Value</h2>
-    <p>Instant resale price estimates powered by machine learning</p>
-  </div>
-</div>
 
 <main>
 <div class="container">
