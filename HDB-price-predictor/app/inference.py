@@ -8,6 +8,7 @@ import re
 
 import numpy as np
 import pandas as pd
+import xgboost as xgb
 
 from app.model_loader import ModelArtifacts
 from app.schemas import PredictionRequest, PredictionResponse, PredictionRange, FeaturesSummary
@@ -233,7 +234,7 @@ def predict(req: PredictionRequest, artifacts: ModelArtifacts) -> PredictionResp
         # Reindex to match training columns
         df = df.reindex(columns=artifacts.ohe_columns, fill_value=0)
 
-        pred = float(artifacts.models[fold_i].predict(df)[0])
+        pred = float(artifacts.models[fold_i].predict(xgb.DMatrix(df))[0])
         fold_predictions.append(pred)
 
     mean_pred = int(round(np.mean(fold_predictions)))

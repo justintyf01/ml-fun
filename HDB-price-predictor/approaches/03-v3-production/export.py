@@ -266,7 +266,7 @@ def main():
         fold_importances.append(model.get_booster().get_score(importance_type="gain"))
         test_preds += model.predict(X_test_ohe) / N_FOLDS
 
-        model.save_model(os.path.join(fold_dir, "xgboost.json"))
+        model.get_booster().save_model(os.path.join(fold_dir, "xgboost.json"))
 
     # ── Ensemble test evaluation ────────────────────────────────
     test_r2 = r2_score(y_test, test_preds)

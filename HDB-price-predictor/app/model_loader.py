@@ -13,7 +13,7 @@ class ModelArtifacts:
 
     def __init__(self, artifacts_dir: str = "model_artifacts"):
         self.artifacts_dir = artifacts_dir
-        self.models: list[xgb.XGBRegressor] = []
+        self.models: list[xgb.Booster] = []
         self.target_encodings: list[dict] = []
         self.ohe_columns: list[str] = []
         self.aggregate_lookups: dict = {}
@@ -34,7 +34,7 @@ class ModelArtifacts:
 
         # Load single best fold
         fold_dir = os.path.join(self.artifacts_dir, f"fold_{BEST_FOLD}")
-        model = xgb.XGBRegressor()
+        model = xgb.Booster()
         model.load_model(os.path.join(fold_dir, "xgboost.json"))
         self.models.append(model)
 
