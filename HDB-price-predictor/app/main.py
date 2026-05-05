@@ -53,6 +53,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.mount("/static", StaticFiles(directory="app/static"), name="static")
+
 
 @app.get("/api/health")
 async def health():

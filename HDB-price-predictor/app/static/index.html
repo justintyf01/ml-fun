@@ -457,6 +457,42 @@
 
     .hidden { display: none !important; }
 
+    /* ── Hero banner ──────────────────────────────────────── */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 200px;
+      overflow: hidden;
+    }
+    .hero img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center 55%;
+      display: block;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom,
+        rgba(0,0,0,0.05) 0%,
+        rgba(0,0,0,0.35) 100%);
+    }
+    .hero-text {
+      position: absolute;
+      bottom: 1rem; left: 1.5rem; right: 1.5rem;
+      z-index: 1;
+      color: #fff;
+    }
+    .hero-text h2 {
+      font-size: 1.375rem; font-weight: 700; line-height: 1.2;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+    }
+    .hero-text p {
+      font-size: 0.8125rem; margin-top: 0.2rem;
+      opacity: 0.85;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+    }
+
     /* ── Footer ───────────────────────────────────────────── */
     .site-footer {
       text-align: center;
@@ -491,8 +527,7 @@
       <p>Instant price estimates for any HDB flat in Singapore</p>
     </div>
     <nav class="header-links">
-      <a href="#" target="_blank" rel="noopener" class="header-link">
-        <!-- Replace # with your personal website URL -->
+      <a href="https://portfolio-opal-sigma-42.vercel.app/" target="_blank" rel="noopener" class="header-link">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
         Portfolio
       </a>
@@ -503,6 +538,14 @@
     </nav>
   </div>
 </header>
+
+<div class="hero">
+  <img src="/static/hero.jpg" alt="Singapore HDB flats at golden hour">
+  <div class="hero-text">
+    <h2>Find Your Flat's Value</h2>
+    <p>Instant resale price estimates powered by machine learning</p>
+  </div>
+</div>
 
 <main>
 <div class="container">
@@ -697,7 +740,9 @@
 </main>
 
 <footer class="site-footer">
-  Built by <a href="https://github.com/justintyf01" target="_blank" rel="noopener">Justin Teo</a>
+  Built by <a href="https://portfolio-opal-sigma-42.vercel.app/" target="_blank" rel="noopener">Justin Teo</a>
+  &nbsp;·&nbsp;
+  Photo by <a href="https://unsplash.com/photos/a-view-of-a-city-with-tall-buildings-VIHH4O59y_0?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink" target="_blank" rel="noopener">Unsplash</a>
 </footer>
 
 <script>
