@@ -35,7 +35,7 @@ class ModelArtifacts:
         # Load single best fold
         fold_dir = os.path.join(self.artifacts_dir, f"fold_{BEST_FOLD}")
         model = xgb.Booster()
-        model.load_model(os.path.join(fold_dir, "xgboost.json"))
+        model.load_model(os.path.join(fold_dir, "xgboost.ubj"))
         self.models.append(model)
 
         with open(os.path.join(fold_dir, "target_encodings.json")) as f:
