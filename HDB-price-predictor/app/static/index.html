@@ -10,21 +10,21 @@
   <meta name="keywords" content="HDB resale price, Singapore flat valuation, HDB price calculator, resale flat estimate, Singapore property price">
   <meta name="author" content="Justin Teo">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://hdb-price-predictor.onrender.com/">
+  <link rel="canonical" href="https://hdbhowmuch.jships.dev/">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://hdb-price-predictor.onrender.com/">
+  <meta property="og:url" content="https://hdbhowmuch.jships.dev/">
   <meta property="og:title" content="HDB Resale Price Estimator (Singapore)">
   <meta property="og:description" content="Instant resale price estimates for any HDB flat. XGBoost model trained on 227,000+ Singapore transactions. R² = 0.98.">
-  <meta property="og:image" content="https://hdb-price-predictor.onrender.com/static/hero.jpg">
+  <meta property="og:image" content="https://hdbhowmuch.jships.dev/static/hero.jpg">
   <meta property="og:locale" content="en_SG">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="HDB Resale Price Estimator (Singapore)">
   <meta name="twitter:description" content="Instant resale price estimates for any HDB flat in Singapore.">
-  <meta name="twitter:image" content="https://hdb-price-predictor.onrender.com/static/hero.jpg">
+  <meta name="twitter:image" content="https://hdbhowmuch.jships.dev/static/hero.jpg">
 
   <!-- Structured data -->
   <script type="application/ld+json">
@@ -32,7 +32,7 @@
     "@context": "https://schema.org",
     "@type": "WebApplication",
     "name": "HDB Resale Price Estimator",
-    "url": "https://hdb-price-predictor.onrender.com/",
+    "url": "https://hdbhowmuch.jships.dev/",
     "description": "Machine learning tool that predicts Singapore HDB resale flat prices using XGBoost trained on 227,000+ transactions.",
     "applicationCategory": "FinanceApplication",
     "operatingSystem": "Any",
@@ -924,6 +924,41 @@
 
 </div><!-- /page-wrap -->
 </main>
+
+<!-- SEO content: crawlable by Google, not part of the main UI -->
+<section aria-label="About this tool" style="max-width:920px;margin:0 auto;padding:0 1rem 2rem;color:var(--text-light);font-size:0.8125rem;line-height:1.6;">
+  <h2 style="font-size:0.875rem;font-weight:600;color:var(--text-muted);margin-bottom:0.75rem;">About this HDB Resale Price Estimator</h2>
+  <p style="margin-bottom:0.5rem;">This free tool estimates the resale price of any HDB flat in Singapore using a machine learning model trained on 227,000+ transactions from 2017 to present. It covers all 26 HDB towns and flat types — from 1 Room to Multi-Generation — and returns an instant price estimate based on location, storey, floor area, lease remaining, and proximity to amenities such as MRT stations, schools, hawker centres, and shopping malls.</p>
+  <p style="margin-bottom:1rem;">The model achieves R² = 0.980 with a typical prediction error of around S$33,000, making it one of the most accurate publicly available HDB resale price calculators in Singapore.</p>
+
+  <h2 style="font-size:0.875rem;font-weight:600;color:var(--text-muted);margin-bottom:0.75rem;">Frequently Asked Questions</h2>
+  <dl style="display:flex;flex-direction:column;gap:0.75rem;">
+    <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+      <dt style="font-weight:500;color:var(--text-muted);" itemprop="name">How accurate is this HDB resale price estimate?</dt>
+      <dd style="margin:0.25rem 0 0;" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <span itemprop="text">The model has an R² score of 0.980 — meaning it explains 98% of price variation across all HDB flats. The typical prediction error is around S$33,000. Results are most accurate for standard flat types in established estates with good transaction history.</span>
+      </dd>
+    </div>
+    <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+      <dt style="font-weight:500;color:var(--text-muted);" itemprop="name">What data is this HDB price calculator based on?</dt>
+      <dd style="margin:0.25rem 0 0;" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <span itemprop="text">The model is trained on 227,425 HDB resale transactions from January 2017 to present, sourced from data.gov.sg. Features include distance to CBD, MRT stations, elite primary schools, hawker centres, shopping malls, and parks — all geocoded using the OneMap API.</span>
+      </dd>
+    </div>
+    <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+      <dt style="font-weight:500;color:var(--text-muted);" itemprop="name">Which HDB towns and flat types are supported?</dt>
+      <dd style="margin:0.25rem 0 0;" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <span itemprop="text">All 26 HDB towns in Singapore are supported, including Ang Mo Kio, Bedok, Bishan, Bukit Merah, Clementi, Hougang, Jurong East, Kallang/Whampoa, Punggol, Queenstown, Sengkang, Tampines, Toa Payoh, Woodlands, and Yishun. Flat types from 1 Room through Executive and Multi-Generation are all covered.</span>
+      </dd>
+    </div>
+    <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+      <dt style="font-weight:500;color:var(--text-muted);" itemprop="name">Can I use this as an official HDB valuation?</dt>
+      <dd style="margin:0.25rem 0 0;" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <span itemprop="text">No. This tool provides an indicative estimate based on historical transaction data and machine learning. It is not an official valuation. For formal valuations required for bank loans or CPF usage, you must engage a licensed property valuer or use HDB's official e-Valuation service.</span>
+      </dd>
+    </div>
+  </dl>
+</section>
 
 <footer class="site-footer">
   <div>

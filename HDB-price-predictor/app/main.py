@@ -137,3 +137,13 @@ async def submit_feedback(request: Request, body: FeedbackRequest):
 @app.get("/")
 async def serve_frontend():
     return FileResponse("app/static/index.html")
+
+
+@app.get("/robots.txt", include_in_schema=False)
+async def robots():
+    return FileResponse("app/static/robots.txt", media_type="text/plain")
+
+
+@app.get("/sitemap.xml", include_in_schema=False)
+async def sitemap():
+    return FileResponse("app/static/sitemap.xml", media_type="application/xml")
