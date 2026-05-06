@@ -3,10 +3,48 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HDB Resale Estimator</title>
+
+  <!-- Primary SEO -->
+  <title>HDB Resale Price Estimator (Singapore) - Flat Valuation Tool</title>
+  <meta name="description" content="Instantly estimate the resale price of any HDB flat in Singapore. Powered by XGBoost trained on 227,000+ transactions. Enter a postal code and get an accurate price estimate in seconds.">
+  <meta name="keywords" content="HDB resale price, Singapore flat valuation, HDB price calculator, resale flat estimate, Singapore property price">
+  <meta name="author" content="Justin Teo">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://hdb-price-predictor.onrender.com/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://hdb-price-predictor.onrender.com/">
+  <meta property="og:title" content="HDB Resale Price Estimator (Singapore)">
+  <meta property="og:description" content="Instant resale price estimates for any HDB flat. XGBoost model trained on 227,000+ Singapore transactions. R² = 0.98.">
+  <meta property="og:image" content="https://hdb-price-predictor.onrender.com/static/hero.jpg">
+  <meta property="og:locale" content="en_SG">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="HDB Resale Price Estimator (Singapore)">
+  <meta name="twitter:description" content="Instant resale price estimates for any HDB flat in Singapore.">
+  <meta name="twitter:image" content="https://hdb-price-predictor.onrender.com/static/hero.jpg">
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "HDB Resale Price Estimator",
+    "url": "https://hdb-price-predictor.onrender.com/",
+    "description": "Machine learning tool that predicts Singapore HDB resale flat prices using XGBoost trained on 227,000+ transactions.",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "SGD" },
+    "author": { "@type": "Person", "name": "Justin Teo", "url": "https://portfolio-opal-sigma-42.vercel.app/" }
+  }
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -43,66 +81,87 @@
       line-height: 1.5;
     }
 
+    /* ── Keyframes ────────────────────────────────────────── */
+    @keyframes spin         { to { transform: rotate(360deg); } }
+    @keyframes fadeUp       { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes slideDown    { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes slideInRight { from { opacity:0; transform:translateX(28px); } to { opacity:1; transform:translateX(0); } }
+    @keyframes slideOutLeft { from { opacity:1; transform:translateX(0); }   to { opacity:0; transform:translateX(-28px); } }
+    @keyframes slideInLeft  { from { opacity:0; transform:translateX(-28px); } to { opacity:1; transform:translateX(0); } }
+    @keyframes slideOutRight{ from { opacity:1; transform:translateX(0); }   to { opacity:0; transform:translateX(28px); } }
+    @keyframes pricePop     { 0% { opacity:0; transform:scale(0.82); } 65% { transform:scale(1.04); } 100% { opacity:1; transform:scale(1); } }
+    @keyframes shimmer      { 0% { background-position:200% center; } 100% { background-position:-200% center; } }
+    @keyframes toastIn      { from { opacity:0; transform:translateX(-50%) translateY(-12px); } to { opacity:1; transform:translateX(-50%) translateY(0); } }
+    @keyframes toastOut     { from { opacity:1; transform:translateX(-50%) translateY(0); }    to { opacity:0; transform:translateX(-50%) translateY(-12px); } }
+    @keyframes barGrow      { from { width:0; } to { width:100%; } }
+    @keyframes fadeSideIn   { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+
     /* ── Header ───────────────────────────────────────────── */
     header {
       position: relative;
       background-image: url('/static/hero.jpg');
       background-size: cover;
       background-position: center 55%;
-      height: 220px;
+      height: 240px;
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      padding: 24px 1rem 20px;
     }
     header::before {
       content: '';
       position: absolute; inset: 0;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.40) 100%);
+      background: linear-gradient(to bottom, rgba(0,0,0,0.06) 0%, rgba(0,0,0,0.42) 100%);
       pointer-events: none;
     }
     .header-inner {
-      position: absolute;
-      top: 28px; bottom: 16px;
-      left: 50%; transform: translateX(-50%);
-      width: calc(100% - 2rem);
-      max-width: 540px;
+      position: relative;
       z-index: 1;
+      width: 100%;
+      max-width: 540px;
       background: var(--card);
       border-radius: var(--radius-lg);
       box-shadow: var(--shadow-md);
-      padding: 1rem 1.25rem;
+      padding: 1.125rem 1.5rem;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 0.5rem;
+      gap: 0.4rem;
       text-align: center;
+      animation: fadeUp 0.45s cubic-bezier(0.22,1,0.36,1) both;
     }
-    header h1 { font-size: 1.25rem; font-weight: 700; }
-    header p  { font-size: 0.875rem; color: var(--text-muted); }
+    header h1 { font-size: 1.25rem; font-weight: 700; line-height: 1.3; }
+    .header-desc {
+      font-size: 0.875rem; color: var(--text-muted); line-height: 1.45;
+      max-width: 420px;
+    }
+    .header-meta {
+      font-size: 0.75rem; color: var(--text-light);
+      display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; justify-content: center;
+    }
+    .header-meta-dot { color: var(--border); }
 
-    .header-links {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.375rem;
-    }
-    .header-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      font-size: 0.8125rem;
-      font-weight: 500;
-      color: var(--text-muted);
-      text-decoration: none;
-      padding: 0.25rem 0.5rem;
-      border-radius: var(--radius);
-      transition: color 0.15s, background 0.15s;
-    }
-    .header-link:hover { color: var(--text); background: var(--bg); }
-
-    /* ── Layout ───────────────────────────────────────────── */
-    .container {
-      max-width: 540px;
+    /* ── Page layout (2-column on desktop) ────────────────── */
+    .page-wrap {
+      max-width: 920px;
       margin: 0 auto;
       padding: 1.5rem 1rem 3rem;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+      align-items: start;
+    }
+    @media (min-width: 800px) {
+      .page-wrap {
+        grid-template-columns: minmax(0, 540px) 1fr;
+        gap: 1.5rem;
+      }
+    }
+
+    .sidebar {
+      display: flex; flex-direction: column; gap: 1rem;
+      animation: fadeUp 0.4s 0.2s ease both;
     }
 
     /* ── Card ─────────────────────────────────────────────── */
@@ -112,6 +171,12 @@
       box-shadow: var(--shadow-md);
       padding: 1.5rem;
     }
+    .card-sm {
+      background: var(--card);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      padding: 1.25rem;
+    }
 
     .section + .section {
       margin-top: 1.5rem;
@@ -120,37 +185,73 @@
     }
 
     .section-label {
-      font-size: 0.6875rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--primary);
-      margin-bottom: 0.875rem;
+      font-size: 0.6875rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--primary); margin-bottom: 0.875rem;
+    }
+
+    /* ── Sidebar: How it works ────────────────────────────── */
+    .how-steps {
+      list-style: none; display: flex; flex-direction: column; gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+    .how-step {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+    }
+    .how-num {
+      flex-shrink: 0; width: 1.5rem; height: 1.5rem;
+      background: var(--primary-pale); color: var(--primary);
+      border-radius: 50%; font-size: 0.75rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 0.1rem;
+    }
+    .how-text { font-size: 0.875rem; color: var(--text-muted); line-height: 1.4; }
+
+    .model-stats {
+      border-top: 1px solid var(--border); padding-top: 1rem;
+      display: flex; flex-direction: column; gap: 0.5rem;
+    }
+    .model-stat-row {
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .model-stat-label { font-size: 0.8125rem; color: var(--text-muted); }
+    .model-stat-val   { font-size: 0.8125rem; font-weight: 600; color: var(--text); }
+
+    /* ── Sidebar: Result explanations ────────────────────── */
+    .explain-block {
+      display: flex; gap: 0.75rem; margin-bottom: 1rem;
+    }
+    .explain-icon {
+      flex-shrink: 0; font-size: 1.25rem; margin-top: 0.05rem;
+    }
+    .explain-title {
+      font-size: 0.875rem; font-weight: 600; color: var(--text);
+      margin-bottom: 0.3rem;
+    }
+    .explain-body {
+      font-size: 0.8125rem; color: var(--text-muted); line-height: 1.5;
+    }
+    .explain-note {
+      margin-top: 0.75rem; padding: 0.625rem 0.75rem;
+      background: var(--bg); border-radius: var(--radius);
+      font-size: 0.75rem; color: var(--text-muted); line-height: 1.5;
+      border-left: 3px solid var(--border);
     }
 
     /* ── Form controls ────────────────────────────────────── */
     .field-label {
-      display: block;
-      font-size: 0.875rem;
-      font-weight: 500;
-      color: var(--text);
-      margin-bottom: 0.375rem;
+      display: block; font-size: 0.875rem; font-weight: 500;
+      color: var(--text); margin-bottom: 0.375rem;
     }
 
     .input {
-      width: 100%;
-      padding: 0.5625rem 0.75rem;
-      font-family: var(--font);
-      font-size: 1rem;
-      color: var(--text);
-      background: var(--card);
-      border: 1px solid var(--border-input);
-      border-radius: var(--radius);
+      width: 100%; padding: 0.5625rem 0.75rem;
+      font-family: var(--font); font-size: 1rem;
+      color: var(--text); background: var(--card);
+      border: 1px solid var(--border-input); border-radius: var(--radius);
       outline: none;
       transition: border-color 0.15s, box-shadow 0.15s;
-      -webkit-appearance: none;
-      /* hide browser spin arrows on number inputs */
-      -moz-appearance: textfield;
+      -webkit-appearance: none; -moz-appearance: textfield;
     }
     .input::-webkit-outer-spin-button,
     .input::-webkit-inner-spin-button { -webkit-appearance: none; }
@@ -160,61 +261,39 @@
     }
     .input::placeholder { color: var(--text-light); }
     .input:disabled { background: #E4E7EC; cursor: not-allowed; color: var(--text-muted); border-color: var(--border); }
-
-    /* Warning state */
     .input.warn { border-color: var(--warn); background: var(--warn-pale); }
     .input.warn:focus { box-shadow: 0 0 0 3px rgba(220,104,3,0.12); }
     .field-warn {
-      margin-top: 0.375rem;
-      font-size: 0.8125rem;
-      color: var(--warn);
-      display: flex;
-      align-items: flex-start;
-      gap: 0.3rem;
+      margin-top: 0.375rem; font-size: 0.8125rem; color: var(--warn);
+      display: flex; align-items: flex-start; gap: 0.3rem;
     }
 
-    /* Postal row */
     .input-row { display: flex; gap: 0.5rem; }
-    .input-row .input {
-      flex: 1;
-      font-size: 1.125rem;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-    }
+    .input-row .input { flex: 1; font-size: 1.125rem; font-weight: 600; letter-spacing: 0.04em; }
 
     /* Address badge */
     .address-badge {
-      display: none;
-      align-items: center;
-      gap: 0.5rem;
-      margin-top: 0.75rem;
-      padding: 0.625rem 0.875rem;
-      background: var(--primary-pale);
-      border-radius: var(--radius);
+      display: none; align-items: center; gap: 0.5rem;
+      margin-top: 0.75rem; padding: 0.625rem 0.875rem;
+      background: var(--primary-pale); border-radius: var(--radius);
       font-size: 0.875rem;
     }
-    .address-badge.show { display: flex; }
+    .address-badge.show { display: flex; animation: slideDown 0.25s ease both; }
     .address-badge .addr-text { flex: 1; font-weight: 600; color: var(--primary-dark); }
     .address-badge .addr-sub  { font-size: 0.75rem; font-weight: 400; color: var(--text-muted); }
     .address-badge .clear-btn {
       background: none; border: none; cursor: pointer;
       color: var(--text-muted); font-size: 1rem; padding: 0; line-height: 1;
+      transition: color 0.15s, transform 0.2s;
     }
-    .address-badge .clear-btn:hover { color: var(--text); }
+    .address-badge .clear-btn:hover { color: var(--text); transform: rotate(90deg); }
 
-    /* Manual toggle link */
     .link-btn {
-      display: inline-block;
-      margin-top: 0.625rem;
-      font-size: 0.8125rem;
-      color: var(--primary);
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-family: var(--font);
-      padding: 0;
-      text-decoration: underline;
-      text-decoration-color: transparent;
+      display: inline-block; margin-top: 0.625rem;
+      font-size: 0.8125rem; color: var(--primary);
+      background: none; border: none; cursor: pointer;
+      font-family: var(--font); padding: 0;
+      text-decoration: underline; text-decoration-color: transparent;
       transition: text-decoration-color 0.15s;
     }
     .link-btn:hover { text-decoration-color: var(--primary); }
@@ -223,48 +302,35 @@
     .pill-group { display: flex; flex-wrap: wrap; gap: 0.5rem; }
     .pill-btn {
       padding: 0.375rem 0.875rem;
-      border: 1.5px solid var(--border-input);
-      border-radius: 2rem;
-      font-family: var(--font);
-      font-size: 0.8125rem;
-      font-weight: 500;
-      color: var(--text-muted);
-      background: var(--card);
-      cursor: pointer;
-      transition: all 0.15s;
-      white-space: nowrap;
+      border: 1.5px solid var(--border-input); border-radius: 2rem;
+      font-family: var(--font); font-size: 0.8125rem; font-weight: 500;
+      color: var(--text-muted); background: var(--card);
+      cursor: pointer; transition: all 0.15s; white-space: nowrap;
+      user-select: none;
     }
-    .pill-btn:hover { border-color: var(--primary); color: var(--primary); }
+    .pill-btn:hover  { border-color: var(--primary); color: var(--primary); }
+    .pill-btn:active { transform: scale(0.94); }
     .pill-btn.active {
-      border-color: var(--primary);
-      background: var(--primary-pale);
-      color: var(--primary);
-      font-weight: 600;
+      border-color: var(--primary); background: var(--primary-pale);
+      color: var(--primary); font-weight: 600;
     }
 
-    /* Two-column grid */
     .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 
-    /* Stepper (floor) */
+    /* Stepper */
     .stepper {
-      display: flex;
-      align-items: center;
-      border: 1px solid var(--border-input);
-      border-radius: var(--radius);
-      overflow: hidden;
-      transition: box-shadow 0.15s, border-color 0.15s;
+      display: flex; align-items: center;
+      border: 1px solid var(--border-input); border-radius: var(--radius);
+      overflow: hidden; transition: box-shadow 0.15s, border-color 0.15s;
     }
     .stepper:focus-within {
       border-color: var(--primary);
       box-shadow: 0 0 0 3px rgba(31,105,255,0.12);
     }
     .stepper input {
-      flex: 1; width: 0;
-      border: none; outline: none;
-      font-family: var(--font);
-      font-size: 1.125rem; font-weight: 700;
-      color: var(--text); text-align: center;
-      padding: 0.5rem 0;
+      flex: 1; width: 0; border: none; outline: none;
+      font-family: var(--font); font-size: 1.125rem; font-weight: 700;
+      color: var(--text); text-align: center; padding: 0.5rem 0;
       -moz-appearance: textfield;
     }
     .stepper input::-webkit-outer-spin-button,
@@ -272,15 +338,14 @@
     .stepper .step-btn {
       background: var(--bg); border: none;
       width: 2.25rem; height: 2.625rem;
-      font-size: 1.25rem; font-weight: 300;
-      color: var(--text-muted);
+      font-size: 1.25rem; font-weight: 300; color: var(--text-muted);
       cursor: pointer;
       display: flex; align-items: center; justify-content: center;
-      transition: background 0.1s; flex-shrink: 0; user-select: none;
+      transition: background 0.1s, color 0.1s; flex-shrink: 0; user-select: none;
     }
-    .stepper .step-btn:hover { background: #E4E7EC; color: var(--text); }
+    .stepper .step-btn:hover  { background: #E4E7EC; color: var(--text); }
+    .stepper .step-btn:active { background: #D0D5DD; }
 
-    /* Input with auto badge */
     .input-wrap { position: relative; }
     .input-wrap .input { padding-right: 3.75rem; }
     .auto-tag {
@@ -288,122 +353,131 @@
       transform: translateY(-50%);
       background: var(--success-pale); color: var(--success);
       font-size: 0.6875rem; font-weight: 700;
-      padding: 0.125rem 0.375rem; border-radius: 2rem;
-      pointer-events: none;
+      padding: 0.125rem 0.375rem; border-radius: 2rem; pointer-events: none;
     }
 
-    /* Unit toggle (sqm / sqft) */
     .unit-group {
-      display: inline-flex;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      vertical-align: middle;
+      display: inline-flex; border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden; vertical-align: middle;
     }
     .unit-btn {
-      padding: 0.15rem 0.5rem;
-      font-family: var(--font);
-      font-size: 0.75rem;
-      font-weight: 500;
-      color: var(--text-muted);
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      transition: background 0.12s, color 0.12s;
-      line-height: 1.5;
+      padding: 0.15rem 0.5rem; font-family: var(--font);
+      font-size: 0.75rem; font-weight: 500; color: var(--text-muted);
+      background: transparent; border: none; cursor: pointer;
+      transition: background 0.12s, color 0.12s; line-height: 1.5;
     }
     .unit-btn + .unit-btn { border-left: 1px solid var(--border); }
     .unit-btn.active { background: var(--primary); color: #fff; font-weight: 600; }
 
-    /* Town dropdown (last-resort fallback) */
     .select {
-      width: 100%;
-      padding: 0.5625rem 0.75rem;
+      width: 100%; padding: 0.5625rem 0.75rem;
       font-family: var(--font); font-size: 1rem;
       color: var(--text); background: var(--card);
       border: 1px solid var(--border-input); border-radius: var(--radius);
       outline: none; cursor: pointer;
       transition: border-color 0.15s, box-shadow 0.15s;
     }
-    .select:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(31,105,255,0.12);
-    }
+    .select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(31,105,255,0.12); }
 
     /* Buttons */
     .btn {
       display: inline-flex; align-items: center; justify-content: center; gap: 0.375rem;
       font-family: var(--font); font-weight: 600; cursor: pointer;
-      border: none; border-radius: var(--radius); transition: background 0.15s, transform 0.1s;
+      border: none; border-radius: var(--radius);
+      transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
     }
     .btn-primary {
       width: 100%; margin-top: 1.5rem;
       padding: 0.75rem 1.5rem;
-      background: var(--primary); color: #fff;
-      font-size: 1rem;
+      background: var(--primary); color: #fff; font-size: 1rem;
+      position: relative; overflow: hidden;
     }
-    .btn-primary:hover:not(:disabled) { background: var(--primary-dark); }
-    .btn-primary:active:not(:disabled) { transform: scale(0.99); }
-    .btn-primary:disabled { opacity: 0.55; cursor: not-allowed; }
+    .btn-primary:hover:not(:disabled) {
+      background: var(--primary-dark);
+      box-shadow: 0 4px 14px rgba(31,105,255,0.28);
+    }
+    .btn-primary:active:not(:disabled) { transform: scale(0.985); }
+    .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+    .btn-primary.loading {
+      background: linear-gradient(90deg, var(--primary) 0%, #4f8fff 40%, var(--primary) 60%, var(--primary-dark) 100%);
+      background-size: 300% auto;
+      animation: shimmer 1.4s linear infinite;
+    }
 
     .btn-outline {
       width: 100%; margin-top: 1.25rem;
       padding: 0.625rem 1.5rem;
       background: var(--card); color: var(--text);
-      border: 1.5px solid var(--border);
-      font-size: 0.9375rem;
+      border: 1.5px solid var(--border); font-size: 0.9375rem;
     }
     .btn-outline:hover { background: var(--bg); border-color: var(--border-input); }
 
     .btn-sm {
       padding: 0.4375rem 0.875rem;
       background: var(--primary); color: #fff;
-      font-size: 0.875rem; border-radius: var(--radius);
-      white-space: nowrap;
+      font-size: 0.875rem; border-radius: var(--radius); white-space: nowrap;
     }
-    .btn-sm:hover:not(:disabled) { background: var(--primary-dark); }
+    .btn-sm:hover:not(:disabled)  { background: var(--primary-dark); }
+    .btn-sm:active:not(:disabled) { transform: scale(0.96); }
     .btn-sm:disabled { opacity: 0.55; cursor: not-allowed; }
 
-    /* Spinner */
     .spinner {
       width: 1rem; height: 1rem;
       border: 2px solid rgba(255,255,255,0.4); border-top-color: #fff;
-      border-radius: 50%;
-      animation: spin 0.65s linear infinite;
+      border-radius: 50%; animation: spin 0.65s linear infinite;
     }
-    @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* Error */
-    .error-box {
-      display: none;
-      margin-top: 0.875rem; padding: 0.625rem 0.875rem;
-      background: var(--danger-pale);
-      border: 1px solid #FC9C90;
+    /* Toast */
+    .toast {
+      position: fixed; top: 1rem; left: 50%; transform: translateX(-50%);
+      max-width: calc(100vw - 2rem); width: 500px;
+      background: var(--card); border: 1px solid #FC9C90;
       border-radius: var(--radius);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
       color: var(--danger); font-size: 0.875rem;
+      padding: 0.625rem 0.875rem 0.625rem 1rem;
+      display: flex; align-items: center; gap: 0.625rem;
+      z-index: 100; pointer-events: none;
+      animation: toastIn 0.25s ease both;
     }
-    .error-box.show { display: block; }
+    .toast.hiding { animation: toastOut 0.2s ease both; }
+    .toast .toast-msg { flex: 1; }
 
-    /* ── Result view ──────────────────────────────────────── */
+    .error-box { display: none; }
+
+    /* ── Form / Result transitions ────────────────────────── */
     #result-view { display: none; }
     #result-view.show { display: block; }
-    #form-view.hide  { display: none; }
+    #form-view.hide { display: none; }
+    .slide-out-left  { animation: slideOutLeft  0.22s ease forwards !important; }
+    .slide-in-right  { animation: slideInRight  0.3s  cubic-bezier(0.22,1,0.36,1) both !important; }
+    .slide-out-right { animation: slideOutRight 0.22s ease forwards !important; }
+    .slide-in-left   { animation: slideInLeft   0.3s  cubic-bezier(0.22,1,0.36,1) both !important; }
 
+    /* ── Result card ──────────────────────────────────────── */
     .back-btn {
       display: inline-flex; align-items: center; gap: 0.25rem;
       background: none; border: none; cursor: pointer;
       font-family: var(--font); font-size: 0.875rem;
       color: var(--text-muted); padding: 0;
-      margin-bottom: 1.25rem;
-      transition: color 0.15s;
+      margin-bottom: 1.25rem; transition: color 0.15s, gap 0.2s;
     }
-    .back-btn:hover { color: var(--text); }
+    .back-btn:hover { color: var(--text); gap: 0.4rem; }
+
+    .result-context {
+      display: flex; align-items: center; gap: 0.375rem;
+      flex-wrap: wrap; margin-bottom: 1.25rem;
+    }
+    .ctx-chip {
+      display: inline-flex; align-items: center; gap: 0.25rem;
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 2rem; padding: 0.2rem 0.625rem;
+      font-size: 0.75rem; font-weight: 500; color: var(--text-muted);
+    }
 
     .result-hero {
-      background: var(--primary-pale);
-      border-radius: var(--radius);
-      padding: 1rem 1.25rem;
-      margin-bottom: 1.25rem;
+      background: var(--primary-pale); border-radius: var(--radius);
+      padding: 1.25rem 1.25rem 1rem; margin-bottom: 1.25rem;
     }
     .result-eyebrow {
       font-size: 0.6875rem; font-weight: 700;
@@ -412,30 +486,53 @@
     }
     .result-price {
       font-size: 2.75rem; font-weight: 700;
-      color: var(--primary-dark); line-height: 1.1;
-      margin-bottom: 0.25rem;
+      color: var(--primary-dark); line-height: 1.1; margin-bottom: 0.5rem;
     }
-    .result-range {
-      font-size: 0.875rem; color: var(--text-muted);
-      margin-bottom: 0.25rem;
+    .result-price.pop { animation: pricePop 0.55s cubic-bezier(0.34,1.56,0.64,1) both; }
+
+    .range-bar-wrap { margin-bottom: 0.5rem; }
+    .range-bar-labels {
+      display: flex; justify-content: space-between;
+      font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 0.3rem;
     }
-    .result-note {
-      font-size: 0.75rem; color: var(--text-light);
-      margin-bottom: 0;
+    .range-bar-outer {
+      position: relative; height: 10px;
+      display: flex; align-items: center;
     }
+    .range-bar-track {
+      position: absolute; left: 0; right: 0; height: 6px;
+      background: rgba(31,105,255,0.15); border-radius: 3px; overflow: hidden;
+    }
+    .range-bar-fill {
+      position: absolute; left: 20%; height: 100%;
+      background: var(--primary); border-radius: 3px;
+      width: 60%; animation: barGrow 0.6s 0.3s cubic-bezier(0.22,1,0.36,1) both;
+      transform-origin: left;
+    }
+    .range-bar-center {
+      position: absolute; left: 50%;
+      transform: translateX(-50%);
+      width: 10px; height: 10px; background: var(--primary-dark);
+      border: 2px solid var(--card); border-radius: 50%;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+      z-index: 1;
+    }
+    .result-note { font-size: 0.75rem; color: var(--text-light); }
 
     .divider { height: 1px; background: var(--border); margin: 1.25rem 0; }
 
     .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.75rem;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem;
     }
     .stat-card {
       background: var(--bg); border-radius: var(--radius);
       padding: 0.75rem 0.875rem;
       border-left: 3px solid transparent;
+      opacity: 0; transform: translateY(8px);
+      transition: transform 0.15s, box-shadow 0.15s;
     }
+    .stat-card.visible { animation: fadeUp 0.3s ease both; }
+    .stat-card:hover   { box-shadow: var(--shadow); transform: translateY(-1px); }
     .stat-card.accent-blue   { border-left-color: var(--primary); }
     .stat-card.accent-green  { border-left-color: var(--success); }
     .stat-card.accent-amber  { border-left-color: #F5A623; }
@@ -453,49 +550,84 @@
       border-radius: 2rem; font-size: 0.75rem; font-weight: 600;
     }
     .tag-yes { background: var(--success-pale); color: var(--success); }
-    .tag-no  { background: var(--bg); color: var(--text-muted);
-               border: 1px solid var(--border); }
+    .tag-no  { background: var(--bg); color: var(--text-muted); border: 1px solid var(--border); }
 
-    /* Animations */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(12px); }
-      to   { opacity: 1; transform: translateY(0); }
+    /* ── Feedback (collapsible) ────────────────────────────── */
+    .feedback-card {
+      background: var(--card);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
     }
-    .fade-up { animation: fadeUp 0.3s ease both; }
+    .feedback-trigger {
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      padding: 0.75rem 1rem;
+      background: transparent; border-radius: 0; box-shadow: none;
+      cursor: pointer; border: none; font-family: var(--font);
+      font-size: 0.875rem; font-weight: 500; color: var(--text-muted);
+      width: 100%; transition: background 0.15s, color 0.15s;
+    }
+    .feedback-trigger:hover { background: #f0f0f4; color: var(--text); }
+    .feedback-trigger .trigger-arrow {
+      font-size: 0.75rem; transition: transform 0.25s; display: inline-block;
+    }
+    .feedback-trigger.open .trigger-arrow { transform: rotate(180deg); }
 
-    /* Responsive */
+    .feedback-panel {
+      overflow: hidden; max-height: 0;
+      transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.25s ease;
+      opacity: 0;
+    }
+    .feedback-panel.open { max-height: 520px; opacity: 1; }
+    .feedback-inner {
+      padding: 1.125rem 1.25rem 1.25rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .star-group { display: flex; gap: 0.25rem; }
+    .star-btn {
+      background: none; border: none; cursor: pointer;
+      font-size: 2rem; line-height: 1; padding: 0.125rem;
+      color: var(--border); transition: color 0.1s, transform 0.15s;
+    }
+    .star-btn:hover  { transform: scale(1.2); }
+    .star-btn:active { transform: scale(1.05); }
+    .star-btn.filled { color: #F5A623; }
+
+    /* Scroll-reveal */
+    .reveal {
+      opacity: 0; transform: translateY(16px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    .hidden { display: none !important; }
+
+    /* ── Footer ───────────────────────────────────────────── */
+    .site-footer {
+      text-align: center; padding: 1rem 1rem 2rem;
+      font-size: 0.75rem; color: var(--text-light);
+      display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+    }
+    .site-footer a { color: var(--text-muted); text-decoration: none; }
+    .site-footer a:hover { color: var(--text); }
+    .footer-links {
+      display: flex; align-items: center; gap: 0.625rem;
+    }
+    .footer-link {
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      color: var(--text-muted); text-decoration: none; font-weight: 500;
+      transition: color 0.15s;
+    }
+    .footer-link:hover { color: var(--text); }
+
+    /* ── Responsive ───────────────────────────────────────── */
     @media (max-width: 420px) {
       .card { padding: 1.25rem; }
       .result-price { font-size: 2.25rem; }
       .stats-grid { grid-template-columns: repeat(2, 1fr); }
       .two-col { grid-template-columns: 1fr; }
     }
-
-    .hidden { display: none !important; }
-
-    /* ── Footer ───────────────────────────────────────────── */
-    .site-footer {
-      text-align: center;
-      padding: 1.5rem 1rem 2rem;
-      font-size: 0.75rem;
-      color: var(--text-light);
-    }
-    .site-footer a {
-      color: var(--text-muted);
-      text-decoration: none;
-    }
-    .site-footer a:hover { color: var(--text); }
-
-    /* ── Star rating ──────────────────────────────────────── */
-    .star-group { display: flex; gap: 0.25rem; }
-    .star-btn {
-      background: none; border: none; cursor: pointer;
-      font-size: 2rem; line-height: 1; padding: 0.125rem;
-      color: var(--border);
-      transition: color 0.1s, transform 0.1s;
-    }
-    .star-btn:hover  { transform: scale(1.15); }
-    .star-btn.filled { color: #F5A623; }
   </style>
 </head>
 <body>
@@ -503,216 +635,313 @@
 <header>
   <div class="header-inner">
     <h1>HDB Resale Estimator <span style="font-size:0.6875rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;background:var(--primary-pale);color:var(--primary);padding:0.15rem 0.45rem;border-radius:2rem;vertical-align:middle;">Beta</span></h1>
-    <nav class="header-links">
-      <a href="https://portfolio-opal-sigma-42.vercel.app/" target="_blank" rel="noopener" class="header-link">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-        Portfolio
-      </a>
-      <a href="https://github.com/justintyf01" target="_blank" rel="noopener" class="header-link">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.341-3.369-1.341-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
-        GitHub
-      </a>
-    </nav>
-    <p>Instant price estimates for any HDB flat in Singapore</p>
+    <p class="header-desc">Get an instant resale price estimate for any HDB flat in Singapore, enter your postal code and details below.</p>
+    <p class="header-meta">
+      <span>227,000+ transactions</span>
+      <span class="header-meta-dot">·</span>
+      <span>R² = 0.980</span>
+      <span class="header-meta-dot">·</span>
+      <span>2017–present</span>
+    </p>
   </div>
 </header>
 
 <main>
-<div class="container">
+<div class="page-wrap">
 
-  <!-- ── Form view ─────────────────────────────────────────── -->
-  <div id="form-view" class="card">
+  <!-- ── Left column: form / result ──────────────────────── -->
+  <div id="main-col">
 
-    <!-- Address section -->
-    <div class="section">
-      <p class="section-label">Your Flat</p>
+    <!-- Form view -->
+    <div id="form-view" class="card" style="animation:fadeUp 0.4s 0.1s ease both;">
 
-      <label class="field-label" for="postal">Postal Code</label>
-      <div class="input-row">
-        <input class="input" id="postal" type="text" inputmode="numeric"
-          maxlength="6" placeholder="e.g. 560406" autocomplete="postal-code">
-        <button class="btn btn-sm" id="lookup-btn" onclick="handlePostalLookup()">
-          <span id="lookup-text">Search</span>
-          <span id="lookup-spin" class="spinner hidden"></span>
+      <div class="section">
+        <p class="section-label">Your Flat</p>
+
+        <label class="field-label" for="postal">Postal Code</label>
+        <div class="input-row">
+          <input class="input" id="postal" type="text" inputmode="numeric"
+            maxlength="6" placeholder="e.g. 560406" autocomplete="postal-code">
+          <button class="btn btn-sm" id="lookup-btn" onclick="handlePostalLookup()">
+            <span id="lookup-text">Search</span>
+            <span id="lookup-spin" class="spinner hidden"></span>
+          </button>
+        </div>
+
+        <div class="address-badge" id="address-badge">
+          <span style="font-size:1rem;">📍</span>
+          <div style="flex:1;">
+            <div class="addr-text" id="addr-main"></div>
+            <div class="addr-sub"  id="addr-sub"></div>
+          </div>
+          <button class="clear-btn" onclick="clearAddress()" title="Clear">✕</button>
+        </div>
+
+        <button class="link-btn" id="manual-toggle" onclick="toggleManual()">
+          Don't know postal code? Enter address manually
         </button>
-      </div>
 
-      <!-- Address badge -->
-      <div class="address-badge" id="address-badge">
-        <span style="font-size:1rem;">📍</span>
-        <div style="flex:1;">
-          <div class="addr-text" id="addr-main"></div>
-          <div class="addr-sub"  id="addr-sub"></div>
+        <div id="manual-section" class="hidden" style="margin-top:0.875rem;display:flex;flex-direction:column;gap:0.75rem;">
+          <div>
+            <label class="field-label" for="blk-input">Block Number</label>
+            <input class="input" id="blk-input" type="text" placeholder="e.g. 406">
+          </div>
+          <div>
+            <label class="field-label" for="street-input">Street Name</label>
+            <input class="input" id="street-input" type="text"
+              placeholder="e.g. ANG MO KIO AVE 10"
+              list="street-datalist" style="text-transform:uppercase;">
+            <datalist id="street-datalist"></datalist>
+          </div>
+          <button class="btn btn-sm" style="align-self:flex-start;" onclick="handleManualLookup()">
+            Confirm Address
+          </button>
         </div>
-        <button class="clear-btn" onclick="clearAddress()" title="Clear">✕</button>
       </div>
 
-      <!-- Manual address toggle -->
-      <button class="link-btn" id="manual-toggle" onclick="toggleManual()">
-        Don't know postal code? Enter address manually
-      </button>
+      <div class="section">
+        <p class="section-label">Flat Details</p>
 
-      <!-- Manual address inputs -->
-      <div id="manual-section" class="hidden" style="margin-top:0.875rem;display:flex;flex-direction:column;gap:0.75rem;">
-        <div>
-          <label class="field-label" for="blk-input">Block Number</label>
-          <input class="input" id="blk-input" type="text" placeholder="e.g. 406">
+        <div style="margin-bottom:1.25rem;">
+          <label class="field-label">Flat Type</label>
+          <div class="pill-group" id="flat-type-group"></div>
         </div>
-        <div>
-          <label class="field-label" for="street-input">Street Name</label>
-          <input class="input" id="street-input" type="text"
-            placeholder="e.g. ANG MO KIO AVE 10"
-            list="street-datalist" style="text-transform:uppercase;">
-          <datalist id="street-datalist"></datalist>
-        </div>
-        <button class="btn btn-sm" style="align-self:flex-start;" onclick="handleManualLookup()">
-          Confirm Address
-        </button>
-      </div>
-    </div>
 
-    <!-- Details section -->
-    <div class="section">
-      <p class="section-label">Flat Details</p>
-
-      <!-- Flat type -->
-      <div style="margin-bottom:1.25rem;">
-        <label class="field-label">Flat Type</label>
-        <div class="pill-group" id="flat-type-group"></div>
-      </div>
-
-      <!-- Floor + Lease Year (always visible; lease disabled until address resolved) -->
-      <div class="two-col" style="margin-bottom:0.375rem;">
-        <div>
-          <label class="field-label" for="floor-input">Floor</label>
-          <div class="stepper">
-            <button class="step-btn" type="button" onclick="stepFloor(-1)">−</button>
-            <input id="floor-input" type="number" min="1" max="60" value="7">
-            <button class="step-btn" type="button" onclick="stepFloor(1)">+</button>
+        <div class="two-col" style="margin-bottom:0.375rem;">
+          <div>
+            <label class="field-label" for="floor-input">Floor</label>
+            <div class="stepper">
+              <button class="step-btn" type="button" onclick="stepFloor(-1)">−</button>
+              <input id="floor-input" type="number" min="1" max="60" value="7">
+              <button class="step-btn" type="button" onclick="stepFloor(1)">+</button>
+            </div>
+          </div>
+          <div>
+            <label class="field-label" for="lease-input">Lease Year</label>
+            <div class="input-wrap">
+              <input class="input" id="lease-input" type="number"
+                min="1960" max="2030" placeholder="-" disabled>
+              <span class="auto-tag hidden" id="lease-tag">auto</span>
+            </div>
           </div>
         </div>
-        <div>
-          <label class="field-label" for="lease-input">Lease Year</label>
-          <div class="input-wrap">
-            <input class="input" id="lease-input" type="number"
-              min="1960" max="2030" placeholder="—" disabled>
-            <span class="auto-tag hidden" id="lease-tag">auto</span>
-          </div>
-        </div>
-      </div>
-      <!-- Lease warn note sits below the two-col, left-aligned under lease column -->
-      <p class="field-warn hidden" id="lease-warn" style="margin-bottom:1rem;">
-        <span>⚠</span>
-        Lease not found — pre-filled as current year. Please verify and correct if needed.
-      </p>
-      <!-- Spacer when no warn note -->
-      <div id="lease-spacer" style="margin-bottom:1rem;"></div>
-
-      <!-- Floor Area (full-width with sqm / sqft toggle) -->
-      <div style="margin-bottom:1rem;">
-        <label class="field-label" style="display:flex;align-items:center;justify-content:space-between;">
-          Floor Area
-          <span class="unit-group">
-            <button class="unit-btn active" id="unit-sqm" onclick="setUnit('sqm')">sqm</button>
-            <button class="unit-btn"        id="unit-sqft" onclick="setUnit('sqft')">sqft</button>
-          </span>
-        </label>
-        <div class="input-wrap">
-          <input class="input" id="area-input" type="number"
-            min="20" max="4000" step="0.5" placeholder="e.g. 93">
-          <span class="auto-tag hidden" id="area-tag">auto</span>
-        </div>
-      </div>
-
-      <!-- Town dropdown: last-resort fallback when lat/lon unavailable and block unknown -->
-      <div id="town-section" class="hidden" style="margin-bottom:1rem;">
-        <label class="field-label" for="town-select">Town</label>
-        <p style="font-size:0.8125rem;color:var(--text-muted);margin-bottom:0.5rem;">
-          Could not determine town automatically. Please select below.
+        <p class="field-warn hidden" id="lease-warn" style="margin-bottom:1rem;">
+          <span>⚠</span>
+          Lease not found. Pre-filled as current year. Please verify and correct if needed.
         </p>
-        <select class="select" id="town-select">
-          <option value="">Select town…</option>
-        </select>
+        <div id="lease-spacer" style="margin-bottom:1rem;"></div>
+
+        <div style="margin-bottom:1rem;">
+          <label class="field-label" style="display:flex;align-items:center;justify-content:space-between;">
+            Floor Area
+            <span class="unit-group">
+              <button class="unit-btn active" id="unit-sqm"  onclick="setUnit('sqm')">sqm</button>
+              <button class="unit-btn"        id="unit-sqft" onclick="setUnit('sqft')">sqft</button>
+            </span>
+          </label>
+          <div class="input-wrap">
+            <input class="input" id="area-input" type="number"
+              min="20" max="4000" step="0.5" placeholder="e.g. 93">
+            <span class="auto-tag hidden" id="area-tag">auto</span>
+          </div>
+        </div>
+
+        <div id="town-section" class="hidden" style="margin-bottom:1rem;">
+          <label class="field-label" for="town-select">Town</label>
+          <p style="font-size:0.8125rem;color:var(--text-muted);margin-bottom:0.5rem;">
+            Could not determine town automatically. Please select below.
+          </p>
+          <select class="select" id="town-select">
+            <option value="">Select town…</option>
+          </select>
+        </div>
       </div>
-    </div>
 
-    <button class="btn btn-primary" id="submit-btn" onclick="submitForm()">
-      <span id="submit-text">Get Estimate</span>
-      <span id="submit-spin" class="spinner hidden"></span>
-    </button>
-
-    <div class="error-box" id="error-box"></div>
-  </div>
-
-  <!-- ── Result view ────────────────────────────────────────── -->
-  <div id="result-view">
-    <div class="card fade-up">
-      <button class="back-btn" onclick="showForm()">← Back</button>
-
-      <div class="result-hero">
-        <p class="result-eyebrow">Estimated Resale Price</p>
-        <p class="result-price" id="result-price">—</p>
-        <p class="result-range" id="result-range">—</p>
-        <p class="result-note">±5% model confidence interval</p>
-      </div>
-
-      <div class="divider"></div>
-
-      <p class="section-label" style="margin-bottom:0.75rem;">Property Insights</p>
-      <div class="stats-grid" id="stats-grid"></div>
-
-      <button class="btn btn-outline" onclick="showForm()">Estimate Another Flat</button>
-    </div>
-  </div>
-
-  <!-- ── Feedback section ─────────────────────────────────── -->
-  <div class="card" style="margin-top:1.5rem;padding:1.25rem;">
-    <p class="section-label" style="margin-bottom:0.75rem;">Leave a Review</p>
-    <p style="font-size:0.8125rem;color:var(--text-muted);margin-bottom:1rem;">
-      Anonymous — no account needed.
-    </p>
-
-    <!-- Star rating -->
-    <div style="margin-bottom:1rem;">
-      <div class="star-group" id="star-group" role="group" aria-label="Rating">
-        <button class="star-btn" data-v="1" onclick="setStars(1)" onmouseenter="hoverStars(1)" onmouseleave="unhoverStars()">☆</button>
-        <button class="star-btn" data-v="2" onclick="setStars(2)" onmouseenter="hoverStars(2)" onmouseleave="unhoverStars()">☆</button>
-        <button class="star-btn" data-v="3" onclick="setStars(3)" onmouseenter="hoverStars(3)" onmouseleave="unhoverStars()">☆</button>
-        <button class="star-btn" data-v="4" onclick="setStars(4)" onmouseenter="hoverStars(4)" onmouseleave="unhoverStars()">☆</button>
-        <button class="star-btn" data-v="5" onclick="setStars(5)" onmouseenter="hoverStars(5)" onmouseleave="unhoverStars()">☆</button>
-      </div>
-      <p id="star-label" style="font-size:0.8125rem;color:var(--text-muted);margin-top:0.375rem;min-height:1.2em;"></p>
-    </div>
-
-    <!-- Message -->
-    <textarea id="fb-text" rows="3"
-      placeholder="Anything to add? (optional)"
-      maxlength="1000"
-      style="width:100%;padding:0.5rem 0.75rem;font-family:var(--font);
-             font-size:0.9375rem;color:var(--text);background:var(--card);
-             border:1px solid var(--border-input);border-radius:var(--radius);
-             outline:none;resize:vertical;transition:border-color 0.15s,box-shadow 0.15s;
-             -webkit-appearance:none;"
-      onfocus="this.style.borderColor='var(--primary)';this.style.boxShadow='0 0 0 3px rgba(31,105,255,0.12)'"
-      onblur="this.style.borderColor='var(--border-input)';this.style.boxShadow='none'"
-    ></textarea>
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:0.625rem;gap:0.75rem;">
-      <span id="fb-count" style="font-size:0.75rem;color:var(--text-light);">0 / 1000</span>
-      <button class="btn btn-sm" id="fb-btn" onclick="submitFeedback()" style="margin:0;">
-        <span id="fb-text-btn">Send</span>
-        <span id="fb-spin" class="spinner hidden"></span>
+      <button class="btn btn-primary" id="submit-btn" onclick="submitForm()">
+        <span id="submit-text">Get Estimate</span>
+        <span id="submit-spin" class="spinner hidden"></span>
       </button>
-    </div>
-    <p id="fb-status" style="display:none;margin-top:0.5rem;font-size:0.8125rem;"></p>
-  </div>
 
-</div>
+      <div class="error-box" id="error-box"></div>
+    </div>
+
+    <!-- Result view -->
+    <div id="result-view">
+      <div id="result-card" class="card">
+        <button class="back-btn" onclick="showForm()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          Back
+        </button>
+
+        <div class="result-context" id="result-context"></div>
+
+        <div class="result-hero">
+          <p class="result-eyebrow">Estimated Resale Price</p>
+          <p class="result-price" id="result-price">—</p>
+          <div class="range-bar-wrap">
+            <div class="range-bar-labels">
+              <span id="range-low-label">—</span>
+              <span id="range-high-label">—</span>
+            </div>
+            <div class="range-bar-outer">
+              <div class="range-bar-track">
+                <div class="range-bar-fill"></div>
+              </div>
+              <div class="range-bar-center"></div>
+            </div>
+          </div>
+          <p class="result-note">±5% model confidence interval · R² = 0.980</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <p class="section-label" style="margin-bottom:0.75rem;">Property Insights</p>
+        <div class="stats-grid" id="stats-grid"></div>
+
+        <button class="btn btn-outline" onclick="showForm()">Estimate Another Flat</button>
+      </div>
+    </div>
+
+  </div><!-- /main-col -->
+
+  <!-- ── Right column: sidebar ───────────────────────────── -->
+  <aside class="sidebar">
+
+    <!-- Form sidebar -->
+    <div id="form-sidebar">
+      <div class="card-sm">
+        <p class="section-label" style="margin-bottom:0.875rem;">How it works</p>
+        <ol class="how-steps">
+          <li class="how-step">
+            <span class="how-num">1</span>
+            <span class="how-text">Enter your HDB postal code, the form auto-fills your address details.</span>
+          </li>
+          <li class="how-step">
+            <span class="how-num">2</span>
+            <span class="how-text">Choose flat type and confirm the floor and area.</span>
+          </li>
+          <li class="how-step">
+            <span class="how-num">3</span>
+            <span class="how-text">Hit <strong>Get Estimate</strong> for an instant price estimate.</span>
+          </li>
+        </ol>
+        <div class="model-stats">
+          <div class="model-stat-row">
+            <span class="model-stat-label">Training data</span>
+            <span class="model-stat-val">227,000+ sales</span>
+          </div>
+          <div class="model-stat-row">
+            <span class="model-stat-label">Accuracy (R²)</span>
+            <span class="model-stat-val">0.980</span>
+          </div>
+          <div class="model-stat-row">
+            <span class="model-stat-label">Typical margin</span>
+            <span class="model-stat-val">~S$33,000</span>
+          </div>
+          <div class="model-stat-row">
+            <span class="model-stat-label">Coverage</span>
+            <span class="model-stat-val">All 26 HDB towns</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Result sidebar (hidden until result is shown) -->
+    <div id="result-sidebar" class="hidden">
+      <div class="card-sm" style="animation:fadeSideIn 0.35s ease both;">
+        <p class="section-label" style="margin-bottom:0.875rem;">About your estimate</p>
+
+        <div class="explain-block">
+          <div class="explain-icon">↔️</div>
+          <div>
+            <p class="explain-title">What's the price range?</p>
+            <p class="explain-body">Two similar flats on the same floor can sell at different prices depending on timing, condition, or how urgently the seller needs to close. The range shown is where the actual sale price is most likely to land (not a guarantee, but a realistic bracket!)</p>
+          </div>
+        </div>
+
+        <div class="explain-block" style="margin-bottom:0;">
+          <div class="explain-icon">🎯</div>
+          <div>
+            <p class="explain-title">How accurate is this?</p>
+            <p class="explain-body">The model has a 98% accuracy score (R² = 0.980). Think of it like a weather forecast that's almost always right - if you showed it 100 different HDB flats, it would predict the right price bracket for 98 of them.</p>
+          </div>
+        </div>
+
+        <div class="explain-note">
+          This is an estimate based on historical data. For a formal valuation, consult a licensed property agent.
+        </div>
+      </div>
+    </div>
+
+    <!-- Feedback (always present, collapsible) -->
+    <div class="reveal" id="feedback-reveal">
+      <div class="feedback-card">
+      <button class="feedback-trigger" id="feedback-trigger" onclick="toggleFeedback()">
+        <span>💬</span>
+        <span>Leave feedback</span>
+        <span class="trigger-arrow">▾</span>
+      </button>
+      <div class="feedback-panel" id="feedback-panel">
+        <div class="feedback-inner">
+          <p style="font-size:0.8125rem;color:var(--text-muted);margin-bottom:1rem;">
+            Anonymous - no account needed.
+          </p>
+
+          <div style="margin-bottom:1rem;">
+            <div class="star-group" id="star-group" role="group" aria-label="Rating">
+              <button class="star-btn" data-v="1" onclick="setStars(1)" onmouseenter="hoverStars(1)" onmouseleave="unhoverStars()">☆</button>
+              <button class="star-btn" data-v="2" onclick="setStars(2)" onmouseenter="hoverStars(2)" onmouseleave="unhoverStars()">☆</button>
+              <button class="star-btn" data-v="3" onclick="setStars(3)" onmouseenter="hoverStars(3)" onmouseleave="unhoverStars()">☆</button>
+              <button class="star-btn" data-v="4" onclick="setStars(4)" onmouseenter="hoverStars(4)" onmouseleave="unhoverStars()">☆</button>
+              <button class="star-btn" data-v="5" onclick="setStars(5)" onmouseenter="hoverStars(5)" onmouseleave="unhoverStars()">☆</button>
+            </div>
+            <p id="star-label" style="font-size:0.8125rem;color:var(--text-muted);margin-top:0.375rem;min-height:1.2em;"></p>
+          </div>
+
+          <textarea id="fb-text" rows="3"
+            placeholder="Anything to add? (optional)" maxlength="1000"
+            style="width:100%;padding:0.5rem 0.75rem;font-family:var(--font);
+                   font-size:0.9375rem;color:var(--text);background:var(--card);
+                   border:1px solid var(--border-input);border-radius:var(--radius);
+                   outline:none;resize:vertical;transition:border-color 0.15s,box-shadow 0.15s;"
+            onfocus="this.style.borderColor='var(--primary)';this.style.boxShadow='0 0 0 3px rgba(31,105,255,0.12)'"
+            onblur="this.style.borderColor='var(--border-input)';this.style.boxShadow='none'"
+          ></textarea>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:0.625rem;gap:0.75rem;">
+            <span id="fb-count" style="font-size:0.75rem;color:var(--text-light);">0 / 1000</span>
+            <button class="btn btn-sm" id="fb-btn" onclick="submitFeedback()" style="margin:0;">
+              <span id="fb-text-btn">Send</span>
+              <span id="fb-spin" class="spinner hidden"></span>
+            </button>
+          </div>
+          <p id="fb-status" style="display:none;margin-top:0.5rem;font-size:0.8125rem;"></p>
+        </div>
+      </div>
+      </div><!-- /feedback-card -->
+    </div><!-- /feedback-reveal -->
+
+  </aside><!-- /sidebar -->
+
+</div><!-- /page-wrap -->
 </main>
 
 <footer class="site-footer">
-  Built by <a href="https://portfolio-opal-sigma-42.vercel.app/" target="_blank" rel="noopener">Justin Teo</a>
-  &nbsp;·&nbsp;
-  Photo by <a href="https://unsplash.com/photos/a-view-of-a-city-with-tall-buildings-VIHH4O59y_0?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink" target="_blank" rel="noopener">Unsplash</a>
+  <div>
+    Built by <a href="https://portfolio-opal-sigma-42.vercel.app/" target="_blank" rel="noopener">Justin Teo</a>
+    &nbsp;·&nbsp;
+    Photo by <a href="https://unsplash.com/photos/a-view-of-a-city-with-tall-buildings-VIHH4O59y_0?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink" target="_blank" rel="noopener">Unsplash</a>
+  </div>
+  <div class="footer-links">
+    <a href="https://portfolio-opal-sigma-42.vercel.app/" target="_blank" rel="noopener" class="footer-link">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      Website
+    </a>
+    <span style="color:var(--border);">·</span>
+    <a href="https://github.com/justintyf01" target="_blank" rel="noopener" class="footer-link">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.341-3.369-1.341-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+      GitHub
+    </a>
+  </div>
 </footer>
 
 <script>
@@ -723,11 +952,11 @@ const s = {
   flatType: null, isManual: false,
   lat: null, lon: null,
   unit: 'sqm',
+  lastResult: null,
 };
 
 const FLAT_TYPES = ['3 ROOM','4 ROOM','5 ROOM','EXECUTIVE','2 ROOM','1 ROOM','MULTI-GENERATION'];
 const SQM_TO_SQFT = 10.7639;
-
 const FALLBACK_AREAS  = {'1 ROOM':33,'2 ROOM':45,'3 ROOM':68,'4 ROOM':93,'5 ROOM':110,'EXECUTIVE':140,'MULTI-GENERATION':155};
 const FALLBACK_MODELS = {'1 ROOM':'Improved','2 ROOM':'Model A','3 ROOM':'New Generation','4 ROOM':'Model A','5 ROOM':'Model A','EXECUTIVE':'Apartment','MULTI-GENERATION':'Multi Generation'};
 
@@ -751,6 +980,17 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('area-input').addEventListener('input', () => {
     document.getElementById('area-tag').classList.add('hidden');
   });
+
+  document.getElementById('fb-text').addEventListener('input', function() {
+    document.getElementById('fb-count').textContent = `${this.value.length} / 1000`;
+  });
+
+  // Scroll-reveal for feedback
+  const revealEl = document.getElementById('feedback-reveal');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  obs.observe(revealEl);
 });
 
 function buildFlatTypeGroup() {
@@ -778,7 +1018,6 @@ function syncFloorArea() {
   }
 }
 
-// ── Unit toggle ───────────────────────────────────────────────
 function setUnit(unit) {
   if (s.unit === unit) return;
   const inp = document.getElementById('area-input');
@@ -811,23 +1050,21 @@ async function prefetchOptions() {
 // ── Address lookup ────────────────────────────────────────────
 async function handlePostalLookup() {
   const postal = document.getElementById('postal').value.replace(/\D/g,'');
-  if (postal.length !== 6) { showError('Please enter a valid 6-digit postal code.'); return; }
+  if (postal.length !== 6) { showToast('Please enter a valid 6-digit postal code.'); return; }
   setLoading('lookup', true);
-  clearError();
   try {
     const hit = await oneMapSearch(postal);
-    if (!hit) { showError('Postal code not found. Try entering the address manually.'); return; }
+    if (!hit) { showToast('Postal code not found. Try entering the address manually.'); return; }
     await applyAddress(hit.BLK_NO, hit.ROAD_NAME, hit.LATITUDE, hit.LONGITUDE);
-  } catch { showError('Could not reach address lookup. Please check your connection.'); }
+  } catch { showToast('Could not reach address lookup. Please check your connection.'); }
   finally { setLoading('lookup', false); }
 }
 
 async function handleManualLookup() {
   const block  = document.getElementById('blk-input').value.trim().toUpperCase();
   const street = document.getElementById('street-input').value.trim().toUpperCase();
-  if (!block || !street) { showError('Please enter both block number and street name.'); return; }
+  if (!block || !street) { showToast('Please enter both block number and street name.'); return; }
   setLoading('lookup', true);
-  clearError();
   try {
     const hit = await oneMapSearch(`${block} ${street}`);
     await applyAddress(block, street, hit?.LATITUDE ?? null, hit?.LONGITUDE ?? null);
@@ -848,17 +1085,17 @@ async function applyAddress(block, street, lat, lon) {
   s.lat = lat ? parseFloat(lat) : null;
   s.lon = lon ? parseFloat(lon) : null;
 
-  // Show address badge
   document.getElementById('addr-main').textContent = `Blk ${block}, ${toTitle(street)}`;
   document.getElementById('addr-sub').textContent   = s.lat
     ? `${s.lat.toFixed(4)}, ${s.lon.toFixed(4)}`
     : 'Coordinates unavailable';
-  document.getElementById('address-badge').classList.add('show');
+  const badge = document.getElementById('address-badge');
+  badge.classList.remove('show');
+  void badge.offsetWidth;
+  badge.classList.add('show');
 
-  // Fetch block info
   s.blockInfo = await fetchBlockInfo(block, street);
 
-  // ── Resolve town ──────────────────────────────────────────
   if (s.blockInfo?.town) {
     s.town = s.blockInfo.town;
     document.getElementById('town-section').classList.add('hidden');
@@ -871,7 +1108,6 @@ async function applyAddress(block, street, lat, lon) {
     document.getElementById('town-section').classList.remove('hidden');
   }
 
-  // ── Resolve lease year ────────────────────────────────────
   if (s.blockInfo?.lease_commence_date) {
     setLeaseAuto(s.blockInfo.lease_commence_date);
   } else {
@@ -884,9 +1120,7 @@ async function applyAddress(block, street, lat, lon) {
 function setLeaseAuto(year) {
   s.leaseYear = year;
   const inp = document.getElementById('lease-input');
-  inp.value = year;
-  inp.disabled = true;
-  inp.classList.remove('warn');
+  inp.value = year; inp.disabled = true; inp.classList.remove('warn');
   document.getElementById('lease-tag').classList.remove('hidden');
   document.getElementById('lease-warn').classList.add('hidden');
   document.getElementById('lease-spacer').style.display = '';
@@ -896,8 +1130,7 @@ function setLeaseUnknown() {
   s.leaseYear = null;
   const inp = document.getElementById('lease-input');
   inp.value = new Date().getFullYear();
-  inp.disabled = false;
-  inp.classList.add('warn');
+  inp.disabled = false; inp.classList.add('warn');
   document.getElementById('lease-tag').classList.add('hidden');
   document.getElementById('lease-warn').classList.remove('hidden');
   document.getElementById('lease-spacer').style.display = 'none';
@@ -924,19 +1157,14 @@ function clearAddress() {
   document.getElementById('address-badge').classList.remove('show');
   document.getElementById('postal').value = '';
   document.getElementById('town-section').classList.add('hidden');
-  // Reset lease input to initial disabled/empty state
   const leaseInp = document.getElementById('lease-input');
-  leaseInp.value = '';
-  leaseInp.disabled = true;
-  leaseInp.classList.remove('warn');
+  leaseInp.value = ''; leaseInp.disabled = true; leaseInp.classList.remove('warn');
   document.getElementById('lease-tag').classList.add('hidden');
   document.getElementById('lease-warn').classList.add('hidden');
   document.getElementById('lease-spacer').style.display = '';
   document.getElementById('area-tag').classList.add('hidden');
-  clearError();
 }
 
-// ── Manual mode ───────────────────────────────────────────────
 function toggleManual() {
   s.isManual = !s.isManual;
   const sec = document.getElementById('manual-section');
@@ -950,7 +1178,6 @@ function toggleManual() {
   }
 }
 
-// ── Floor stepper ─────────────────────────────────────────────
 function stepFloor(d) {
   const el = document.getElementById('floor-input');
   el.value = Math.max(1, Math.min(60, (parseInt(el.value) || 1) + d));
@@ -958,50 +1185,43 @@ function stepFloor(d) {
 
 // ── Submit ────────────────────────────────────────────────────
 async function submitForm() {
-  clearError();
-
-  if (!s.block || !s.street) { showError('Please look up an address first.'); return; }
-  if (!s.flatType)            { showError('Please select a flat type.'); return; }
+  if (!s.block || !s.street) { showToast('Please look up an address first.'); return; }
+  if (!s.flatType)            { showToast('Please select a flat type.'); return; }
 
   const floor = parseInt(document.getElementById('floor-input').value);
-  if (isNaN(floor) || floor < 1 || floor > 60) { showError('Please enter a valid floor (1–60).'); return; }
+  if (isNaN(floor) || floor < 1 || floor > 60) { showToast('Please enter a valid floor (1–60).'); return; }
 
-  // Floor area — convert to sqm before sending
   let area = parseFloat(document.getElementById('area-input').value);
   if (s.unit === 'sqft') area = area / SQM_TO_SQFT;
-  if (isNaN(area) || area < 20 || area > 350) { showError('Please enter a valid floor area (20–350 sqm / 215–3767 sqft).'); return; }
+  if (isNaN(area) || area < 20 || area > 350) { showToast('Please enter a valid floor area (20–350 sqm / 215–3767 sqft).'); return; }
 
-  // Lease year
   let leaseYear = s.leaseYear;
   if (!leaseYear) {
     leaseYear = parseInt(document.getElementById('lease-input').value);
     if (isNaN(leaseYear) || leaseYear < 1960 || leaseYear > 2030)
-      { showError('Please enter a valid lease commencement year (1960–2030).'); return; }
+      { showToast('Please enter a valid lease commencement year (1960–2030).'); return; }
   }
 
-  // Town
   let town = s.town;
   if (!town) {
     town = document.getElementById('town-select').value;
-    if (!town) { showError("Please select your flat's town."); return; }
+    if (!town) { showToast("Please select your flat's town."); return; }
   }
 
   const flatModel = s.blockInfo?.flat_models?.[s.flatType] ?? FALLBACK_MODELS[s.flatType] ?? 'Model A';
 
   const payload = {
-    town,
-    flat_type:           s.flatType,
-    flat_model:          flatModel,
-    block:               s.block,
-    street_name:         s.street,
-    storey_range:        toStoreyRange(floor),
-    floor_area_sqm:      +area.toFixed(2),
-    remaining_lease:     remainingLease(leaseYear),
+    town, flat_type: s.flatType, flat_model: flatModel,
+    block: s.block, street_name: s.street,
+    storey_range: toStoreyRange(floor),
+    floor_area_sqm: +area.toFixed(2),
+    remaining_lease: remainingLease(leaseYear),
     lease_commence_date: leaseYear,
-    month:               currentMonth(),
-    lat:                 s.lat,
-    lon:                 s.lon,
+    month: currentMonth(),
+    lat: s.lat, lon: s.lon,
   };
+
+  s.lastResult = { block: s.block, street: s.street, flatType: s.flatType, floor, area: +area.toFixed(1), town };
 
   setLoading('submit', true);
   try {
@@ -1012,39 +1232,29 @@ async function submitForm() {
     });
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
-      showError(err.detail || 'Prediction failed. Please check your inputs.');
+      showToast(err.detail || 'Prediction failed. Please check your inputs.');
       return;
     }
-    showResult(await res.json());
-  } catch { showError('Could not reach the prediction service. Please try again.'); }
+    await showResult(await res.json());
+  } catch { showToast('Could not reach the prediction service. Please try again.'); }
   finally  { setLoading('submit', false); }
 }
 
-// ── MRT line colours (official LTA palette) ───────────────────
+// ── MRT line colours ──────────────────────────────────────────
 const MRT_LINE_COLORS = {
-  NS: { bg: '#DA2128', text: '#fff' },  // North-South     red
-  EW: { bg: '#009645', text: '#fff' },  // East-West       green
-  CG: { bg: '#009645', text: '#fff' },  // Changi branch   green
-  NE: { bg: '#9900AA', text: '#fff' },  // North-East      purple
-  CC: { bg: '#FA9E0D', text: '#fff' },  // Circle          orange
-  CE: { bg: '#FA9E0D', text: '#fff' },  // Circle ext.     orange
-  DT: { bg: '#005EC4', text: '#fff' },  // Downtown        blue
-  TE: { bg: '#9D5B25', text: '#fff' },  // Thomson-EC      brown
-  BP: { bg: '#748477', text: '#fff' },  // BP LRT          grey
-  SE: { bg: '#748477', text: '#fff' },  // Sengkang LRT    grey
-  SW: { bg: '#748477', text: '#fff' },
-  PE: { bg: '#748477', text: '#fff' },  // Punggol LRT     grey
-  PW: { bg: '#748477', text: '#fff' },
-  CR: { bg: '#028A8A', text: '#fff' },  // Cross Island    teal
-  JE: { bg: '#0099AA', text: '#fff' },  // Jurong Region   teal-blue
-  JS: { bg: '#0099AA', text: '#fff' },
-  JW: { bg: '#0099AA', text: '#fff' },
+  NS:{bg:'#DA2128',text:'#fff'}, EW:{bg:'#009645',text:'#fff'}, CG:{bg:'#009645',text:'#fff'},
+  NE:{bg:'#9900AA',text:'#fff'}, CC:{bg:'#FA9E0D',text:'#fff'}, CE:{bg:'#FA9E0D',text:'#fff'},
+  DT:{bg:'#005EC4',text:'#fff'}, TE:{bg:'#9D5B25',text:'#fff'},
+  BP:{bg:'#748477',text:'#fff'}, SE:{bg:'#748477',text:'#fff'}, SW:{bg:'#748477',text:'#fff'},
+  PE:{bg:'#748477',text:'#fff'}, PW:{bg:'#748477',text:'#fff'},
+  CR:{bg:'#028A8A',text:'#fff'}, JE:{bg:'#0099AA',text:'#fff'},
+  JS:{bg:'#0099AA',text:'#fff'}, JW:{bg:'#0099AA',text:'#fff'},
 };
 
 function mrtBadges(codesStr) {
   return codesStr.split('/').map(code => {
-    const line = code.replace(/\d+[A-Z]?$/i, '');  // strip number suffix → "EW"
-    const c = MRT_LINE_COLORS[line] || { bg: '#667085', text: '#fff' };
+    const line = code.replace(/\d+[A-Z]?$/i, '');
+    const c = MRT_LINE_COLORS[line] || {bg:'#667085',text:'#fff'};
     return `<span style="display:inline-block;background:${c.bg};color:${c.text};`
          + `padding:0.1rem 0.4rem;border-radius:0.25rem;`
          + `font-size:0.7rem;font-weight:700;letter-spacing:0.03em;line-height:1.5;">`
@@ -1052,36 +1262,63 @@ function mrtBadges(codesStr) {
   }).join(' ');
 }
 
+// ── Price count-up ────────────────────────────────────────────
+function animateCount(el, target, duration = 1100) {
+  const start = performance.now();
+  function step(now) {
+    const p = Math.min((now - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - p, 3);
+    el.textContent = fmtSGD(Math.round(ease * target));
+    if (p < 1) requestAnimationFrame(step);
+    else el.textContent = fmtSGD(target);
+  }
+  requestAnimationFrame(step);
+}
+
+// ── Sidebar toggle ────────────────────────────────────────────
+function showFormSidebar() {
+  document.getElementById('form-sidebar').classList.remove('hidden');
+  document.getElementById('result-sidebar').classList.add('hidden');
+}
+function showResultSidebar() {
+  document.getElementById('form-sidebar').classList.add('hidden');
+  const rs = document.getElementById('result-sidebar');
+  rs.classList.remove('hidden');
+  // re-trigger animation
+  const inner = rs.querySelector('.card-sm');
+  if (inner) { inner.style.animation='none'; void inner.offsetWidth; inner.style.animation=''; }
+}
+
 // ── Result ────────────────────────────────────────────────────
-function showResult(d) {
-  document.getElementById('result-price').textContent = fmtSGD(d.predicted_price);
-  document.getElementById('result-range').textContent =
-    `${fmtSGD(d.prediction_range.low)} – ${fmtSGD(d.prediction_range.high)}`;
+async function showResult(d) {
+  if (s.lastResult) {
+    const ctx = s.lastResult;
+    document.getElementById('result-context').innerHTML = [
+      `<span class="ctx-chip">📍 Blk ${ctx.block}, ${toTitle(ctx.street)}</span>`,
+      `<span class="ctx-chip">🏠 ${ctx.flatType}</span>`,
+      `<span class="ctx-chip">Floor ${ctx.floor}</span>`,
+      `<span class="ctx-chip">${ctx.area} sqm</span>`,
+    ].join('');
+  }
+
+  const priceEl = document.getElementById('result-price');
+  priceEl.textContent = fmtSGD(0);
+  document.getElementById('range-low-label').textContent  = fmtSGD(d.prediction_range.low);
+  document.getElementById('range-high-label').textContent = fmtSGD(d.prediction_range.high);
 
   const f = d.features_summary;
-
-  // Parse nearest MRT: "EW8/CC9 Paya Lebar" → code + name
   const mrtParts = f.nearest_mrt.split(' ');
   const mrtCode  = mrtParts[0];
   const mrtName  = mrtParts.slice(1).join(' ');
 
   const stats = [
-    {
-      accent:'accent-blue', icon:'🚇', label:'Nearest MRT',
-      value: mrtBadges(mrtCode),
-      sub:   `${mrtName} · ${fmtDist(f.dist_to_nearest_mrt_m)}`,
-    },
-    { accent:'accent-blue',  icon:'📍', label:'CBD Distance',   value:`${f.dist_to_cbd_km.toFixed(1)} km` },
-    { accent:'accent-green', icon:'🏫', label:'Nearest Pri',  value: f.nearest_primary_school.split(' · ')[0],   sub: f.nearest_primary_school.split(' · ')[1] },
-    { accent:'accent-green', icon:'🏫', label:'Nearest Sec',  value: f.nearest_secondary_school.split(' · ')[0], sub: f.nearest_secondary_school.split(' · ')[1] },
-    { accent:'accent-amber', icon:'📋', label:'Lease Left',     value:`${Math.floor(f.remaining_lease_years)} yrs` },
-    {
-      accent:'accent-amber', icon:'🏘', label:'Mature Estate',
-      value: f.is_mature_estate
-        ? '<span class="tag tag-yes">Yes</span>'
-        : '<span class="tag tag-no">No</span>',
-    },
-    { accent:'accent-amber', icon:'🏗', label:'Building Age',   value:`${f.building_age} yrs` },
+    { accent:'accent-blue',  icon:'🚇', label:'Nearest MRT',   value: mrtBadges(mrtCode), sub: `${mrtName} · ${fmtDist(f.dist_to_nearest_mrt_m)}` },
+    { accent:'accent-blue',  icon:'📍', label:'CBD Distance',  value: `${f.dist_to_cbd_km.toFixed(1)} km` },
+    { accent:'accent-green', icon:'🏫', label:'Nearest Pri',   value: f.nearest_primary_school.split(' · ')[0],   sub: f.nearest_primary_school.split(' · ')[1] },
+    { accent:'accent-green', icon:'🏫', label:'Nearest Sec',   value: f.nearest_secondary_school.split(' · ')[0], sub: f.nearest_secondary_school.split(' · ')[1] },
+    { accent:'accent-amber', icon:'📋', label:'Lease Left',    value: `${Math.floor(f.remaining_lease_years)} yrs` },
+    { accent:'accent-amber', icon:'🏘', label:'Mature Estate', value: f.is_mature_estate ? '<span class="tag tag-yes">Yes</span>' : '<span class="tag tag-no">No</span>' },
+    { accent:'accent-amber', icon:'🏗', label:'Building Age',  value: `${f.building_age} yrs` },
   ];
 
   document.getElementById('stats-grid').innerHTML = stats.map(st => `
@@ -1093,21 +1330,63 @@ function showResult(d) {
     </div>
   `).join('');
 
-  document.getElementById('form-view').classList.add('hide');
+  // Transition: form out, result in
+  const formView = document.getElementById('form-view');
+  formView.classList.add('slide-out-left');
+  await wait(200);
+  formView.classList.add('hide');
+  formView.classList.remove('slide-out-left');
+
   const rv = document.getElementById('result-view');
   rv.classList.add('show');
-  rv.querySelector('.card').classList.remove('fade-up');
-  void rv.querySelector('.card').offsetWidth;
-  rv.querySelector('.card').classList.add('fade-up');
+  const card = document.getElementById('result-card');
+  card.style.animation = 'none'; void card.offsetWidth;
+  card.classList.add('slide-in-right');
+  setTimeout(() => card.classList.remove('slide-in-right'), 350);
+
+  // Swap sidebar
+  showResultSidebar();
+
   window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  await wait(180);
+  priceEl.classList.add('pop');
+  setTimeout(() => priceEl.classList.remove('pop'), 600);
+  animateCount(priceEl, d.predicted_price);
+
+  document.querySelectorAll('.stat-card').forEach((c, i) => {
+    setTimeout(() => { c.style.animationDelay = '0ms'; c.classList.add('visible'); }, 350 + i * 55);
+  });
 }
 
 function showForm() {
-  document.getElementById('result-view').classList.remove('show');
-  document.getElementById('form-view').classList.remove('hide');
+  const card = document.getElementById('result-card');
+  card.classList.add('slide-out-right');
+  wait(200).then(() => {
+    document.getElementById('result-view').classList.remove('show');
+    card.classList.remove('slide-out-right');
+    const fv = document.getElementById('form-view');
+    fv.classList.remove('hide');
+    fv.style.animation = 'none'; void fv.offsetWidth;
+    fv.style.animation = 'slideInLeft 0.3s cubic-bezier(0.22,1,0.36,1) both';
+    setTimeout(() => { fv.style.animation = ''; }, 320);
+    // Reset stat cards
+    document.querySelectorAll('.stat-card').forEach(c => c.classList.remove('visible'));
+    showFormSidebar();
+  });
+}
+
+// ── Feedback ──────────────────────────────────────────────────
+function toggleFeedback() {
+  const trigger = document.getElementById('feedback-trigger');
+  const panel   = document.getElementById('feedback-panel');
+  const open = panel.classList.toggle('open');
+  trigger.classList.toggle('open', open);
 }
 
 // ── Helpers ───────────────────────────────────────────────────
+function wait(ms) { return new Promise(r => setTimeout(r, ms)); }
+
 function toStoreyRange(floor) {
   const band = Math.floor((floor - 1) / 3);
   const lo = String(band * 3 + 1).padStart(2, '0');
@@ -1128,9 +1407,7 @@ function currentMonth() {
   return `${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}`;
 }
 
-function fmtSGD(n) {
-  return 'S$' + Math.round(n).toLocaleString('en-SG');
-}
+function fmtSGD(n) { return 'S$' + Math.round(n).toLocaleString('en-SG'); }
 
 function fmtDist(m) {
   return m >= 1000 ? `${(m/1000).toFixed(1)} km` : `${Math.round(m)} m`;
@@ -1146,30 +1423,39 @@ function setLoading(type, on) {
     document.getElementById('lookup-text').classList.toggle('hidden', on);
     document.getElementById('lookup-spin').classList.toggle('hidden', !on);
   } else {
-    document.getElementById('submit-btn').disabled = on;
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = on;
+    btn.classList.toggle('loading', on);
     document.getElementById('submit-text').classList.toggle('hidden', on);
     document.getElementById('submit-spin').classList.toggle('hidden', !on);
   }
 }
 
-function showError(msg) {
-  const el = document.getElementById('error-box');
-  el.textContent = msg;
-  el.classList.add('show');
-}
-function clearError() {
-  document.getElementById('error-box').classList.remove('show');
+// ── Toast ─────────────────────────────────────────────────────
+let _toastTimer = null;
+function showToast(msg) {
+  let toast = document.getElementById('_toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = '_toast';
+    toast.className = 'toast';
+    toast.innerHTML = `<span style="font-size:1rem;">⚠</span><span class="toast-msg"></span>`;
+    document.body.appendChild(toast);
+  }
+  toast.querySelector('.toast-msg').textContent = msg;
+  toast.classList.remove('hiding');
+  toast.style.animation = 'none'; void toast.offsetWidth; toast.style.animation = '';
+  toast.className = 'toast';
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(() => {
+    toast.classList.add('hiding');
+    setTimeout(() => { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 220);
+  }, 4000);
 }
 
-// ── Feedback ──────────────────────────────────────────────────
-const STAR_LABELS = ['', 'Poor', 'Fair', 'Good', 'Great', 'Excellent'];
+// ── Star rating ───────────────────────────────────────────────
+const STAR_LABELS = ['','Poor','Fair','Good','Great','Excellent'];
 let fbStars = 0;
-
-document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('fb-text').addEventListener('input', function() {
-    document.getElementById('fb-count').textContent = `${this.value.length} / 1000`;
-  });
-});
 
 function renderStars(filled) {
   document.querySelectorAll('.star-btn').forEach((btn, i) => {
@@ -1179,20 +1465,15 @@ function renderStars(filled) {
   });
 }
 
-function setStars(n) {
-  fbStars = n;
-  renderStars(n);
-  document.getElementById('star-label').textContent = STAR_LABELS[n] || '';
-}
-
-function hoverStars(n) { renderStars(n); }
+function setStars(n)     { fbStars = n; renderStars(n); document.getElementById('star-label').textContent = STAR_LABELS[n] || ''; }
+function hoverStars(n)   { renderStars(n); }
 function unhoverStars()  { renderStars(fbStars); }
 
 async function submitFeedback() {
   if (fbStars === 0 && !document.getElementById('fb-text').value.trim()) {
-    document.getElementById('fb-status').textContent = 'Please select a star rating or leave a message.';
-    document.getElementById('fb-status').style.color = 'var(--danger)';
-    document.getElementById('fb-status').style.display = 'block';
+    const status = document.getElementById('fb-status');
+    status.textContent = 'Please select a star rating or leave a message.';
+    status.style.color = 'var(--danger)'; status.style.display = 'block';
     return;
   }
 
@@ -1212,19 +1493,24 @@ async function submitFeedback() {
       }),
     });
     if (res.ok) {
-      status.textContent = 'Thanks for your feedback!';
-      status.style.color = 'var(--success)';
-      document.getElementById('fb-text').value = '';
-      document.getElementById('fb-count').textContent = '0 / 1000';
-      setStars(0);
+      // Replace the entire feedback inner content with a thank-you state
+      document.querySelector('.feedback-inner').innerHTML = `
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0.5rem;padding:0.5rem 0;text-align:center;">
+          <span style="font-size:2rem;">🙏</span>
+          <p style="font-weight:600;color:var(--text);">Thanks for your feedback!</p>
+          <p style="font-size:0.8125rem;color:var(--text-muted);">It helps make this tool better.</p>
+        </div>`;
     } else {
       status.textContent = 'Could not send feedback. Please try again later.';
       status.style.color = 'var(--danger)';
+      status.style.display = 'block';
+      document.getElementById('fb-btn').disabled = false;
+      document.getElementById('fb-text-btn').classList.remove('hidden');
+      document.getElementById('fb-spin').classList.add('hidden');
     }
   } catch {
     status.textContent = 'Could not reach the server. Please try again later.';
     status.style.color = 'var(--danger)';
-  } finally {
     status.style.display = 'block';
     document.getElementById('fb-btn').disabled = false;
     document.getElementById('fb-text-btn').classList.remove('hidden');
